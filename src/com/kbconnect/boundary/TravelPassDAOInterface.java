@@ -33,8 +33,9 @@ public interface TravelPassDAOInterface {
 	 * Deletes a TravelPass from the database where the pass id matches the given id
 	 * 
 	 * @param id
+	 * @return 
 	 */
-	void deletePass(int id);
+	boolean deletePass(int id);
 
 	/**
 	 * Store the given pass in the database

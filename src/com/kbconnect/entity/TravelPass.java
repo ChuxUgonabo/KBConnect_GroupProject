@@ -3,15 +3,17 @@
  */
 package com.kbconnect.entity;
 
+import java.math.BigDecimal;
+
 /**
  * @author Gursewak Singh
  *
  */
 public class TravelPass {
 
-	String _id;
+	int _id;
 	String _passDuration; // day pass, weekly pass, or monthly pass
-	int _price; // the price of the pass
+	BigDecimal _price; // the price of the pass
 	String _passType; // adult, child
 
 	/**
@@ -31,14 +33,14 @@ public class TravelPass {
 	/**
 	 * @return the _price
 	 */
-	public int get_price() {
+	public BigDecimal get_price() {
 		return _price;
 	}
 
 	/**
 	 * @param _price the _price to set
 	 */
-	public void set_price(int _price) {
+	public void set_price(BigDecimal _price) {
 		this._price = _price;
 	}
 
@@ -59,8 +61,17 @@ public class TravelPass {
 	/**
 	 * @return the _id
 	 */
-	public String get_id() {
+	public int get_id() {
 		return _id;
 	}
+
+	/**
+	 * @param _id the _id to set
+	 */
+	public void set_id(int _id) {
+		this._id = _id;
+	}
+
+
 
 }
