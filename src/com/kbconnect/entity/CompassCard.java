@@ -5,6 +5,10 @@ package com.kbconnect.entity;
  * @author Gursewak Singh
  *
  */
+/**
+ * @author Gursewak Singh
+ *
+ */
 public class CompassCard {
 
 	int _id; // database id
@@ -50,6 +54,7 @@ public class CompassCard {
 	 */
 	public boolean compareCVN( String cvn ) {
 		// TODO compare cvn and return true if it matches, false otherwise
+		// encrypted cvn
 		return true;
 	}
 
