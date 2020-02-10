@@ -10,7 +10,7 @@
 </head>
 <body>
 	<h3>WELCOME TO KB CONNECT</h3>
-	<form action="" method="post">
+	<form action="UserDAOController" method="post">
 		<div class="row">
 			<div class="five columns">
 				<label>User Name</label> <input class="u-full-width" type="text"
@@ -23,8 +23,14 @@
 					placeholder="Enter Password" name="password">
 			</div>
 		</div>
+		<input type="hidden" name="action" value="verify">
 		<input class="button-primary" type="submit" value="Login">
+		
+		
 	</form>
+	<p>
+	For new user,please click here to create a <A  class="button-primary" HREF="registeUser.jsp">new User.</A>
+	</p>
 
 </body>
 </html>
