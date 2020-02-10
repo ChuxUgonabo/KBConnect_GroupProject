@@ -29,7 +29,7 @@ public class User {
 			String dob) {
 		_fullName = fName;
 		_username = userN;
-		_password = passW;
+		_password = BCrypt.hashpw(passW,  BCrypt.gensalt());
 		_email = email;
 
 		_address = address;
@@ -121,8 +121,15 @@ public class User {
 	 * @param _password the _password to set
 	 */
 	public void set_password(String _password) {
-        String hashed = BCrypt.hashpw(_password, BCrypt.gensalt());
-		this._password = hashed;
+		this._password = _password;
+	}
+	
+	/**
+	 * 
+	 * @param password
+	 */
+	public void storeHashedPassword(String password) {
+		this._password = BCrypt.hashpw(password, BCrypt.gensalt());
 	}
 
 	/**
