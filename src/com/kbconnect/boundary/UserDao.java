@@ -83,6 +83,7 @@ public class UserDao implements UserDaoInterface {
 
 			// connecting the connectDB
 			this.conn = this.daoAgent.connectDB(conn, databaseName);
+
 			// create the statement
 			this.stmt = this.conn.createStatement();
 			// Execute and store
@@ -108,6 +109,7 @@ public class UserDao implements UserDaoInterface {
 
 			// disconnect from the database
 			this.conn = this.daoAgent.disconnectDB(conn);
+		
 
 		} catch (SQLException e) {
 			System.out.println("Error connectint to the database.");
@@ -226,7 +228,7 @@ public class UserDao implements UserDaoInterface {
 	@Override
 	public boolean createUser(User newUser) {
 		// create a query to insert one
-		String sql = "INSERT INTO users (fullName,username, email, password, address, DOB) values (?,?,?,?,?,?,?);";
+		String sql = "INSERT INTO users (fullName,username, email, password, address, DOB) values (?,?,?,?,?,?);";
 		int count=-1;
 		try {
 			// get connect to database
