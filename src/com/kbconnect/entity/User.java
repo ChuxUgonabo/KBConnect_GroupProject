@@ -1,8 +1,12 @@
 package com.kbconnect.entity;
 
+import org.mindrot.jbcrypt.BCrypt;
+
 /**
  * @author John Ugonabo
  *
+ *
+ * bcrypt encryption reference:  http://www.mindrot.org/projects/jBCrypt/
  */
 
 public class User {
@@ -117,7 +121,8 @@ public class User {
 	 * @param _password the _password to set
 	 */
 	public void set_password(String _password) {
-		this._password = _password;
+        String hashed = BCrypt.hashpw(_password, BCrypt.gensalt());
+		this._password = hashed;
 	}
 
 	/**
@@ -190,6 +195,14 @@ public class User {
 		this._isAdmin = _isAdmin;
 	}
 
+	/**
+	 * 
+	 * @param password
+	 * @return
+	 */
+	public boolean comparePassword( String password ) {
+		return BCrypt.checkpw(password, this._password);
+	}
 //	
 
 }

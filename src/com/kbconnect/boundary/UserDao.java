@@ -21,6 +21,8 @@ public class UserDao implements UserDaoInterface {
 	private ResultSet rs = null;
 	private Statement stmt = null;
 	private PreparedStatement pstmt = null;
+	private DAOAgent daoAgent = new DAOAgent();
+	private String databaseName = "kbconnect";
 
 	/**
 	 * Make a connection with database
@@ -80,7 +82,7 @@ public class UserDao implements UserDaoInterface {
 		try {
 
 			// connecting the connectDB
-			connectDB();
+			this.conn = this.daoAgent.connectDB(conn, databaseName);
 			// create the statement
 			this.stmt = this.conn.createStatement();
 			// Execute and store
@@ -105,7 +107,7 @@ public class UserDao implements UserDaoInterface {
 			}
 
 			// disconnect from the database
-			disconnectDB();
+			this.conn = this.daoAgent.disconnectDB(conn);
 
 		} catch (SQLException e) {
 			System.out.println("Error connectint to the database.");

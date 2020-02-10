@@ -16,6 +16,28 @@ public class LoadedPasses {
 	TravelPass _pass; // the pass that is loaded
 	Date _startDate; // starting date of the pass
 	Date _endDate; // ending date of the pass
+	boolean autorenew; // pointer to check if the pass auto-renews
+
+	/**
+	 * @return the autorenew
+	 */
+	public boolean isAutorenew() {
+		return autorenew;
+	}
+
+	/**
+	 * @param autorenew the auto-renew to set
+	 */
+	public void setAutorenew(boolean autorenew) {
+		this.autorenew = autorenew;
+	}
+
+	/**
+	 * @param _id the _id to set
+	 */
+	public void set_id(int _id) {
+		this._id = _id;
+	}
 
 	/**
 	 * @return the _card
