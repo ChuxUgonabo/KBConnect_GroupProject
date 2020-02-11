@@ -13,63 +13,14 @@ import com.kbconnect.entity.User;
 
 public class UserDao implements UserDaoInterface {
 
-	private String _dsn = "jdbc:mysql://localhost/users?useLegacyDatetimeCode=false&serverTimezone=UTC";
-	private String _username = "root";
-	private String _password = "";
 
 	private Connection conn = null;
 	private ResultSet rs = null;
 	private Statement stmt = null;
 	private PreparedStatement pstmt = null;
+	private String databaseName = "kbconnect";
+	private DAOAgent doaAgent = new DAOAgent();
 
-	/**
-	 * Make a connection with database
-	 */
-	public void connectDB() {
-		try {
-
-			try {
-				Class.forName("com.mysql.jdbc.Driver");
-			} catch (ClassNotFoundException e) {
-				e.printStackTrace();
-			}
-
-			this.conn = DriverManager.getConnection(this._dsn, this._username, this._password);
-			if (this.conn.isClosed()) {
-				System.out.println("Database connection not established.");
-			} else {
-				System.out.println("Database connection established.");
-			}
-
-		} catch (SQLException sx) {
-			System.out.println("Error connecting to the database");
-			System.out.println(sx.getMessage());
-			System.out.println(sx.getErrorCode());
-			System.out.println(sx.getSQLState());
-		}
-	}
-
-	/**
-	 * disconnect with database
-	 */
-
-	public void disconnectDB() {
-		try {
-			// close the connection
-			this.conn.close();
-			if (this.conn.isClosed()) {
-				System.out.println("Database connection has been closed.");
-			} else {
-				System.out.println("Database connection is still open");
-			}
-		} catch (SQLException e) {
-			System.out.println("Error connectint to the database.");
-			System.out.println(e.getMessage());
-			System.out.println(e.getErrorCode());
-			System.out.println(e.getSQLState());
-		}
-
-	}
 
 	@Override
 	public ArrayList<User> getAllUsers() {
@@ -80,7 +31,7 @@ public class UserDao implements UserDaoInterface {
 		try {
 
 			// connecting the connectDB
-			connectDB();
+			this.conn = doaAgent.connectDB(conn, databaseName);
 			// create the statement
 			this.stmt = this.conn.createStatement();
 			// Execute and store
@@ -105,13 +56,9 @@ public class UserDao implements UserDaoInterface {
 			}
 
 			// disconnect from the database
-			disconnectDB();
-
-		} catch (SQLException e) {
-			System.out.println("Error connectint to the database.");
-			System.out.println(e.getMessage());
-			System.out.println(e.getErrorCode());
-			System.out.println(e.getSQLState());
+			this.conn = doaAgent.disconnectDB(conn);
+		} catch (SQLException sx) {
+			doaAgent.displayException(sx);
 		}
 		return allUsers;
 	}
@@ -126,7 +73,7 @@ public class UserDao implements UserDaoInterface {
 		try {
 
 			// connecting the connectDB
-			connectDB();
+			this.conn = doaAgent.connectDB(conn, databaseName);
 			// create the prepared statement
 			this.pstmt = this.conn.prepareStatement(sql);
 			// set the parameter for the query
@@ -149,13 +96,10 @@ public class UserDao implements UserDaoInterface {
 			}
 
 			// disconnect from the database
-			disconnectDB();
+			this.conn = doaAgent.disconnectDB(conn);
 
 		} catch (SQLException sx) {
-			System.out.println("Error connectint to the database.");
-			System.out.println(sx.getMessage());
-			System.out.println(sx.getErrorCode());
-			System.out.println(sx.getSQLState());
+			doaAgent.displayException(sx);
 		}
 		return user;
 	}
@@ -166,7 +110,7 @@ public class UserDao implements UserDaoInterface {
         int count=-1;;
 		try {
 			// connect to the database
-			connectDB();
+			this.conn = doaAgent.connectDB(conn, databaseName);
 			// create the prepare statement
 			this.pstmt = this.conn.prepareStatement(sql);
 			this.pstmt.setString(1, newUser.get_fullName());
@@ -183,13 +127,10 @@ public class UserDao implements UserDaoInterface {
 			count= this.pstmt.getUpdateCount();
 
 			// disconnect from the database
-			disconnectDB();
+			this.conn = doaAgent.disconnectDB(conn);
 
 		} catch (SQLException sx) {
-			System.out.println("Error connectint to the database.");
-			System.out.println(sx.getMessage());
-			System.out.println(sx.getErrorCode());
-			System.out.println(sx.getSQLState());
+			doaAgent.displayException(sx);
 		}
 
 		
@@ -202,7 +143,7 @@ public class UserDao implements UserDaoInterface {
 		String sql = "DELETE FROM users WHERE id=?;";
 		try {
 			// connect to the database
-			connectDB();
+			this.conn = doaAgent.connectDB(conn, databaseName);
 			// create a prepare statement
 			this.pstmt = this.conn.prepareStatement(sql);
 			// set the parameter
@@ -211,13 +152,10 @@ public class UserDao implements UserDaoInterface {
 			this.pstmt.execute();
 
 			// disconnect
-			disconnectDB();
+			this.conn = doaAgent.disconnectDB(conn);
 
 		} catch (SQLException sx) {
-			System.out.println("Error connectint to the database.");
-			System.out.println(sx.getMessage());
-			System.out.println(sx.getErrorCode());
-			System.out.println(sx.getSQLState());
+			doaAgent.displayException(sx);
 		}
 	}
 
@@ -228,7 +166,7 @@ public class UserDao implements UserDaoInterface {
 		int count=-1;
 		try {
 			// get connect to database
-			connectDB();
+			this.conn = doaAgent.connectDB(conn, databaseName);
 			// create the prepare statement
 			this.pstmt = this.conn.prepareStatement(sql);
 			// set parameters
@@ -244,13 +182,10 @@ public class UserDao implements UserDaoInterface {
 			count= this.pstmt.getResultSetType();
 
 			// disconnect
-			disconnectDB();
+			this.conn = doaAgent.disconnectDB(conn);
 
 		} catch (SQLException sx) {
-			System.out.println("Error connectint to the database.");
-			System.out.println(sx.getMessage());
-			System.out.println(sx.getErrorCode());
-			System.out.println(sx.getSQLState());
+			doaAgent.displayException(sx);
 		}
 		
 		return count>0;
