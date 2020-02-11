@@ -1,7 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
     
-    <%@ page import="com.kbconnect.entity.*" %>
+    <%@ page import="com.kbconnect.entity.*, com.kbconnect.boundary.*" %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -16,11 +16,17 @@
 </form>
 
 <% 
-//User user = (User) request.getAttribute("loggeduser");
+UserDao userDao = new UserDao();
+if (session.getAttribute("username") == null ) {
+	response.sendRedirect("login.jsp");
+}
+String username = String.valueOf(session.getAttribute("username"));
 
-//out.println(user.get_fullName());
-//out.print(user.get_address());
-//out.print(user.get_email());
+User user = userDao.getUser(username);
+
+out.println(user.get_fullName());
+out.print(user.get_address());
+out.print(user.get_email());
 %>
 </body>
 </html>
