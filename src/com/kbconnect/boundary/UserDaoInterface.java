@@ -11,18 +11,20 @@ import com.kbconnect.entity.User;
 
 
 public interface UserDaoInterface {
+
 	/**
 	 * Retrieve all the users from the database of users
 	 * @return ArrayList allStudents
 	 */
 	public ArrayList<User> getAllUsers();
+
 	/**
 	 * @param name
 	 * @return object of User base on parameter of name
 	 * Retrieve one user if the given name matches 
 	 */
-
 	public User getUser(String name);
+
 	/**
 	 * 
 	 * @param newUser
@@ -44,5 +46,12 @@ public interface UserDaoInterface {
 	 * Create one new user 
 	 */
 	public boolean createUser(User newUser);
+	
+	/**
+	 * 
+	 * @param id
+	 * @return user object with the given database id
+	 */
+	public User getUser(int id);
 
 }

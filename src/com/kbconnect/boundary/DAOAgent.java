@@ -15,7 +15,7 @@ public class DAOAgent {
 
 	private String _dsn;
 	private String _username = "root";
-	private String _password = "11ne7l13rP";
+	private String _password = "";
 
 	public Connection connectDB(Connection conn, String databaseName) {
 		

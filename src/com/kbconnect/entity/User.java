@@ -1,66 +1,73 @@
 package com.kbconnect.entity;
 
+import java.sql.Date;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+
+// java implementation of bcrypt url: http://www.mindrot.org/projects/jBCrypt
+import org.mindrot.jbcrypt.BCrypt;
+
 /**
  * @author John Ugonabo
  *
+ *
+ *		   bcrypt encryption reference: http://www.mindrot.org/projects/jBCrypt/
  */
 
 public class User {
 
-	int _id; // unique id
+	int _id; // unique id for the database
 	String _fullName;
 	String _username;
-	String _password;
+	String _password; // encrypted password
 	String _email;
-	String _address;
-	String _DOB; // date of birth
+	String _address; // full address including street address city province and postal code
+	java.sql.Date _DOB; // date of birth
 	String _cardNumber; // the card number
-	boolean _isAdmin; //
+	boolean _isAdmin; // pointer to check if a user has admin permissions or not
 
-	public User() {
+    public User() {
+    };
 
-	}
-
-	public void registerUser(String fName, String userN, String passW, String email, String address,
-			String dob) {
+	public User(String fName, String userN, String passW, String email, String address, String dob) {
 		_fullName = fName;
 		_username = userN;
-		_password = passW;
+		_password = BCrypt.hashpw(passW, BCrypt.gensalt());
 		_email = email;
-
 		_address = address;
-		_DOB = dob;
+		// date should be in format yyyy-mm-dd
+		Date sqlDob = Date.valueOf(dob);
+		_DOB = sqlDob;
+        _isAdmin = false;
 	}
 
-	public boolean login(String userN, String passW) {
-		boolean correct = false;
-		if (_username.compareTo(userN) == 1 && _password.compareTo(passW) == 1) {
-			correct = true;
-		}
-		return correct;
+
+	public void login(String userN, String passW) {
+		// TODO do this in the servlet not here
 	}
 
 	public void logout() {
+		// TODO do in servlet
+	}
+
+	public void updateUser(User updatedUser) {
+		_fullName = updatedUser.get_fullName();
+		_username = updatedUser.get_username();
+		_password = updatedUser.get_password();
+		_email = updatedUser.get_email();
+		_address = updatedUser.get_address();
+		_DOB = updatedUser.get_DOB();
+		_cardNumber = updatedUser.get_cardNumber();
+		_isAdmin = updatedUser.is_isAdmin();
 
 	}
 
-	public void updateUser(int id, String fName, String userN, String passW, String email, int phoneN, String addtress,
-			String dob) {
-		_fullName = fName;
-		_username = userN;
-		_password = passW;
-		_email = email;
-
-		_address = addtress;
-		_DOB = dob;
-
+	public void linkCard(CompassCard card) {
+		// cardN should be the 
+		_cardNumber = card.get_cardNumber();
 	}
 
-	public void unlinkCard(String cardN) {
-		_cardNumber = cardN;
-	}
-
-	public void deleteCard() {
+	public void unlinkCard() {
 		_cardNumber = null;
 	}
 
@@ -114,10 +121,21 @@ public class User {
 	}
 
 	/**
+	 *	this is only used when retreiving the user from the database
+	 *	it is not used when creating a new user
+	 *	only storeHashedPassword() is used when creating a new user
 	 * @param _password the _password to set
 	 */
 	public void set_password(String _password) {
 		this._password = _password;
+	}
+
+	/**
+	 * 
+	 * @param password
+	 */
+	public void storeHashedPassword(String password) {
+		this._password = BCrypt.hashpw(password, BCrypt.gensalt());
 	}
 
 	/**
@@ -151,7 +169,7 @@ public class User {
 	/**
 	 * @return the _DOB
 	 */
-	public String get_DOB() {
+	public Date get_DOB() {
 		return _DOB;
 	}
 
@@ -159,7 +177,13 @@ public class User {
 	 * @param _DOB the _DOB to set
 	 */
 	public void set_DOB(String _DOB) {
-		this._DOB = _DOB;
+		// date should be in format yyyy-mm-dd
+		Date sqlDob = Date.valueOf(_DOB);
+		this._DOB = sqlDob;
+	}
+	
+	public void set_DOB(java.sql.Date DOB) {
+		this._DOB = DOB;
 	}
 
 	/**
@@ -190,6 +214,13 @@ public class User {
 		this._isAdmin = _isAdmin;
 	}
 
-//	
+	/**
+	 * 
+	 * @param password
+	 * @return
+	 */
+	public boolean comparePassword(String password) {
+		return BCrypt.checkpw(password, this._password);
+	}
 
 }

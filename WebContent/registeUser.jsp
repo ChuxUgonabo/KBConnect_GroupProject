@@ -13,7 +13,7 @@
 <body>
 
 	<h4>Register User</h4>
-	<form action="UserDaoController" method="post">
+	<form action="UserDAOController" method="post">
 		<div class="row">
 			<div class="five columns">
 				<label>Full Name</label> <input class="u-full-width" type="text"
@@ -38,12 +38,12 @@
 		</div>
 		<div class="row">
 			<div class="five columns">
-				<label>Phone Number</label> <input class="u-full-width" type="text"
-					placeholder="phone number" name="phone">
+				<label>DOB</label> <input type="date" class="u-full-width"
+					name="DOB">
 			</div>
 			<div class="five columns">
-				<label>DOB</label> <input type="text" class="u-full-width" name="DOB" placeholder="yy/dd/mm">
 				
+
 			</div>
 		</div>
 
@@ -56,6 +56,7 @@
 		</div>
 		<input type="hidden" name="action" value="create"> <input
 			class="button-primary" type="submit" value="Create User">
+		
 	</form>
 
 
