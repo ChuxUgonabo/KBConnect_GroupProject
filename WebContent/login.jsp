@@ -10,7 +10,8 @@
 </head>
 <body>
 	<h3>WELCOME TO KB CONNECT</h3>
-	<form action="UserDAOController" method="post">
+	<form action="LoginController" method="post">
+	<input type="hidden" value="login" name="action">
 		<div class="row">
 			<div class="five columns">
 				<label>User Name</label> <input class="u-full-width" type="text"

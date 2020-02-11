@@ -31,7 +31,7 @@ public class UserDAOController extends HttpServlet {
 
 	/**
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse
-	 *      response)
+	 *		response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
@@ -41,25 +41,26 @@ public class UserDAOController extends HttpServlet {
 
 	/**
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse
-	 *      response)
+	 *		response)
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
-		// TODO Auto-generated method stub
+
 		// sentinel for checking the action if it is successful
 		boolean process = false;
 		// See what the form action was
 		switch (request.getParameter("action")) {
 		case "create":
-			// instantiate object of User
-			User newUser = new User();
-			// set attributes value to object of User
-			newUser.registerUser(request.getParameter("fullName"), 
-					request.getParameter("username"),
-					request.getParameter("password"),
-					request.getParameter("email"), 
-					request.getParameter("address"),
-					request.getParameter("DOB"));
+
+			String fullname = request.getParameter("fullName");
+			String username = request.getParameter("username");
+			String password = request.getParameter("password");
+			String email = request.getParameter("email");
+			String address = request.getParameter("address");
+			String DOB = request.getParameter("DOB");
+
+			// instantiate object of User with the given parameters
+			User newUser = new User(fullname, username, password, email, address, DOB);
 
 			// add new one to database
 
@@ -70,18 +71,20 @@ public class UserDAOController extends HttpServlet {
 
 		case "edit":
 			// instantiate object of user
-			User editUser = new User();
+			User editUser;
 
 			// call getUser() to get current user by id
 			editUser = bdao.getUser(request.getParameter("id"));
 
 			// set attributes value to object
+			/**
 			editUser.registerUser(request.getParameter("fullName"), 
 					request.getParameter("username"),
 					request.getParameter("password"),
 					request.getParameter("email"), 
 					request.getParameter("address"),
 					request.getParameter("DOB"));
+					*/
 //			editUser.set_fullName(request.getParameter("fullName"));
 //			editUser.set_username(request.getParameter("username"));
 //			editUser.set_email(request.getParameter("email"));

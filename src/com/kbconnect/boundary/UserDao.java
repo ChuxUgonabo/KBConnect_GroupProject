@@ -13,68 +13,71 @@ import com.kbconnect.entity.User;
 
 public class UserDao implements UserDaoInterface {
 
-	private String _dsn = "jdbc:mysql://localhost/users?useLegacyDatetimeCode=false&serverTimezone=UTC";
-	private String _username = "root";
-	private String _password = "";
+    // going to use a separate class for making a connection and
+    // disconnecting from the database
+	//private String _dsn = "jdbc:mysql://localhost/users?useLegacyDatetimeCode=false&serverTimezone=UTC";
+	//private String _username = "root";
+	//private String _password = "";
 
 	private Connection conn = null;
 	private ResultSet rs = null;
 	private Statement stmt = null;
 	private PreparedStatement pstmt = null;
-	private DAOAgent daoAgent = new DAOAgent();
 	private String databaseName = "kbconnect";
+	private DAOAgent daoAgent = new DAOAgent();
 
-	/**
-	 * Make a connection with database
-	 */
-	public void connectDB() {
-		try {
+	///**
+	// * Make a connection with database
+	// */
+	//public void connectDB() {
+	//	try {
 
-			try {
-				Class.forName("com.mysql.jdbc.Driver");
-			} catch (ClassNotFoundException e) {
-				e.printStackTrace();
-			}
+	//		try {
+	//			Class.forName("com.mysql.jdbc.Driver");
+	//		} catch (ClassNotFoundException e) {
+	//			e.printStackTrace();
+	//		}
 
-			this.conn = DriverManager.getConnection(this._dsn, this._username, this._password);
-			if (this.conn.isClosed()) {
-				System.out.println("Database connection not established.");
-			} else {
-				System.out.println("Database connection established.");
-			}
+	//		this.conn = DriverManager.getConnection(this._dsn, this._username, this._password);
+	//		if (this.conn.isClosed()) {
+	//			System.out.println("Database connection not established.");
+	//		} else {
+	//			System.out.println("Database connection established.");
+	//		}
 
-		} catch (SQLException sx) {
-			System.out.println("Error connecting to the database");
-			System.out.println(sx.getMessage());
-			System.out.println(sx.getErrorCode());
-			System.out.println(sx.getSQLState());
-		}
-	}
+	//	} catch (SQLException sx) {
+	//		System.out.println("Error connecting to the database");
+	//		System.out.println(sx.getMessage());
+	//		System.out.println(sx.getErrorCode());
+	//		System.out.println(sx.getSQLState());
+	//	}
+	//}
 
-	/**
-	 * disconnect with database
-	 */
+	///**
+	// * disconnect with database
+	// */
 
-	public void disconnectDB() {
-		try {
-			// close the connection
-			this.conn.close();
-			if (this.conn.isClosed()) {
-				System.out.println("Database connection has been closed.");
-			} else {
-				System.out.println("Database connection is still open");
-			}
-		} catch (SQLException e) {
-			System.out.println("Error connectint to the database.");
-			System.out.println(e.getMessage());
-			System.out.println(e.getErrorCode());
-			System.out.println(e.getSQLState());
-		}
+	//public void disconnectDB() {
+	//	try {
+	//		// close the connection
+	//		this.conn.close();
+	//		if (this.conn.isClosed()) {
+	//			System.out.println("Database connection has been closed.");
+	//		} else {
+	//			System.out.println("Database connection is still open");
+	//		}
+	//	} catch (SQLException e) {
+	//		System.out.println("Error connectint to the database.");
+	//		System.out.println(e.getMessage());
+	//		System.out.println(e.getErrorCode());
+	//		System.out.println(e.getSQLState());
+	//	}
 
-	}
+	//}
 
 	@Override
 	public ArrayList<User> getAllUsers() {
+        // list to store all the users
 		ArrayList<User> allUsers = new ArrayList<User>();
 
 		// list all the Users
@@ -86,8 +89,11 @@ public class UserDao implements UserDaoInterface {
 
 			// create the statement
 			this.stmt = this.conn.createStatement();
+
 			// Execute and store
 			this.rs = this.stmt.executeQuery(sql);
+
+			// convert all the results into java objects
 			while (rs.next()) {
 				// instantiate a new User
 				User user = new User();
@@ -99,9 +105,9 @@ public class UserDao implements UserDaoInterface {
 				user.set_email(rs.getString("email"));
 				user.set_password(rs.getString("password"));
 				user.set_address(rs.getString("address"));
-				user.set_DOB(rs.getString("DOB"));
-//				user.set_cardNumber(rs.getString("cardNumber"));
-//				user.set_isAdmin(rs.getString("isAdmin"));
+				user.set_DOB(rs.getDate("DOB"));
+				user.set_cardNumber(rs.getString("cardNumber"));
+				user.set_isAdmin(rs.getBoolean("isAdmin"));
 
 				// add the object to the list
 				allUsers.add(user);
@@ -109,10 +115,9 @@ public class UserDao implements UserDaoInterface {
 
 			// disconnect from the database
 			this.conn = this.daoAgent.disconnectDB(conn);
-		
 
 		} catch (SQLException e) {
-			System.out.println("Error connectint to the database.");
+			System.out.println("Database error");
 			System.out.println(e.getMessage());
 			System.out.println(e.getErrorCode());
 			System.out.println(e.getSQLState());
@@ -121,7 +126,7 @@ public class UserDao implements UserDaoInterface {
 	}
 
 	@Override
-	public User getUser(String id) {
+	public User getUser(int id) {
 		// Instantiate the object of student
 		User user = new User();
 
@@ -130,11 +135,11 @@ public class UserDao implements UserDaoInterface {
 		try {
 
 			// connecting the connectDB
-			connectDB();
+			this.conn = daoAgent.connectDB(this.conn, databaseName);
 			// create the prepared statement
 			this.pstmt = this.conn.prepareStatement(sql);
 			// set the parameter for the query
-			this.pstmt.setString(1, id);
+			this.pstmt.setInt(1, id);
 			// Execute
 			this.rs = this.pstmt.executeQuery();
 			while (rs.next()) {
@@ -143,17 +148,16 @@ public class UserDao implements UserDaoInterface {
 				user.set_fullName(rs.getString("fullName"));
 				user.set_username(rs.getString("username"));
 				user.set_email(rs.getString("email"));
-				
 				user.set_password(rs.getString("password"));
 				user.set_address(rs.getString("address"));
-				user.set_DOB(rs.getString("DOB"));
-//				user.set_cardNumber(rs.getString("cardNumber"));
-//				user.set_isAdmin(rs.getString("isAdmin"));
+				user.set_DOB(rs.getDate("DOB"));
+				user.set_cardNumber(rs.getString("cardNumber"));
+				user.set_isAdmin(rs.getBoolean("isAdmin"));
 
 			}
 
 			// disconnect from the database
-			disconnectDB();
+			this.conn = daoAgent.disconnectDB( this.conn );
 
 		} catch (SQLException sx) {
 			System.out.println("Error connectint to the database.");
@@ -164,30 +168,45 @@ public class UserDao implements UserDaoInterface {
 		return user;
 	}
 
-	@Override
-	public boolean  updateUser(User newUser) {
-		String sql = "UPDATE users set  fullName=?,username=? email=?, password=?,address=?, BOD=?, WHERE id=?;";
-        int count=-1;;
-		try {
-			// connect to the database
-			connectDB();
-			// create the prepare statement
-			this.pstmt = this.conn.prepareStatement(sql);
-			this.pstmt.setString(1, newUser.get_fullName());
-			this.pstmt.setString(2, newUser.get_username());
-			this.pstmt.setString(3, newUser.get_email());
-		
-			this.pstmt.setString(4, newUser.get_password());
-			this.pstmt.setString(5, newUser.get_address());
-			this.pstmt.setString(6, newUser.get_DOB());
-			this.pstmt.setString(7, String.valueOf(newUser.get_id()));
+	public User getUser(String username) {
+		// Instantiate the object of student
+		User user = new User();
+		boolean successful;
 
-			this.pstmt.execute();
-			
-			count= this.pstmt.getUpdateCount();
+		// get one object of student by condition of email
+		String sql = "SELECT * FROM users where username=?;";
+		try {
+
+			// connecting the connectDB
+			this.conn = daoAgent.connectDB(this.conn, databaseName);
+			// create the prepared statement
+			this.pstmt = this.conn.prepareStatement(sql);
+			// set the parameter for the query
+			this.pstmt.setString(1, username);
+			// Execute
+			successful = this.pstmt.execute();
+			if (successful) {
+				this.rs = this.pstmt.getResultSet();
+				while (rs.next()) {
+					// populate the properties of the object from the database
+					user.set_id(rs.getInt("id"));
+					user.set_fullName(rs.getString("fullName"));
+					user.set_username(rs.getString("username"));
+					user.set_email(rs.getString("email"));
+
+					user.set_password(rs.getString("password"));
+					user.set_address(rs.getString("address"));
+					user.set_DOB(rs.getDate("DOB"));
+//				user.set_cardNumber(rs.getString("cardNumber"));
+//				user.set_isAdmin(rs.getString("isAdmin"));
+
+				}
+			} else {
+				user = null;
+			}
 
 			// disconnect from the database
-			disconnectDB();
+			this.conn = daoAgent.disconnectDB(this.conn);
 
 		} catch (SQLException sx) {
 			System.out.println("Error connectint to the database.");
@@ -196,8 +215,45 @@ public class UserDao implements UserDaoInterface {
 			System.out.println(sx.getSQLState());
 		}
 
-		
-		return count>0;
+		return user;
+	}
+
+	@Override
+	public boolean updateUser(User newUser) {
+		String sql = "UPDATE users set  fullName=?,username=? email=?, password=?,address=?, DOB=?, cardNumber=?, isAdmin=?, WHERE id=?;";
+		int count = -1;
+		;
+		try {
+			// connect to the database
+			this.conn = daoAgent.connectDB(this.conn, databaseName);
+			// create the prepare statement
+			this.pstmt = this.conn.prepareStatement(sql);
+			this.pstmt.setString(1, newUser.get_fullName());
+			this.pstmt.setString(2, newUser.get_username());
+			this.pstmt.setString(3, newUser.get_email());
+
+			this.pstmt.setString(4, newUser.get_password());
+			this.pstmt.setString(5, newUser.get_address());
+			this.pstmt.setDate(6, newUser.get_DOB());
+            this.pstmt.setString(7, newUser.get_cardNumber());
+            this.pstmt.setBoolean(8, newUser.is_isAdmin());
+			this.pstmt.setString(9, String.valueOf(newUser.get_id()));
+
+			this.pstmt.execute();
+
+			count = this.pstmt.getUpdateCount();
+
+			// disconnect from the database
+			this.conn = daoAgent.disconnectDB(this.conn);
+
+		} catch (SQLException sx) {
+			System.out.println("Error connectint to the database.");
+			System.out.println(sx.getMessage());
+			System.out.println(sx.getErrorCode());
+			System.out.println(sx.getSQLState());
+		}
+
+		return count > 0;
 	}
 
 	@Override
@@ -206,7 +262,7 @@ public class UserDao implements UserDaoInterface {
 		String sql = "DELETE FROM users WHERE id=?;";
 		try {
 			// connect to the database
-			connectDB();
+			this.conn = daoAgent.connectDB(this.conn, databaseName);
 			// create a prepare statement
 			this.pstmt = this.conn.prepareStatement(sql);
 			// set the parameter
@@ -215,7 +271,7 @@ public class UserDao implements UserDaoInterface {
 			this.pstmt.execute();
 
 			// disconnect
-			disconnectDB();
+			this.conn = daoAgent.disconnectDB(this.conn);
 
 		} catch (SQLException sx) {
 			System.out.println("Error connectint to the database.");
@@ -228,27 +284,29 @@ public class UserDao implements UserDaoInterface {
 	@Override
 	public boolean createUser(User newUser) {
 		// create a query to insert one
-		String sql = "INSERT INTO users (fullName,username, email, password, address, DOB) values (?,?,?,?,?,?);";
-		int count=-1;
+		String sql = "INSERT INTO users (fullName,username, email, password, address, DOB, cardNumber, isAdmin) values (?,?,?,?,?,?,?,?);";
+		int count = -1;
 		try {
 			// get connect to database
-			connectDB();
+			this.conn = daoAgent.connectDB(this.conn, databaseName);
 			// create the prepare statement
 			this.pstmt = this.conn.prepareStatement(sql);
 			// set parameters
 			this.pstmt.setString(1, newUser.get_fullName());
 			this.pstmt.setString(2, newUser.get_username());
 			this.pstmt.setString(3, newUser.get_email());
-		
+
 			this.pstmt.setString(4, newUser.get_password());
 			this.pstmt.setString(5, newUser.get_address());
-			this.pstmt.setString(6, newUser.get_DOB());
+			this.pstmt.setDate(6, newUser.get_DOB());
+			this.pstmt.setString(7,newUser.get_cardNumber());
+			this.pstmt.setBoolean(8, newUser.is_isAdmin());
 			// execute
 			this.pstmt.execute();
-			count= this.pstmt.getResultSetType();
+			count = this.pstmt.getResultSetType();
 
 			// disconnect
-			disconnectDB();
+			this.conn = daoAgent.disconnectDB(this.conn);
 
 		} catch (SQLException sx) {
 			System.out.println("Error connectint to the database.");
@@ -256,10 +314,9 @@ public class UserDao implements UserDaoInterface {
 			System.out.println(sx.getErrorCode());
 			System.out.println(sx.getSQLState());
 		}
-		
-		return count>0;
+
+		return count > 0;
 
 	}
 
-	
 }

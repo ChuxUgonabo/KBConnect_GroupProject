@@ -38,8 +38,8 @@
 		</div>
 		<div class="row">
 			<div class="five columns">
-				<label>DOB</label> <input type="text" class="u-full-width"
-					name="DOB" placeholder="yy/dd/mm">
+				<label>DOB</label> <input type="date" class="u-full-width"
+					name="DOB">
 			</div>
 			<div class="five columns">
 				
