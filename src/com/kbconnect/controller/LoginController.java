@@ -1,8 +1,6 @@
 package com.kbconnect.controller;
 
 import java.io.IOException;
-import java.net.http.HttpRequest;
-import java.text.ParseException;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -55,8 +53,7 @@ public class LoginController extends HttpServlet {
 				response.sendRedirect("invalidCredentials");
 			} else {
 				HttpSession session = request.getSession();
-				request.setAttribute("loggeduser", requestedUser);
-				session.setAttribute("username", requestedUser);
+				session.setAttribute("username", requestedUser.get_username());
 				response.sendRedirect("profile.jsp");
 			}
 			break;

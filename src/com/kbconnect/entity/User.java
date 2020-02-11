@@ -1,8 +1,6 @@
 package com.kbconnect.entity;
 
 import java.sql.Date;
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
 
 // java implementation of bcrypt url: http://www.mindrot.org/projects/jBCrypt
 import org.mindrot.jbcrypt.BCrypt;
