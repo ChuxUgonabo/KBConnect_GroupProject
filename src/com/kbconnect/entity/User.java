@@ -22,7 +22,6 @@ public class User {
 	String _address; // full address including street address city province and postal code
 	java.sql.Date _DOB; // date of birth
 	String _cardNumber; // the card number
-	boolean _isAdmin; // pointer to check if a user has admin permissions or not
 
     public User() {
     };
@@ -36,7 +35,6 @@ public class User {
 		// date should be in format yyyy-mm-dd
 		Date sqlDob = Date.valueOf(dob);
 		_DOB = sqlDob;
-        _isAdmin = false;
 	}
 
 
@@ -56,8 +54,6 @@ public class User {
 		_address = updatedUser.get_address();
 		_DOB = updatedUser.get_DOB();
 		_cardNumber = updatedUser.get_cardNumber();
-		_isAdmin = updatedUser.is_isAdmin();
-
 	}
 
 	public void linkCard(CompassCard card) {
@@ -196,20 +192,6 @@ public class User {
 	 */
 	public void set_cardNumber(String _cardNumber) {
 		this._cardNumber = _cardNumber;
-	}
-
-	/**
-	 * @return the _isAdmin
-	 */
-	public boolean is_isAdmin() {
-		return _isAdmin;
-	}
-
-	/**
-	 * @param _isAdmin the _isAdmin to set
-	 */
-	public void set_isAdmin(boolean _isAdmin) {
-		this._isAdmin = _isAdmin;
 	}
 
 	/**

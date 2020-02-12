@@ -19,6 +19,9 @@ public class CompassCard {
 	boolean _isActive; // is the card active or not
 	double _balance; // the money balance on the card
 
+	public CompassCard() {
+		
+	}
 
 	
 	public CompassCard(String _cardNumber, String cvn, boolean _isActive, double _balance) {
@@ -67,6 +70,10 @@ public class CompassCard {
 		// encrypted cvn
 		return true;
 	}
+
+    public String get_cvn() {
+        return this._cvn;
+    }
 
 	/**
 	 * @return the _id

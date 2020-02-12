@@ -119,7 +119,6 @@ public class UserDao implements UserDaoInterface {
 				user.set_address(rs.getString("address"));
 				user.set_DOB(rs.getDate("DOB"));
 				user.set_cardNumber(rs.getString("cardNumber"));
-				user.set_isAdmin(rs.getBoolean("isAdmin"));
 
 				// add the object to the list
 				allUsers.add(user);
@@ -174,7 +173,6 @@ public class UserDao implements UserDaoInterface {
 				user.set_address(rs.getString("address"));
 				user.set_DOB(rs.getDate("DOB"));
 				user.set_cardNumber(rs.getString("cardNumber"));
-				user.set_isAdmin(rs.getBoolean("isAdmin"));
 
 			}
 
@@ -220,7 +218,6 @@ public class UserDao implements UserDaoInterface {
 					user.set_address(rs.getString("address"));
 					user.set_DOB(rs.getDate("DOB"));
 //				user.set_cardNumber(rs.getString("cardNumber"));
-//				user.set_isAdmin(rs.getString("isAdmin"));
 
 				}
 			} else {
@@ -243,7 +240,7 @@ public class UserDao implements UserDaoInterface {
 
 	@Override
 	public boolean updateUser(User newUser) {
-		String sql = "UPDATE users set  fullName=?,username=? email=?, password=?,address=?, DOB=?, cardNumber=?, isAdmin=?, WHERE id=?;";
+		String sql = "UPDATE users set  fullName=?, username=?, email=?, password=?, address=?, DOB=?, cardNumber=? WHERE id=?;";
 		int count = -1;
 		;
 		try {
@@ -263,8 +260,7 @@ public class UserDao implements UserDaoInterface {
 			this.pstmt.setString(5, newUser.get_address());
 			this.pstmt.setDate(6, newUser.get_DOB());
             this.pstmt.setString(7, newUser.get_cardNumber());
-            this.pstmt.setBoolean(8, newUser.is_isAdmin());
-			this.pstmt.setString(9, String.valueOf(newUser.get_id()));
+			this.pstmt.setString(8, String.valueOf(newUser.get_id()));
 
 			this.pstmt.execute();
 
@@ -317,7 +313,7 @@ public class UserDao implements UserDaoInterface {
 	@Override
 	public boolean createUser(User newUser) {
 		// create a query to insert one
-		String sql = "INSERT INTO users (fullName,username, email, password, address, DOB, cardNumber, isAdmin) values (?,?,?,?,?,?,?,?);";
+		String sql = "INSERT INTO users (fullName,username, email, password, address, DOB, cardNumber) values (?,?,?,?,?,?,?);";
 		int count = -1;
 		try {
 			// get connect to database
@@ -337,7 +333,6 @@ public class UserDao implements UserDaoInterface {
 			this.pstmt.setString(5, newUser.get_address());
 			this.pstmt.setDate(6, newUser.get_DOB());
 			this.pstmt.setString(7,newUser.get_cardNumber());
-			this.pstmt.setBoolean(8, newUser.is_isAdmin());
 			// execute
 			this.pstmt.execute();
 			count = this.pstmt.getResultSetType();
