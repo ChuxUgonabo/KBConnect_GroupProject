@@ -13,24 +13,19 @@ import com.kbconnect.entity.User;
 
 public class UserDao implements UserDaoInterface {
 
-<<<<<<< HEAD
-=======
     // going to use a separate class for making a connection and
     // disconnecting from the database
 	//private String _dsn = "jdbc:mysql://localhost/users?useLegacyDatetimeCode=false&serverTimezone=UTC";
 	//private String _username = "root";
 	//private String _password = "";
->>>>>>> acfd1630c0988f65ecd2efebbc3c1979a8939c82
 
 	private Connection conn = null;
 	private ResultSet rs = null;
 	private Statement stmt = null;
 	private PreparedStatement pstmt = null;
 	private String databaseName = "kbconnect";
-<<<<<<< HEAD
-	private DAOAgent doaAgent = new DAOAgent();
+//	private DAOAgent doaAgent = new DAOAgent();
 
-=======
 	private DAOAgent daoAgent = new DAOAgent();
 
 	///**
@@ -81,7 +76,6 @@ public class UserDao implements UserDaoInterface {
 	//	}
 
 	//}
->>>>>>> acfd1630c0988f65ecd2efebbc3c1979a8939c82
 
 	@Override
 	public ArrayList<User> getAllUsers() {
@@ -93,12 +87,8 @@ public class UserDao implements UserDaoInterface {
 		try {
 
 			// connecting the connectDB
-<<<<<<< HEAD
-			this.conn = doaAgent.connectDB(conn, databaseName);
-=======
-			this.conn = this.daoAgent.connectDB(conn, databaseName);
+			this.conn = daoAgent.connectDB(this.conn, databaseName);
 
->>>>>>> acfd1630c0988f65ecd2efebbc3c1979a8939c82
 			// create the statement
 			this.stmt = this.conn.createStatement();
 
@@ -125,20 +115,12 @@ public class UserDao implements UserDaoInterface {
 			}
 
 			// disconnect from the database
-<<<<<<< HEAD
-			this.conn = doaAgent.disconnectDB(conn);
+			this.conn = daoAgent.disconnectDB(conn);
 		} catch (SQLException sx) {
-			doaAgent.displayException(sx);
-=======
+			daoAgent.displayException(sx);
 			this.conn = this.daoAgent.disconnectDB(conn);
 
-		} catch (SQLException e) {
-			System.out.println("Database error");
-			System.out.println(e.getMessage());
-			System.out.println(e.getErrorCode());
-			System.out.println(e.getSQLState());
->>>>>>> acfd1630c0988f65ecd2efebbc3c1979a8939c82
-		}
+		} 
 		return allUsers;
 	}
 
@@ -152,11 +134,8 @@ public class UserDao implements UserDaoInterface {
 		try {
 
 			// connecting the connectDB
-<<<<<<< HEAD
-			this.conn = doaAgent.connectDB(conn, databaseName);
-=======
+//			this.conn = doaAgent.connectDB(conn, databaseName);
 			this.conn = daoAgent.connectDB(this.conn, databaseName);
->>>>>>> acfd1630c0988f65ecd2efebbc3c1979a8939c82
 			// create the prepared statement
 			this.pstmt = this.conn.prepareStatement(sql);
 			// set the parameter for the query
@@ -180,10 +159,7 @@ public class UserDao implements UserDaoInterface {
 			this.conn = daoAgent.disconnectDB( this.conn );
 
 		} catch (SQLException sx) {
-			System.out.println("Error connectint to the database.");
-			System.out.println(sx.getMessage());
-			System.out.println(sx.getErrorCode());
-			System.out.println(sx.getSQLState());
+			daoAgent.displayException(sx);
 		}
 		return user;
 	}
@@ -225,14 +201,11 @@ public class UserDao implements UserDaoInterface {
 			}
 
 			// disconnect from the database
-<<<<<<< HEAD
-			this.conn = doaAgent.disconnectDB(conn);
-=======
+//			this.conn = doaAgent.disconnectDB(conn);
 			this.conn = daoAgent.disconnectDB(this.conn);
->>>>>>> acfd1630c0988f65ecd2efebbc3c1979a8939c82
 
 		} catch (SQLException sx) {
-			doaAgent.displayException(sx);
+			daoAgent.displayException(sx);
 		}
 
 		return user;
@@ -245,11 +218,8 @@ public class UserDao implements UserDaoInterface {
 		;
 		try {
 			// connect to the database
-<<<<<<< HEAD
-			this.conn = doaAgent.connectDB(conn, databaseName);
-=======
+//			this.conn = doaAgent.connectDB(conn, databaseName);
 			this.conn = daoAgent.connectDB(this.conn, databaseName);
->>>>>>> acfd1630c0988f65ecd2efebbc3c1979a8939c82
 			// create the prepare statement
 			this.pstmt = this.conn.prepareStatement(sql);
 			this.pstmt.setString(1, newUser.get_fullName());
@@ -267,14 +237,11 @@ public class UserDao implements UserDaoInterface {
 			count = this.pstmt.getUpdateCount();
 
 			// disconnect from the database
-<<<<<<< HEAD
-			this.conn = doaAgent.disconnectDB(conn);
-=======
+//			this.conn = doaAgent.disconnectDB(conn);
 			this.conn = daoAgent.disconnectDB(this.conn);
->>>>>>> acfd1630c0988f65ecd2efebbc3c1979a8939c82
 
 		} catch (SQLException sx) {
-			doaAgent.displayException(sx);
+			daoAgent.displayException(sx);
 		}
 
 		return count > 0;
@@ -286,11 +253,8 @@ public class UserDao implements UserDaoInterface {
 		String sql = "DELETE FROM users WHERE id=?;";
 		try {
 			// connect to the database
-<<<<<<< HEAD
-			this.conn = doaAgent.connectDB(conn, databaseName);
-=======
+//			this.conn = doaAgent.connectDB(conn, databaseName);
 			this.conn = daoAgent.connectDB(this.conn, databaseName);
->>>>>>> acfd1630c0988f65ecd2efebbc3c1979a8939c82
 			// create a prepare statement
 			this.pstmt = this.conn.prepareStatement(sql);
 			// set the parameter
@@ -299,14 +263,11 @@ public class UserDao implements UserDaoInterface {
 			this.pstmt.execute();
 
 			// disconnect
-<<<<<<< HEAD
-			this.conn = doaAgent.disconnectDB(conn);
-=======
+//			this.conn = doaAgent.disconnectDB(conn);
 			this.conn = daoAgent.disconnectDB(this.conn);
->>>>>>> acfd1630c0988f65ecd2efebbc3c1979a8939c82
 
 		} catch (SQLException sx) {
-			doaAgent.displayException(sx);
+			daoAgent.displayException(sx);
 		}
 	}
 
@@ -317,11 +278,8 @@ public class UserDao implements UserDaoInterface {
 		int count = -1;
 		try {
 			// get connect to database
-<<<<<<< HEAD
-			this.conn = doaAgent.connectDB(conn, databaseName);
-=======
+//			this.conn = doaAgent.connectDB(conn, databaseName);
 			this.conn = daoAgent.connectDB(this.conn, databaseName);
->>>>>>> acfd1630c0988f65ecd2efebbc3c1979a8939c82
 			// create the prepare statement
 			this.pstmt = this.conn.prepareStatement(sql);
 			// set parameters
@@ -338,14 +296,11 @@ public class UserDao implements UserDaoInterface {
 			count = this.pstmt.getResultSetType();
 
 			// disconnect
-<<<<<<< HEAD
-			this.conn = doaAgent.disconnectDB(conn);
-=======
+//			this.conn = doaAgent.disconnectDB(conn);
 			this.conn = daoAgent.disconnectDB(this.conn);
->>>>>>> acfd1630c0988f65ecd2efebbc3c1979a8939c82
 
 		} catch (SQLException sx) {
-			doaAgent.displayException(sx);
+			daoAgent.displayException(sx);
 		}
 
 		return count > 0;
