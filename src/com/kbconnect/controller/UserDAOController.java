@@ -1,6 +1,9 @@
 package com.kbconnect.controller;
 
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.regex.Pattern;
+
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -23,6 +26,8 @@ public class UserDAOController extends HttpServlet {
 
 	// instantiate DAO
 	UserDao bdao = new UserDao();
+	// initialize an array list of allUser
+	ArrayList<User> allUser = new ArrayList<User>();
 
 	public UserDAOController() {
 		super();
@@ -46,6 +51,8 @@ public class UserDAOController extends HttpServlet {
 	protected void doPost(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
 
+		// get all users for compare with a new user if it exists
+		allUser = bdao.getAllUsers();
 		// sentinel for checking the action if it is successful
 		boolean process = false;
 		// See what the form action was
@@ -59,13 +66,44 @@ public class UserDAOController extends HttpServlet {
 			String address = request.getParameter("address");
 			String DOB = request.getParameter("DOB");
 
-			// instantiate object of User with the given parameters
-			User newUser = new User(fullname, username, password, email, address, DOB);
+			//
+			// ^ # Start of the line
+			// [a-z0-9_-] # Match characters and symbols in the list, a-z, 0-9, underscore,
+			// hyphen
+			// {3,15} # Length at least 2 characters and maximum length of 15
+			// $ # End of the line
+			Pattern pattern = Pattern.compile("^[a-z0-9A-Z_-]{2,15}$");
+			boolean exist = false;
+			boolean valid = (username != null) && pattern.matcher(username).matches();
+			if (valid) {
+				// compare with every user in the list by username
+				for (User u : allUser) {
+					if (u.get_username().equals(username)) {
+						exist = true;
+						break;
+					}
+				}
 
-			// add new one to database
+				if (exist) {
+					response.sendRedirect("registeUser.jsp?error=same");
 
-			process = bdao.createUser(newUser);
-			System.out.println("creating: " + process);
+				} else {
+
+					// instantiate object of User with the given parameters
+					User newUser = new User(fullname, username, password, email, address, DOB);
+					// add new one to database
+					process = bdao.createUser(newUser);
+					System.out.println("creating: " + process);
+					// back to login page
+					response.sendRedirect("login.jsp?message=succeed");
+				}
+
+			}
+
+			else {
+
+				response.sendRedirect("registeUser.jsp?error=invalid");
+			}
 
 			break;
 
@@ -115,7 +153,7 @@ public class UserDAOController extends HttpServlet {
 		}
 
 		// back to login page
-		response.sendRedirect("login.jsp");
+//		response.sendRedirect("login.jsp");
 
 //		doGet(request, response);
 	}
