@@ -9,7 +9,23 @@
 	<link rel="stylesheet" href="css/skeleton.css">
 </head>
 <body>
-	<h3>WELCOME TO KB CONNECT</h3>
+    <%
+    String message = request.getParameter("message");
+    if ( message != null ) {
+        switch ( message ){
+
+            case "login":
+                out.print("<h4>Please Login to proceed</h4>");
+            break;
+
+            default:
+            break;
+        }
+
+    } else {
+        out.print("<h3>WELCOME TO KB CONNECT</h3>");
+    }
+    %>
 	<form action="LoginController" method="post">
 	<input type="hidden" value="login" name="action">
 		<div class="row">

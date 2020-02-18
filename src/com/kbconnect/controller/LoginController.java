@@ -47,6 +47,7 @@ public class LoginController extends HttpServlet {
 			String username = request.getParameter("username");
 			String password = request.getParameter("password");
 			User requestedUser = userDao.getUser(username);
+            System.out.println(requestedUser);
 			if (requestedUser == null) {
 				response.sendRedirect("login.jsp?error=InvalidCredentials");
 			} else if(!requestedUser.comparePassword(password)) {
