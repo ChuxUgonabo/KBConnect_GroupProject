@@ -45,8 +45,8 @@ User user = userDao.getUser(username);
 
     <hr>
 
-    <button class="btn btn-primary"><a class="text-light" href="editProfile.jsp?id=<% out.print(user.get_id()); %>">Edit Profile</a></button>
-    <button class="btn btn-primary"><a class="text-light" href="linkCard.jsp?id=<% out.print(user.get_id()); %>">Link Card</a></button>
+    <button class="btn btn-primary"><a class="text-light" href="editProfile.jsp">Edit Profile</a></button>
+    <button class="btn btn-primary"><a class="text-light" href="linkCard.jsp">Link Card</a></button>
 
 </body>
 </html>

@@ -47,11 +47,11 @@ public class LoginController extends HttpServlet {
 			String username = request.getParameter("username");
 			String password = request.getParameter("password");
 			User requestedUser = userDao.getUser(username);
-            System.out.println(requestedUser);
+
 			if (requestedUser == null) {
-				response.sendRedirect("login.jsp?error=InvalidCredentials");
+				response.sendRedirect("login.jsp?message=invalidCredentials");
 			} else if(!requestedUser.comparePassword(password)) {
-				response.sendRedirect("invalidCredentials");
+				response.sendRedirect("login.jsp?message=invalidCredentials");
 			} else {
 				HttpSession session = request.getSession();
 				session.setAttribute("username", requestedUser.get_username());
@@ -62,7 +62,7 @@ public class LoginController extends HttpServlet {
 		case "logout":
 			HttpSession session = request.getSession();
 			session.invalidate();
-			response.sendRedirect("login.jsp");
+			response.sendRedirect("login.jsp?message=loggedOut");
 		}
 		
 	}

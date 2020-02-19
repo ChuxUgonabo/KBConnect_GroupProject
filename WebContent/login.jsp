@@ -18,6 +18,14 @@
                 out.print("<h4>Please Login to proceed</h4>");
             break;
 
+            case "invalidCredentials":
+                out.print("<h4>Invalid Credentials!</h4>");
+            break;
+
+            case "loggedOut":
+                out.print("<h4>You have been logged out. Please log in again to continue.</h4>");
+            break;
+
             default:
             break;
         }

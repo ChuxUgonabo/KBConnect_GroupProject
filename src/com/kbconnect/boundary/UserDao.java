@@ -13,11 +13,12 @@ import com.kbconnect.entity.User;
 
 public class UserDao implements UserDaoInterface {
 
-    // going to use a separate class for making a connection and
-    // disconnecting from the database
-	//private String _dsn = "jdbc:mysql://localhost/users?useLegacyDatetimeCode=false&serverTimezone=UTC";
-	//private String _username = "root";
-	//private String _password = "";
+	// going to use a separate class for making a connection and
+	// disconnecting from the database
+	// private String _dsn =
+	// "jdbc:mysql://localhost/users?useLegacyDatetimeCode=false&serverTimezone=UTC";
+	// private String _username = "root";
+	// private String _password = "";
 
 	private Connection conn = null;
 	private ResultSet rs = null;
@@ -28,58 +29,59 @@ public class UserDao implements UserDaoInterface {
 
 	private DAOAgent daoAgent = new DAOAgent();
 
-	///**
+	/// **
 	// * Make a connection with database
 	// */
-	//public void connectDB() {
-	//	try {
+	// public void connectDB() {
+	// try {
 
-	//		try {
-	//			Class.forName("com.mysql.jdbc.Driver");
-	//		} catch (ClassNotFoundException e) {
-	//			e.printStackTrace();
-	//		}
+	// try {
+	// Class.forName("com.mysql.jdbc.Driver");
+	// } catch (ClassNotFoundException e) {
+	// e.printStackTrace();
+	// }
 
-	//		this.conn = DriverManager.getConnection(this._dsn, this._username, this._password);
-	//		if (this.conn.isClosed()) {
-	//			System.out.println("Database connection not established.");
-	//		} else {
-	//			System.out.println("Database connection established.");
-	//		}
+	// this.conn = DriverManager.getConnection(this._dsn, this._username,
+	// this._password);
+	// if (this.conn.isClosed()) {
+	// System.out.println("Database connection not established.");
+	// } else {
+	// System.out.println("Database connection established.");
+	// }
 
-	//	} catch (SQLException sx) {
-	//		System.out.println("Error connecting to the database");
-	//		System.out.println(sx.getMessage());
-	//		System.out.println(sx.getErrorCode());
-	//		System.out.println(sx.getSQLState());
-	//	}
-	//}
+	// } catch (SQLException sx) {
+	// System.out.println("Error connecting to the database");
+	// System.out.println(sx.getMessage());
+	// System.out.println(sx.getErrorCode());
+	// System.out.println(sx.getSQLState());
+	// }
+	// }
 
-	///**
+	/// **
 	// * disconnect with database
 	// */
 
-	//public void disconnectDB() {
-	//	try {
-	//		// close the connection
-	//		this.conn.close();
-	//		if (this.conn.isClosed()) {
-	//			System.out.println("Database connection has been closed.");
-	//		} else {
-	//			System.out.println("Database connection is still open");
-	//		}
-	//	} catch (SQLException e) {
-	//		System.out.println("Error connectint to the database.");
-	//		System.out.println(e.getMessage());
-	//		System.out.println(e.getErrorCode());
-	//		System.out.println(e.getSQLState());
-	//	}
+	// public void disconnectDB() {
+	// try {
+	// // close the connection
+	// this.conn.close();
+	// if (this.conn.isClosed()) {
+	// System.out.println("Database connection has been closed.");
+	// } else {
+	// System.out.println("Database connection is still open");
+	// }
+	// } catch (SQLException e) {
+	// System.out.println("Error connectint to the database.");
+	// System.out.println(e.getMessage());
+	// System.out.println(e.getErrorCode());
+	// System.out.println(e.getSQLState());
+	// }
 
-	//}
+	// }
 
 	@Override
 	public ArrayList<User> getAllUsers() {
-        // list to store all the users
+		// list to store all the users
 		ArrayList<User> allUsers = new ArrayList<User>();
 
 		// list all the Users
@@ -118,9 +120,8 @@ public class UserDao implements UserDaoInterface {
 			this.conn = daoAgent.disconnectDB(conn);
 		} catch (SQLException sx) {
 			daoAgent.displayException(sx);
-			this.conn = this.daoAgent.disconnectDB(conn);
 
-		} 
+		}
 		return allUsers;
 	}
 
@@ -156,7 +157,7 @@ public class UserDao implements UserDaoInterface {
 			}
 
 			// disconnect from the database
-			this.conn = daoAgent.disconnectDB( this.conn );
+			this.conn = daoAgent.disconnectDB(this.conn);
 
 		} catch (SQLException sx) {
 			daoAgent.displayException(sx);
@@ -167,7 +168,7 @@ public class UserDao implements UserDaoInterface {
 	public User getUser(String username) {
 		// Instantiate the object of student
 		User user = new User();
-		boolean successful;
+		boolean successful = false;
 
 		// get one object of student by condition of email
 		String sql = "SELECT * FROM users where username=?;";
@@ -180,23 +181,24 @@ public class UserDao implements UserDaoInterface {
 			// set the parameter for the query
 			this.pstmt.setString(1, username);
 			// Execute
-			successful = this.pstmt.execute();
-			if (successful) {
-				this.rs = this.pstmt.getResultSet();
-				while (rs.next()) {
-					// populate the properties of the object from the database
-					user.set_id(rs.getInt("id"));
-					user.set_fullName(rs.getString("fullName"));
-					user.set_username(rs.getString("username"));
-					user.set_email(rs.getString("email"));
+			this.pstmt.execute();
 
-					user.set_password(rs.getString("password"));
-					user.set_address(rs.getString("address"));
-					user.set_DOB(rs.getDate("DOB"));
+			this.rs = this.pstmt.getResultSet();
+			while (rs.next()) {
+				successful = true;
+				// populate the properties of the object from the database
+				user.set_id(rs.getInt("id"));
+				user.set_fullName(rs.getString("fullName"));
+				user.set_username(rs.getString("username"));
+				user.set_email(rs.getString("email"));
+
+				user.set_password(rs.getString("password"));
+				user.set_address(rs.getString("address"));
+				user.set_DOB(rs.getDate("DOB"));
 //				user.set_cardNumber(rs.getString("cardNumber"));
+			}
+			if (!successful) {
 
-				}
-			} else {
 				user = null;
 			}
 
@@ -229,7 +231,7 @@ public class UserDao implements UserDaoInterface {
 			this.pstmt.setString(4, newUser.get_password());
 			this.pstmt.setString(5, newUser.get_address());
 			this.pstmt.setDate(6, newUser.get_DOB());
-            this.pstmt.setString(7, newUser.get_cardNumber());
+			this.pstmt.setString(7, newUser.get_cardNumber());
 			this.pstmt.setString(8, String.valueOf(newUser.get_id()));
 
 			this.pstmt.execute();
@@ -290,7 +292,7 @@ public class UserDao implements UserDaoInterface {
 			this.pstmt.setString(4, newUser.get_password());
 			this.pstmt.setString(5, newUser.get_address());
 			this.pstmt.setDate(6, newUser.get_DOB());
-			this.pstmt.setString(7,newUser.get_cardNumber());
+			this.pstmt.setString(7, newUser.get_cardNumber());
 			// execute
 			this.pstmt.execute();
 			count = this.pstmt.getResultSetType();
