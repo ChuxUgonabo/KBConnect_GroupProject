@@ -10,7 +10,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import com.kbconnect.boundary.UserDao;
+import com.kbconnect.boundary.ComuterDAO;
 import com.kbconnect.entity.User;
 
 /**
@@ -25,7 +25,7 @@ public class UserDAOController extends HttpServlet {
 	 */
 
 	// instantiate DAO
-	UserDao bdao = new UserDao();
+	ComuterDAO bdao = new ComuterDAO();
 	// initialize an array list of allUser
 	ArrayList<User> allUser = new ArrayList<User>();
 
@@ -95,7 +95,7 @@ public class UserDAOController extends HttpServlet {
 					process = bdao.createUser(newUser);
 					System.out.println("creating: " + process);
 					// back to login page
-					response.sendRedirect("login.jsp?message=succeed");
+					response.sendRedirect("login.jsp");
 				}
 
 			}
@@ -107,15 +107,17 @@ public class UserDAOController extends HttpServlet {
 
 			break;
 
-		case "edit":
+		case "update":
 			// instantiate object of user
 			User editUser;
 
+            int id = Integer.parseInt(request.getParameter("userId"));
 			// call getUser() to get current user by id
-			editUser = bdao.getUser(request.getParameter("id"));
+			editUser = bdao.getUser(id);
 
 			// set attributes value to object
 			/**
+			editUser = bdao.getUser(request.getParameter("id"));
 			editUser.registerUser(request.getParameter("fullName"), 
 					request.getParameter("username"),
 					request.getParameter("password"),
@@ -123,17 +125,23 @@ public class UserDAOController extends HttpServlet {
 					request.getParameter("address"),
 					request.getParameter("DOB"));
 					*/
-//			editUser.set_fullName(request.getParameter("fullName"));
-//			editUser.set_username(request.getParameter("username"));
-//			editUser.set_email(request.getParameter("email"));
-//			editUser.set_password(request.getParameter("password"));
-//			editUser.set_address(request.getParameter("address"));
-//			editUser.set_DOB(request.getParameter("DOB"));
+            String editedFullName = request.getParameter("fullName");
+            String editedEmail = request.getParameter("email");
+            String editedAddress = request.getParameter("address");
+            String editedDob = request.getParameter("DOB");
+//          String username = request.getParameter("fullName");
+
+			//editUser.set_username(username);
+			editUser.set_email(editedEmail);
+			editUser.set_address(editedAddress);
+			editUser.set_DOB(editedDob);
+			editUser.set_fullName(editedFullName);
 
 			// call update method to editing
 			process = bdao.updateUser(editUser);
 			System.out.println("Editing: " + process);
 
+            response.sendRedirect("profile.jsp");
 			break;
 
 		case "delete":

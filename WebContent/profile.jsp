@@ -3,8 +3,7 @@
 
 <%@ page import="com.kbconnect.entity.*, com.kbconnect.boundary.*" %>
 <%
-
-UserDao userDao = new UserDao();
+	ComuterDAO userDao = new ComuterDAO();
 if (session.getAttribute("username") == null) {
     response.sendRedirect("login.jsp?message=login");
 }

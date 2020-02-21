@@ -4,7 +4,7 @@
 <html>
 <head>
 <meta charset="ISO-8859-1">
-<title>Login</title>
+<title>Admin Login</title>
 	<link rel="stylesheet" href="css/normalize.css">
 	<link rel="stylesheet" href="css/skeleton.css">
 </head>
@@ -35,7 +35,7 @@
     }
     %>
 	<form action="LoginController" method="post">
-	<input type="hidden" value="login" name="action">
+	<input type="hidden" value="adminLogin" name="action">
 		<div class="row">
 			<div class="five columns">
 				<label>User Name</label> <input class="u-full-width" type="text"
@@ -53,9 +53,6 @@
 		
 		
 	</form>
-	<p>
-	For new user,please click here to create a <A  class="button-primary" HREF="registeUser.jsp">new User.</A>
-	</p>
 
 </body>
 </html>

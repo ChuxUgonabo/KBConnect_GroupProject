@@ -9,7 +9,10 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
-import com.kbconnect.boundary.UserDao;
+import com.kbconnect.boundary.AdminDAO;
+import com.kbconnect.boundary.ComuterDAO;
+import com.kbconnect.entity.Admin;
+import com.kbconnect.entity.Commuter;
 import com.kbconnect.entity.User;
 
 /**
@@ -40,29 +43,67 @@ public class LoginController extends HttpServlet {
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		
-		UserDao userDao = new UserDao();
+		// initialize the dao for admin and user
+		ComuterDAO userDao = new ComuterDAO();
+		AdminDAO adminDao = new AdminDAO();
 		switch (request.getParameter("action")) {
 			
+		// if the action was simple login
 		case "login":
+			// retrieve the user from the database
 			String username = request.getParameter("username");
 			String password = request.getParameter("password");
-			User requestedUser = userDao.getUser(username);
+            User requestedUser = userDao.getUser(username);
 
-			if (requestedUser == null) {
-				response.sendRedirect("login.jsp?message=invalidCredentials");
-			} else if(!requestedUser.comparePassword(password)) {
+            // check if the user with given username exists and the password matches
+			if(requestedUser == null || !requestedUser.comparePassword(password)) {
+				// send the invalid credentials error message
 				response.sendRedirect("login.jsp?message=invalidCredentials");
 			} else {
+				// start the session for the user
 				HttpSession session = request.getSession();
 				session.setAttribute("username", requestedUser.get_username());
+				// redirect the user to the profile page
 				response.sendRedirect("profile.jsp");
 			}
 			break;
 			
+		// if the action was for admin login
+		case "adminLogin":
+			// get the admin from the database and
+			String adminUsername = request.getParameter("username");
+			String adminPassword = request.getParameter("password");
+            Admin admin = adminDao.getUser(adminUsername);
+
+            // check if the admin with the given username exists
+            // compare to check if the passwords match
+			if (admin == null || !admin.comparePassword(adminPassword)) {
+				// send the invalid credentials error
+				response.sendRedirect("login.jsp?message=invalidCredentials");
+			} else {
+				// start the session for admin
+				HttpSession session = request.getSession();
+				session.setAttribute("username", admin.get_username());
+				// redirect the admin to his profile page
+				response.sendRedirect("adminProfile.jsp");
+			}
+            break;
+
 		case "logout":
+			// check if the admin is loging out or comuter
+            String isAdmin = request.getParameter("admin");
+            
+            // destroy the user session associated with the request
 			HttpSession session = request.getSession();
 			session.invalidate();
+			
+			// if the loggedout user was admin, redirect to admin login page
+            if (isAdmin != null && isAdmin.equals("admin")) {
+                response.sendRedirect("adminLogin.jsp?message=loggedOut");
+            }
+            // redirect user to login page
 			response.sendRedirect("login.jsp?message=loggedOut");
+            break;
 		}
 		
 	}
