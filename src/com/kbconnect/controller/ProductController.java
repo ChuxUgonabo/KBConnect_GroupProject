@@ -130,6 +130,7 @@ public class ProductController extends HttpServlet {
 
                // delete the product
                pdao.deleteProduct(deletedProduct);
+               response.sendRedirect("productList.jsp");
                break;
 
             case "deletePass":
