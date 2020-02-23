@@ -19,6 +19,7 @@
 	User user = userDao.getUser(username);
 	if (user == null ) {
 		response.sendRedirect("adminLogin.jsp?message=login");
+		return;
 	}
 %>
 <!DOCTYPE html>
@@ -57,6 +58,7 @@
                 out.println("<td><a href='productForm.jsp?action=updateProduct&productId=" +productOne.get_id()+ "'>Edit</a> </td>");
                 out.println("<td> <form action='ProductController' method='post'>");
                 out.println("<input type='hidden' value='"+productOne.get_id()+ "' name='productId'>");
+                out.println("<input type='hidden' name='action' value='deleteProduct' >");
                 out.println("<input type='submit' value='Delete' >");
                 out.println("</form></td>");
 				out.println("</tr>");
