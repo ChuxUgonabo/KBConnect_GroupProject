@@ -121,7 +121,7 @@ public class ProductController extends HttpServlet {
                pdao.updateProduct(updatedProduct);
                break;
 
-            case "delete":
+            case "deleteProduct":
                // get the product id to be deleted
                int deleteId = Integer.parseInt(request.getParameter("productId"));
                
@@ -130,6 +130,17 @@ public class ProductController extends HttpServlet {
 
                // delete the product
                pdao.deleteProduct(deletedProduct);
+               break;
+
+            case "deletePass":
+               // get the product id to be deleted
+               int passDeleteId = Integer.parseInt(request.getParameter("passId"));
+               
+               // retrieve the product to be deleted
+               TravelPass deletedPass = tpdao.getPass(passDeleteId);
+
+               // delete the product
+               tpdao.deletePass(deletedPass);
                break;
 
        }

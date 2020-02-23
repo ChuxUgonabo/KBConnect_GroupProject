@@ -35,7 +35,7 @@ public interface TravelPassDAOInterface {
 	 * @param id
 	 * @return 
 	 */
-	boolean deletePass(int id);
+	boolean deletePass(TravelPass pass);
 
 	/**
 	 * Store the given pass in the database

@@ -109,22 +109,25 @@ public class TravelPassDAO implements TravelPassDAOInterface {
 	}
 
 	@Override
-	public boolean deletePass(int id) {
+	public boolean deletePass(TravelPass deletedPass) {
 
 		// connect to the database
 		this.conn = this.doaAgent.connectDB(conn, databaseName);
 
 		// sql query to get all passes
-		String sqlQuery = "DELETE FROM travelPass WHERE id=" + id;
-		boolean successful = false;
+		String sqlQuery = "DELETE FROM travelPass WHERE id=?";
+		int rowCount = 0;
 
 		try {
 
 			// create a statement
-			this.stmt = this.conn.createStatement();
+			this.pstmt = this.conn.prepareStatement(sqlQuery);
+			
+			// bind the result
+			this.pstmt.setInt(1, deletedPass.get_id());
 
 			// execute the statement and store the results as a sql result set
-			successful = this.stmt.execute(sqlQuery);
+			rowCount = this.pstmt.executeUpdate();
 
 		} catch (SQLException sx) {
 			System.out.println("Database Error");
@@ -136,7 +139,7 @@ public class TravelPassDAO implements TravelPassDAOInterface {
 		// disconnect the database connection
 		this.conn = doaAgent.disconnectDB(conn);
 
-		return successful;
+		return rowCount > 0;
 	}
 
 	@Override

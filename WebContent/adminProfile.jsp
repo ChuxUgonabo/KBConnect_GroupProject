@@ -48,7 +48,7 @@
     <div class="dropdown">
         <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Manage Products</button>
         <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-            <a class="dropdown-item" href="listProducts.jsp">List all products</a>
+            <a class="dropdown-item" href="productList.jsp">List all products</a>
             <a class="dropdown-item" href="productForm.jsp?action=createPass">Add a new Travel Pass</a>
             <a class="dropdown-item" href="productForm.jsp?action=createProduct">Add a new Product</a>
         </div>

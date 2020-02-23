@@ -9,13 +9,17 @@
 	ArrayList<Product> productList = new ArrayList<Product>();
 	productList = productDao.getAllProducts();
 
-	ComuterDAO userDao = new ComuterDAO();
+	AdminDAO userDao = new AdminDAO();
 	if (session.getAttribute("username") == null ) {
-		response.sendRedirect("login.jsp?message=login");
+		response.sendRedirect("adminLogin.jsp?message=login");
+		return;
 	}
 	String username = String.valueOf(session.getAttribute("username"));
 
 	User user = userDao.getUser(username);
+	if (user == null ) {
+		response.sendRedirect("adminLogin.jsp?message=login");
+	}
 %>
 <!DOCTYPE html>
 <html>
@@ -28,6 +32,7 @@
 <body>
 	<% out.print(user.get_username()); %>
 	<form action="LoginController" method="post">
+		<input type="hidden" value="admin" name="admin">
 		<input class="btn btn-primary" type="submit" name="action" value="logout">
 	</form>
 	
@@ -38,6 +43,8 @@
 				<th>Description</th>
 				<th>Price</th>
 				<th>Type</th>	
+				<th>Edit</th>	
+				<th>Delete</th>	
 			</thead>
 		</tr>
 		<%
@@ -47,6 +54,11 @@
 				out.println("<td> "+productOne.get_description()+ " </td>");
 				out.println("<td> "+productOne.get_price()+ " </td>");
 				out.println("<td> "+productOne.get_id()+ " </td>");
+                out.println("<td><a href='productForm.jsp?action=updateProduct&productId=" +productOne.get_id()+ "'>Edit</a> </td>");
+                out.println("<td> <form action='ProductController' method='post'>");
+                out.println("<input type='hidden' value='"+productOne.get_id()+ "' name='productId'>");
+                out.println("<input type='submit' value='Delete' >");
+                out.println("</form></td>");
 				out.println("</tr>");
 			}
 		%>

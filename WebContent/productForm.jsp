@@ -48,7 +48,7 @@ TravelPassDAO tpdao = new TravelPassDAO();
             break;
 
             case "updateProduct":
-                int productId = Integer.parseInt(request.getParameter("id"));
+                int productId = Integer.parseInt(request.getParameter("productId"));
                 Product editProduct = pdao.getProduct(productId);
                 out.print("<form action='ProductController' method='post'>");
                 out.print("<input type='hidden' name='action' value='create'>");
