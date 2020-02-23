@@ -79,7 +79,7 @@ public class LoginController extends HttpServlet {
             // compare to check if the passwords match
 			if (admin == null || !admin.comparePassword(adminPassword)) {
 				// send the invalid credentials error
-				response.sendRedirect("login.jsp?message=invalidCredentials");
+				response.sendRedirect("adminLogin.jsp?message=invalidCredentials");
 			} else {
 				// start the session for admin
 				HttpSession session = request.getSession();

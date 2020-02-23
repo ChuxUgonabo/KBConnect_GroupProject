@@ -223,7 +223,7 @@ public class AdminDAO implements AdminDAOInterface {
 	@Override
 	public boolean createUser(Admin newUser) {
 		// create a query to insert one
-		String sql = "INSERT INTO admin (fullName,username, email, password, address, DOB, cardNumber, is_admin) values (?,?,?,?,?,?,?,?);";
+		String sql = "INSERT INTO admin (fullName,username, email, password, address, DOB, cardNumber) values (?,?,?,?,?,?,?);";
 		int count = -1;
 		try {
 			// get connect to database
@@ -240,7 +240,6 @@ public class AdminDAO implements AdminDAOInterface {
 			this.pstmt.setString(5, newUser.get_address());
 			this.pstmt.setDate(6, newUser.get_DOB());
 			this.pstmt.setString(7, newUser.get_cardNumber());
-			this.pstmt.setBoolean(8, newUser.is_isAdmin());
 			// execute
 			this.pstmt.execute();
 			count = this.pstmt.getResultSetType();

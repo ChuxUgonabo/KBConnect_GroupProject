@@ -8,6 +8,8 @@ package com.kbconnect.entity;
  *
  */
 public class Admin extends User{
+	
+
 	private boolean _isAdmin;
 	
 	/**
@@ -15,6 +17,9 @@ public class Admin extends User{
 	 */
 	public Admin() {
 		
+	}
+	public Admin(String fName, String userN, String passW, String email, String address, String dob) {
+		super(fName, userN, passW, email, address, dob);
 	}
 	
 	public void set_isAdmin(boolean is_Admin) {

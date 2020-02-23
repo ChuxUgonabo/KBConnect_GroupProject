@@ -10,7 +10,9 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import com.kbconnect.boundary.AdminDAO;
 import com.kbconnect.boundary.ComuterDAO;
+import com.kbconnect.entity.Admin;
 import com.kbconnect.entity.User;
 
 /**
@@ -26,6 +28,7 @@ public class UserDAOController extends HttpServlet {
 
 	// instantiate DAO
 	ComuterDAO bdao = new ComuterDAO();
+	AdminDAO adao = new AdminDAO();
 	// initialize an array list of allUser
 	ArrayList<User> allUser = new ArrayList<User>();
 
@@ -55,8 +58,12 @@ public class UserDAOController extends HttpServlet {
 		allUser = bdao.getAllUsers();
 		// sentinel for checking the action if it is successful
 		boolean process = false;
+		Pattern pattern = Pattern.compile("^[a-z0-9A-Z_-]{2,15}$");
+
 		// See what the form action was
 		switch (request.getParameter("action")) {
+		
+
 		case "create":
 
 			String fullname = request.getParameter("fullName");
@@ -72,7 +79,6 @@ public class UserDAOController extends HttpServlet {
 			// hyphen
 			// {3,15} # Length at least 2 characters and maximum length of 15
 			// $ # End of the line
-			Pattern pattern = Pattern.compile("^[a-z0-9A-Z_-]{2,15}$");
 			boolean exist = false;
 			boolean valid = (username != null) && pattern.matcher(username).matches();
 			if (valid) {
@@ -116,15 +122,6 @@ public class UserDAOController extends HttpServlet {
 			editUser = bdao.getUser(id);
 
 			// set attributes value to object
-			/**
-			editUser = bdao.getUser(request.getParameter("id"));
-			editUser.registerUser(request.getParameter("fullName"), 
-					request.getParameter("username"),
-					request.getParameter("password"),
-					request.getParameter("email"), 
-					request.getParameter("address"),
-					request.getParameter("DOB"));
-					*/
             String editedFullName = request.getParameter("fullName");
             String editedEmail = request.getParameter("email");
             String editedAddress = request.getParameter("address");
@@ -143,6 +140,7 @@ public class UserDAOController extends HttpServlet {
 
             response.sendRedirect("profile.jsp");
 			break;
+
 
 		case "delete":
 			// instantiate object of User

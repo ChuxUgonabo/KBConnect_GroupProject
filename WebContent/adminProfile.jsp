@@ -1,6 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
 	pageEncoding="ISO-8859-1"%>
-<%@ page = import="java.util.*" %>
+<%@ page import="java.util.*" %>
 <%@ page import="com.kbconnect.entity.*, com.kbconnect.boundary.*"%>
 
 <%
@@ -10,7 +10,7 @@
 	listOfUsers = comuterDa0.getAllUsers();
 	
 	if (session.getAttribute("username") == null) {
-		response.sendRedirect("login.jsp?message=login");
+		response.sendRedirect("adminLogin.jsp?message=login");
 	} 
 	
 	String username = String.valueOf(session.getAttribute("username"));
@@ -28,7 +28,8 @@
     <p><% out.print(admin.get_username()); %></p>
     
      <form action="LoginController" method="post">
-    <input class="btn btn-primary" type="submit" name="action" value="logout">
+         <input type="hidden" value="admin" name="admin">
+    <input class="btn btn-primary" type="submit" name="action" value="Logout">
     </form>   
 
     <hr>
@@ -42,38 +43,19 @@
     </ul>
 
     <hr>
-    <table>
-   		<tr>	
-  			<thead>
-  			<tr>Full Name</tr>
-  			<tr>Username</tr>
-  			<tr>Email</tr>
-  			<tr>Address</tr>
-  			<tr>Card NUmber</tr>
-  			<tr>Edit</tr>
-  			<tr>Delete</tr>
-  			
-  			</thead>
-   			
-   		</tr>
-    	<%
-    		for(User userOne : listOfUsers){
-    			out.println("<tr>");
-    			out.println("<td>"+ userOne.get_fullName() +"</td>");
-    			out.println("<td>"+ userOne.get_username() +"</td>");
-    			out.println("<td>"+ userOne.get_email() +"</td>");
-    			out.println("<td>"+ userOne.get_address() +"</td>");
-    			out.println("<td>"+ userOne.get_cardNumber() +"</td>");
-    			out.println("<td><a href=editProfile.jsp?action=edit&id"+userOne.get_id()+">Edit</a></td>");
-    			out.println("<td><a href=UserDAOController?action=delete&id"+userOne.get_id()+">Delete</a></td>");
-    			out.println("</tr>");
 
-    		}
-    	
-    	%>
-   	</table>
+    <div class="dropdown">
+        <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Manage Products</button>
+        <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+            <a class="dropdown-item" href="listProducts.jsp">List all products</a>
+            <a class="dropdown-item" href="productForm.jsp?action=createPass">Create new Product</a>
+            <a class="dropdown-item" href="productForm.jsp">Create new Travel pass</a>
+        </div>
+    </div>
 	 <hr>
-	<p>Create a <a href="registerUser.jsp">new Commuter.</a></p>   
 
+<script src="https://code.jquery.com/jquery-3.4.1.slim.min.js" integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n" crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js" integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6" crossorigin="anonymous"></script>
 </body>
 </html>
