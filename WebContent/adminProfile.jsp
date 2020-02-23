@@ -1,27 +1,28 @@
-<%@ page language="java" contentType="text/html; charset=ISO-8859-1"
-	pageEncoding="ISO-8859-1"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ page import="java.util.*" %>
 <%@ page import="com.kbconnect.entity.*, com.kbconnect.boundary.*"%>
 
-<%
-	AdminDAO adminDao = new AdminDAO();
-	ComuterDAO comuterDa0 = new ComuterDAO();
-	ArrayList<User> listOfUsers = new ArrayList<User>();
-	listOfUsers = comuterDa0.getAllUsers();
-	
-	if (session.getAttribute("username") == null) {
-		response.sendRedirect("adminLogin.jsp?message=login");
-	} 
-	
-	String username = String.valueOf(session.getAttribute("username"));
-	
-	Admin admin = adminDao.getUser(username);
-%>
 <!DOCTYPE html>
 <html>
 <head>
-<meta charset="ISO-8859-1">
+<meta charset="UTF-8">
 <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+
+<%
+	AdminDAO adminDao = new AdminDAO();
+	ComuterDAO comuterDao = new ComuterDAO();
+	ArrayList<User> listOfUsers = new ArrayList<User>();
+	listOfUsers = comuterDao.getAllUsers();
+
+	if (session.getAttribute("username") == null) {
+		response.sendRedirect("adminLogin.jsp?message=login");
+        return;
+	}
+
+	String username = String.valueOf(session.getAttribute("username"));
+
+	Admin admin = adminDao.getUser(username);
+%>
 <title><% out.print(admin.get_username()); %></title>
 </head>
 <body>
@@ -48,8 +49,8 @@
         <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Manage Products</button>
         <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
             <a class="dropdown-item" href="listProducts.jsp">List all products</a>
-            <a class="dropdown-item" href="productForm.jsp?action=createPass">Create new Product</a>
-            <a class="dropdown-item" href="productForm.jsp">Create new Travel pass</a>
+            <a class="dropdown-item" href="productForm.jsp?action=createPass">Add a new Travel Pass</a>
+            <a class="dropdown-item" href="productForm.jsp?action=createProduct">Add a new Product</a>
         </div>
     </div>
 	 <hr>

@@ -3,7 +3,6 @@
  */
 package com.kbconnect.entity;
 
-import java.math.BigDecimal;
 
 /**
  * @author Gursewak Singh
@@ -13,7 +12,7 @@ public class TravelPass {
 
 	int _id;
 	String _passDuration; // day pass, weekly pass, or monthly pass
-	BigDecimal _price; // the price of the pass
+	double _price; // the price of the pass
 	String _passType; // adult, child
 
 	/**
@@ -33,14 +32,14 @@ public class TravelPass {
 	/**
 	 * @return the _price
 	 */
-	public BigDecimal get_price() {
+	public double get_price() {
 		return _price;
 	}
 
 	/**
 	 * @param _price the _price to set
 	 */
-	public void set_price(BigDecimal _price) {
+	public void set_price(double _price) {
 		this._price = _price;
 	}
 

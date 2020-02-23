@@ -8,7 +8,9 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import com.kbconnect.boundary.ProductDAO;
+import com.kbconnect.boundary.TravelPassDAO;
 import com.kbconnect.entity.Product;
+import com.kbconnect.entity.TravelPass;
 
 /**
  * Servlet implementation class ProductController
@@ -39,6 +41,7 @@ public class ProductController extends HttpServlet {
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 
        ProductDAO pdao = new ProductDAO(); 
+       TravelPassDAO tpdao = new TravelPassDAO(); 
 
        switch (request.getParameter("action")) {
 
@@ -58,6 +61,45 @@ public class ProductController extends HttpServlet {
 
                // save the product in the database
                pdao.createProduct(newProduct);
+               break;
+
+           case "createPass":
+               // get the new pass info
+               String duration = request.getParameter("description");
+               String passType = request.getParameter("type");
+               double passPrice = Double.parseDouble(request.getParameter("price"));
+
+               // create a new pass instance
+               TravelPass newPass = new TravelPass();
+
+               // populate the pass
+               newPass.set_passDuration(duration);
+               newPass.set_passType(passType);
+               newPass.set_price(passPrice);
+
+               // save the pass in the database
+               tpdao.createPass(newPass);
+               break;
+
+           case "updatePass":
+
+               int passId = Integer.parseInt(request.getParameter("passId"));
+
+               // get the new pass info
+               String editDuration = request.getParameter("description");
+               String editPassType = request.getParameter("type");
+               double editPrice = Double.parseDouble(request.getParameter("price"));
+
+               // create a new pass instance
+               TravelPass editPass = tpdao.getPass(passId);
+
+               // populate the pass
+               editPass.set_passDuration(editDuration);
+               editPass.set_passType(editPassType);
+               editPass.set_price(editPrice);
+
+               // save the pass in the database
+               tpdao.updatePass(editPass);
                break;
 
            case "update":
