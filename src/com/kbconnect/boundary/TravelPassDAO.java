@@ -82,7 +82,7 @@ public class TravelPassDAO implements TravelPassDAOInterface {
 			this.pstmt.setInt(1, id);
 
 			// execute the statement and store the results as a sql result set
-			this.rs = this.pstmt.executeQuery(sqlQuery);
+			this.rs = this.pstmt.executeQuery();
 
 			// turn all the results into java objects
 			while (this.rs.next()) {
@@ -149,9 +149,9 @@ public class TravelPassDAO implements TravelPassDAOInterface {
 		this.conn = this.doaAgent.connectDB(conn, databaseName);
 
 		// sql query to get all passes
-		String sqlInsert = "INSERT INTO travelPass " + "(passDuration, passType, price)" + "VALUES (?, ?, ?)";
+		String sqlInsert = "INSERT INTO travelPass (passDuration, passType, price) VALUES (?, ?, ?)";
 
-		ResultSet generatedId = null;
+		int effectedRows = 0;
 
 		try {
 
@@ -163,9 +163,8 @@ public class TravelPassDAO implements TravelPassDAOInterface {
 			this.pstmt.setString(2, pass.get_passType());
 			this.pstmt.setDouble(3, pass.get_price());
 			// execute the statement and store the results as a sql result set
-			this.rs = this.pstmt.executeQuery();
+			effectedRows = this.pstmt.executeUpdate();
 
-			generatedId = this.pstmt.getGeneratedKeys();
 
 		} catch (SQLException sx) {
 			System.out.println("Database Error");
@@ -177,7 +176,7 @@ public class TravelPassDAO implements TravelPassDAOInterface {
 		// disconnect the database connection
 		this.conn = doaAgent.disconnectDB(conn);
 
-		return false;
+		return effectedRows > 0;
 	}
 
 	@Override
@@ -209,6 +208,7 @@ public class TravelPassDAO implements TravelPassDAOInterface {
             this.pstmt.setString(1, editedPass.get_passDuration());
             this.pstmt.setString(2, editedPass.get_passType());
             this.pstmt.setDouble(3, editedPass.get_price());
+            this.pstmt.setDouble(4, editedPass.get_id());
 
             updateCount = this.pstmt.executeUpdate();
 
