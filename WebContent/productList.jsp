@@ -6,6 +6,8 @@
 
 <%
 	ProductDAO productDao = new ProductDAO();
+	TravelPassDAO passDao = new TravelPassDAO();
+    ArrayList<TravelPass> passList = passDao.getAllPasses();
 	ArrayList<Product> productList = new ArrayList<Product>();
 	productList = productDao.getAllProducts();
 
@@ -19,6 +21,7 @@
 	User user = userDao.getUser(username);
 	if (user == null ) {
 		response.sendRedirect("adminLogin.jsp?message=login");
+		return;
 	}
 %>
 <!DOCTYPE html>
@@ -33,9 +36,14 @@
 	<% out.print(user.get_username()); %>
 	<form action="LoginController" method="post">
 		<input type="hidden" value="admin" name="admin">
-		<input class="btn btn-primary" type="submit" name="action" value="logout">
+        <input type="hidden" value="logout" name="action">
+		<input class="btn btn-primary" type="submit" value="Logout">
 	</form>
+
+    <a href="adminProfile.jsp" class="btn btn-primary">Profile Page</a>
 	
+
+    <h4>Cards</h4>
 	<table>
 		<tr>
 			<thead>
@@ -53,10 +61,41 @@
 				out.println("<td> "+productOne.get_id()+ " </td>");
 				out.println("<td> "+productOne.get_description()+ " </td>");
 				out.println("<td> "+productOne.get_price()+ " </td>");
-				out.println("<td> "+productOne.get_id()+ " </td>");
+				out.println("<td> "+productOne.get_type()+ " </td>");
                 out.println("<td><a href='productForm.jsp?action=updateProduct&productId=" +productOne.get_id()+ "'>Edit</a> </td>");
                 out.println("<td> <form action='ProductController' method='post'>");
                 out.println("<input type='hidden' value='"+productOne.get_id()+ "' name='productId'>");
+                out.println("<input type='hidden' name='action' value='deleteProduct' >");
+                out.println("<input type='submit' value='Delete' >");
+                out.println("</form></td>");
+				out.println("</tr>");
+			}
+		%>
+	</table>
+
+    <h4>Passes</h4>
+	<table>
+		<tr>
+			<thead>
+				<th>ID</th>
+				<th>Duration</th>
+				<th>Type</th>
+				<th>Price</th>	
+				<th>Edit</th>	
+				<th>Delete</th>	
+			</thead>
+		</tr>
+		<%
+			for(TravelPass a_pass : passList){
+				out.println("<tr>");
+				out.println("<td> "+a_pass.get_id()+ " </td>");
+				out.println("<td> "+a_pass.get_passDuration()+ " </td>");
+				out.println("<td> "+a_pass.get_passType()+ " </td>");
+				out.println("<td> "+a_pass.get_price()+ " </td>");
+                out.println("<td><a href='productForm.jsp?action=updatePass&passId=" +a_pass.get_id()+ "'>Edit</a> </td>");
+                out.println("<td> <form action='ProductController' method='post'>");
+                out.println("<input type='hidden' value='"+a_pass.get_id()+ "' name='passId'>");
+                out.println("<input type='hidden' name='action' value='deletePass' >");
                 out.println("<input type='submit' value='Delete' >");
                 out.println("</form></td>");
 				out.println("</tr>");

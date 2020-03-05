@@ -61,12 +61,13 @@ public class ProductController extends HttpServlet {
 
                // save the product in the database
                pdao.createProduct(newProduct);
+               response.sendRedirect("productList.jsp");
                break;
 
            case "createPass":
                // get the new pass info
-               String duration = request.getParameter("description");
-               String passType = request.getParameter("type");
+               String duration = request.getParameter("duration");
+               String passType = request.getParameter("passType");
                double passPrice = Double.parseDouble(request.getParameter("price"));
 
                // create a new pass instance
@@ -79,6 +80,7 @@ public class ProductController extends HttpServlet {
 
                // save the pass in the database
                tpdao.createPass(newPass);
+               response.sendRedirect("productList.jsp");
                break;
 
            case "updatePass":
@@ -86,8 +88,8 @@ public class ProductController extends HttpServlet {
                int passId = Integer.parseInt(request.getParameter("passId"));
 
                // get the new pass info
-               String editDuration = request.getParameter("description");
-               String editPassType = request.getParameter("type");
+               String editDuration = request.getParameter("duration");
+               String editPassType = request.getParameter("passType");
                double editPrice = Double.parseDouble(request.getParameter("price"));
 
                // create a new pass instance
@@ -100,9 +102,10 @@ public class ProductController extends HttpServlet {
 
                // save the pass in the database
                tpdao.updatePass(editPass);
+               response.sendRedirect("productList.jsp");
                break;
 
-           case "update":
+           case "updateProduct":
                // get the info for product to be updated
                int productId = Integer.parseInt(request.getParameter("productId"));
                String newDescription = request.getParameter("description");
@@ -119,6 +122,7 @@ public class ProductController extends HttpServlet {
 
                // save the product in the database
                pdao.updateProduct(updatedProduct);
+               response.sendRedirect("productList.jsp");
                break;
 
             case "deleteProduct":
@@ -130,6 +134,7 @@ public class ProductController extends HttpServlet {
 
                // delete the product
                pdao.deleteProduct(deletedProduct);
+               response.sendRedirect("productList.jsp");
                break;
 
             case "deletePass":
@@ -141,6 +146,7 @@ public class ProductController extends HttpServlet {
 
                // delete the product
                tpdao.deletePass(deletedPass);
+               response.sendRedirect("productList.jsp");
                break;
 
        }

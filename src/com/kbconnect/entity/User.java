@@ -20,7 +20,7 @@ public class User {
 	String _password; // encrypted password
 	String _email;
 	String _address; // full address including street address city province and postal code
-	java.sql.Date _DOB; // date of birth
+	Date _DOB; // date of birth
 	String _cardNumber; // the card number
 
     public User() {

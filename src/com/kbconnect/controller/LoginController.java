@@ -100,6 +100,7 @@ public class LoginController extends HttpServlet {
 			// if the loggedout user was admin, redirect to admin login page
             if (isAdmin != null && isAdmin.equals("admin")) {
                 response.sendRedirect("adminLogin.jsp?message=loggedOut");
+                break;
             }
             // redirect user to login page
 			response.sendRedirect("login.jsp?message=loggedOut");
