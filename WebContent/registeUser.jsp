@@ -31,7 +31,7 @@
 					placeholder="test@gmail.com" name="email" required>
 			</div>
 			<div class="five columns">
-				<label>Password</label> <input class="u-full-width" type="text"
+				<label>Password</label> <input class="u-full-width" type="password"
 					placeholder="at least 8 characters" pattern=".{8,}"
 					title="Eight or more characters" name="password" required>
 			</div>
@@ -40,7 +40,7 @@
 		<div class="row">
 			<div class="five columns">
 				<label>DOB</label> <input class="u-full-width" type="date"
-					placeholder="mm/dd/yyyy" name="DOB">
+					placeholder="yyyy-mm-dd" name="DOB">
 			</div>
 			<div class="five columns"></div>
 		</div>

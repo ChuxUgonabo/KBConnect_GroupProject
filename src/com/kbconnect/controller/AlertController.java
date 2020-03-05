@@ -54,7 +54,7 @@ public class AlertController extends HttpServlet {
                 String alertDescription = request.getParameter("description");
                 // for a new alert, the date created and last update are same
                 long millis = System.currentTimeMillis();
-                Date alertCreationDate = java.sql.Date(millis);
+                Date alertCreationDate = new Date(millis);
 
                 // initialize a new alert
                 Alert newAlert = new Alert();
