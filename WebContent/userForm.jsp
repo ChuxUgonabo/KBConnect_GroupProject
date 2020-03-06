@@ -4,8 +4,8 @@
 <%@ page import="com.kbconnect.entity.*, com.kbconnect.boundary.*"%>
 
 <%
-	AdminDAO udao = new AdminDAO();
-	User user = new User();
+	ComuterDAO udao = new ComuterDAO();
+
 %>
 <!DOCTYPE html>
 <html>
@@ -28,7 +28,7 @@
 		String action = request.getParameter("action");
 		if (action != null) {
 			switch (action) {
-			case "createUser":
+			case "createCommuter":
 				out.print("<form action='UserDAOController' method='post'>");
 				out.print("<input type='hidden' name='action' value='create'>");
                    
@@ -82,26 +82,26 @@
 				out.print("</form>");
 				break;
 
-			case "updateUser":
-				int userId = Integer.parseInt(request.getParameter("userId"));
-				User currUser = udao.getUser(userId);
+			case "updateCommuter":
+				int commuterId = Integer.parseInt(request.getParameter("commuterId"));
+				User currCommuter = udao.getUser(commuterId);
 				out.print("<form action='UserDAOController' method='post'>");
 
 				out.print("<input type='hidden' name='action' value='update'>");
-				out.print("<input type='hidden' name='productId' value='" + currUser.get_id() + "'>");
+				out.print("<input type='hidden' name='productId' value='" + currCommuter.get_id() + "'>");
 
 				out.print ("<div><h4>Edit the current user</h4></div>");
 				out.print("<div class='row'>");
 				out.print("<div class='five columns'>");
 				out.print("<label>Full Name</label>");
 				out.print(
-						"<input class='u-full-width' type='text' placeholder='Full Name' name='fullName' value='"+ currUser.get_fullName()+"' required>");
+						"<input class='u-full-width' type='text' placeholder='Full Name' name='fullName' value='"+ currCommuter.get_fullName()+"' required>");
 				out.print("</div>");
 
 				out.print("<div class='five columns'>");
 				out.print("<label>User Name</label>");
 				out.print(
-						"<input class='u-full-width' type='text' placeholder='User Name' name='username' value='"+ currUser.get_username()+"' required>");
+						"<input class='u-full-width' type='text' placeholder='User Name' name='username' value='"+ currCommuter.get_username()+"' required>");
 				out.print("</div>");
 				out.print("</div>");
 
@@ -109,21 +109,21 @@
 				out.print("<div class='five columns'>");
 				out.print("<label>Email</label>");
 				out.print(
-						"<input class='u-full-width' type='email' placeholder='test@gmail.com' name='email' value='"+ currUser.get_email()+"' required>");
+						"<input class='u-full-width' type='email' placeholder='test@gmail.com' name='email' value='"+ currCommuter.get_email()+"' required>");
 				out.print("</div>");
 
 				out.print("<div class='five columns'>");
 				out.print("<label>Password</label>");
 				out.print(
 						"<input class='u-full-width' type='text' placeholder='at least 8 characters' pattern='.{8,}'");
-				out.print("title='Eight or more characters' name='password' value='"+ currUser.get_password()+"' required>");
+				out.print("title='Eight or more characters' name='password' value='"+ currCommuter.get_password()+"' required>");
 				out.print("</div>");
 				out.print("</div>");
 
 				out.print("<div class='row'>");
 				out.print("<div class='five columns'>");
 				out.print("<label>DOB</label>");
-				out.print("<input class='u-full-width' type='date' placeholder='mm/dd/yyyy' name='DOB' value='"+ currUser.get_DOB()+"'>");
+				out.print("<input class='u-full-width' type='date' placeholder='mm/dd/yyyy' name='DOB' value='"+ currCommuter.get_DOB()+"'>");
 				out.print("</div>");
 				out.print("<div class='five columns'></div>");
 				out.print("</div>");
@@ -131,7 +131,7 @@
 				out.print("<div class='row'>");
 				out.print("<div class='five columns'>");
 				out.print("<label>Street Address</label>");
-				out.print("<textarea rows='3' cols='50' name='address'>"+ currUser.get_address()+"</textarea>");
+				out.print("<textarea rows='3' cols='50' name='address'>"+ currCommuter.get_address()+"</textarea>");
 				out.print("</div>");
 
 				out.print("</div>");
@@ -145,8 +145,8 @@
 		}
 	%>
 
-	<a href="userList.jsp" class="button-primary">back to
-		user list</a>
+	<a href="allCommuters.jsp" class="button-primary">back to
+	the list of commuters</a>
 
 
 </body>
