@@ -71,6 +71,7 @@ public class AlertController extends HttpServlet {
             // if the admin is posting the update on a previous alert
             case "updateAlert":
                 // code to update Alert
+                // another random comment to test tomcat running
                 break;
 
             // if the admin is deleting the alert
