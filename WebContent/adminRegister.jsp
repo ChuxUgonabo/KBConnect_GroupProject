@@ -1,19 +1,15 @@
-<%@ page language="java" contentType="text/html; charset=ISO-8859-1"
-	pageEncoding="ISO-8859-1"%>
-
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+    pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html>
 <head>
-<meta charset="ISO-8859-1">
-<title>Create user here</title>
-<!--  Reference from Skeleton CSS -->
-<link rel="stylesheet" href="css/normalize.css">
-<link rel="stylesheet" href="css/skeleton.css">
+<meta charset="UTF-8">
+<title>Insert title here</title>
 </head>
 <body>
 
 	<h4>Register User</h4>
-	<form action="UserDAOController" method="post">
+	<form action="AdminController" method="post">
 		<div class="row">
 			<div class="five columns">
 				<label>Full Name</label> <input class="u-full-width" type="text"
@@ -40,7 +36,7 @@
 		<div class="row">
 			<div class="five columns">
 				<label>DOB</label> <input class="u-full-width" type="date"
-					placeholder="yyyy-mm-dd" name="DOB">
+					placeholder="mm/dd/yyyy" name="DOB">
 			</div>
 			<div class="five columns"></div>
 		</div>
@@ -73,6 +69,7 @@
 
 
 	</form>
+
 
 
 </body>
