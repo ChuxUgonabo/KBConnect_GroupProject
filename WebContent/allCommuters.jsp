@@ -61,9 +61,9 @@
 				out.println("<td> "+commuterOne.get_cardNumber()+ " </td>");
 				out.println("<td> "+commuterOne.get_DOB()+ " </td>");
 				out.println("<td> "+commuterOne.get_address()+ " </td>");
-				out.println("<td><a href='editProfile.jsp?action=update&userId=" +commuterOne.get_id()+ "'>Edit</a> </td>");
+				out.println("<td><a href='userForm.jsp?action=updateCommuter&commuterId=" +commuterOne.get_id()+ "'>Edit</a> </td>");
                 out.println("<td> <form action='UserDAOController' method='post'>");
-                out.println("<input type='hidden' value='"+commuterOne.get_id()+ "' name='userId'>");
+                out.println("<input type='hidden' name='username' value='"+commuterOne.get_username()+"'>");
                 out.println("<input type='hidden' name='action' value='delete' >");
                 out.println("<input type='submit' value='Delete' >");
                 out.println("</form></td>");
@@ -71,5 +71,11 @@
 			}
 		%>
 	</table>
+	<hr>
+	<form action="">
+		<input type="hidden" name="action" value="createCommuter">
+		<button type="submit" formaction="userForm.jsp" class="button-primary">Add New Commuter</button>
+	</form>
+	
 </body>
 </html>
