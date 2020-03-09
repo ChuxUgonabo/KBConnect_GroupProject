@@ -3,6 +3,8 @@
  */
 package com.kbconnect.entity;
 
+import java.sql.Date;
+
 /**
  * @author John Ugonabo
  *
@@ -10,8 +12,8 @@ package com.kbconnect.entity;
 public class Alert {
 	private int _id;
 	private String _description;
-	java.sql.Date _dateOfLastUpdate; // date of last update
-	java.sql.Date _dateCreated; // date created
+	Date _dateOfLastUpdate; // date of last update
+	Date _dateCreated; // date created
 	
 	
 	/**

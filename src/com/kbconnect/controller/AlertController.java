@@ -66,16 +66,41 @@ public class AlertController extends HttpServlet {
 
                 // save the alert to the database
                 aldao.createAlert(newAlert);
+                response.sendRedirect("listAlerts.jsp");
                 break;
 
             // if the admin is posting the update on a previous alert
             case "updateAlert":
-                // code to update Alert
-                // another random comment to test tomcat running
+
+                // get the id of the alert to be updated
+                int updateId = Integer.parseInt(request.getParameter("updateId"));
+
+                // get  the new values for the alert
+                String updateDesc = request.getParameter("description");
+                long updateMillis = System.currentTimeMillis();
+                Date lastUpdate = new Date(updateMillis);
+
+                // update the old alert to reflect new values
+                Alert oldAlert = aldao.getAlert(updateId);
+                oldAlert.set_description(updateDesc);
+                oldAlert.set_dateOfLastUpdate(lastUpdate);
+
+                // save the alert in the database
+                aldao.updateAlert(oldAlert);
+                response.sendRedirect("listAlert.jsp?message=updated&id=" + oldAlert.get_id());
                 break;
 
             // if the admin is deleting the alert
             case "deleteAlert":
+                // get the id of the alert to be deleted
+                int deleteId = Integer.parseInt(request.getParameter("alertId"));
+
+                // get the alert from the database
+                Alert deleteAlert = aldao.getAlert(deleteId);
+
+                // delete the alert
+                aldao.deleteAlert(deleteAlert);
+                response.sendRedirect("listAlert.jsp?message=deleted&id=" + deleteAlert.get_id());
                 break;
         }
 

@@ -160,7 +160,7 @@ public class AlertDAO implements AlertDAOInterface {
 			// create a prepare statement
 			this.pstmt = this.conn.prepareStatement(sql);
 			// set the parameter
-			this.pstmt.setString(1, String.valueOf(deletedAlert.get_id()));
+			this.pstmt.setInt(1, deletedAlert.get_id());
 			// execute
 			this.pstmt.execute();			
 			// disconnect
