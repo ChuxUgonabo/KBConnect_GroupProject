@@ -4,7 +4,17 @@
 <%@ page import="com.kbconnect.entity.*, com.kbconnect.boundary.*"%>
 
 <%
+	AdminDAO adminDao = new AdminDAO();
+
 	ComuterDAO udao = new ComuterDAO();
+if (session.getAttribute("username") == null) {
+	response.sendRedirect("adminLogin.jsp?message=login");
+    return;
+}
+
+String username = String.valueOf(session.getAttribute("username"));
+
+Admin admin = adminDao.getUser(username);
 
 %>
 <!DOCTYPE html>
@@ -31,6 +41,8 @@
 			case "createCommuter":
 				out.print("<form action='UserDAOController' method='post'>");
 				out.print("<input type='hidden' name='action' value='create'>");
+				out.print("<input type='hidden' name='authority' value='admin'>");
+
                    
 				out.print ("<div><h4>Create a new user</h4></div>");
 				out.print("<div class='row'>");
@@ -57,7 +69,7 @@
 				out.print("<div class='five columns'>");
 				out.print("<label>Password</label>");
 				out.print(
-						"<input class='u-full-width' type='text' placeholder='at least 8 characters' pattern='.{8,}'");
+						"<input class='u-full-width' type='password' placeholder='at least 8 characters' pattern='.{8,}'");
 				out.print("title='Eight or more characters' name='password' required>");
 				out.print("</div>");
 				out.print("</div>");
@@ -88,7 +100,8 @@
 				out.print("<form action='UserDAOController' method='post'>");
 
 				out.print("<input type='hidden' name='action' value='update'>");
-				out.print("<input type='hidden' name='productId' value='" + currCommuter.get_id() + "'>");
+				out.print("<input type='hidden' name='authority' value='admin'>");
+				out.print("<input type='hidden' name='userId' value='" + currCommuter.get_id() + "'>");
 
 				out.print ("<div><h4>Edit the current user</h4></div>");
 				out.print("<div class='row'>");
@@ -101,7 +114,7 @@
 				out.print("<div class='five columns'>");
 				out.print("<label>User Name</label>");
 				out.print(
-						"<input class='u-full-width' type='text' placeholder='User Name' name='username' value='"+ currCommuter.get_username()+"' required>");
+						"<input class='u-full-width' type='text' placeholder='User Name' name='userName' value='"+ currCommuter.get_username()+"' required>");
 				out.print("</div>");
 				out.print("</div>");
 
@@ -112,20 +125,11 @@
 						"<input class='u-full-width' type='email' placeholder='test@gmail.com' name='email' value='"+ currCommuter.get_email()+"' required>");
 				out.print("</div>");
 
-				out.print("<div class='five columns'>");
-				out.print("<label>Password</label>");
-				out.print(
-						"<input class='u-full-width' type='text' placeholder='at least 8 characters' pattern='.{8,}'");
-				out.print("title='Eight or more characters' name='password' value='"+ currCommuter.get_password()+"' required>");
-				out.print("</div>");
-				out.print("</div>");
-
-				out.print("<div class='row'>");
+				
 				out.print("<div class='five columns'>");
 				out.print("<label>DOB</label>");
 				out.print("<input class='u-full-width' type='date' placeholder='mm/dd/yyyy' name='DOB' value='"+ currCommuter.get_DOB()+"'>");
 				out.print("</div>");
-				out.print("<div class='five columns'></div>");
 				out.print("</div>");
 
 				out.print("<div class='row'>");
@@ -138,15 +142,13 @@
 
 				out.print("<button type='submit' class='button-primary'>Save</button>");
 				out.print("</form>");
+				
 
 				break;
 
 			}
 		}
 	%>
-
-	<a href="allCommuters.jsp" class="button-primary">back to
-	the list of commuters</a>
 
 
 </body>
