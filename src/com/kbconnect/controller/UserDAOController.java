@@ -72,6 +72,7 @@ public class UserDAOController extends HttpServlet {
 			String email = request.getParameter("email");
 			String address = request.getParameter("address");
 			String DOB = request.getParameter("DOB");
+			String authority = request.getParameter("authority");
 
 			//
 			// ^ # Start of the line
@@ -101,7 +102,12 @@ public class UserDAOController extends HttpServlet {
 					process = bdao.createUser(newUser);
 					System.out.println("creating: " + process);
 					// back to login page
-					response.sendRedirect("login.jsp");
+					if (authority != null){
+						response.sendRedirect("allCommuters.jsp");
+					}
+					else {
+						response.sendRedirect("login.jsp");
+					}
 				}
 
 			}
@@ -126,9 +132,11 @@ public class UserDAOController extends HttpServlet {
             String editedEmail = request.getParameter("email");
             String editedAddress = request.getParameter("address");
             String editedDob = request.getParameter("DOB");
-//          String username = request.getParameter("fullName");
+//          String editUsername = request.getParameter("userName");
+			String editAuthority = request.getParameter("authority");
 
-			//editUser.set_username(username);
+
+//			editUser.set_username(editUsername);
 			editUser.set_email(editedEmail);
 			editUser.set_address(editedAddress);
 			editUser.set_DOB(editedDob);
@@ -138,7 +146,12 @@ public class UserDAOController extends HttpServlet {
 			process = bdao.updateUser(editUser);
 			System.out.println("Editing: " + process);
 
-            response.sendRedirect("profile.jsp");
+            if (editAuthority != null){
+				response.sendRedirect("allCommuters.jsp");
+			}
+			else {
+	            response.sendRedirect("profile.jsp");
+			}
 			break;
 
 
@@ -146,11 +159,11 @@ public class UserDAOController extends HttpServlet {
 			// instantiate object of User
 			User curr = new User();
 			// call getUser to get current User by id
-			curr = bdao.getUser(request.getParameter("id"));
+			curr = bdao.getUser(request.getParameter("username"));
 			// add new one to database
 			System.out.println("Deleting is coming");
 			bdao.deleteUser(curr);
-
+            response.sendRedirect("allCommuters.jsp");
 			break;
 
 		default:
