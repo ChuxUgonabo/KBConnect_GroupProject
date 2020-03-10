@@ -11,6 +11,7 @@ import java.sql.Date;
  */
 public class Alert {
 	private int _id;
+	private String _shortDescription;
 	private String _description;
 	Date _dateOfLastUpdate; // date of last update
 	Date _dateCreated; // date created
@@ -28,18 +29,35 @@ public class Alert {
 	public void set_id(int _id) {
 		this._id = _id;
 	}
+
 	/**
 	 * @return the _description
 	 */
 	public String get_description() {
 		return _description;
 	}
+
 	/**
 	 * @param _description the _description to set
 	 */
 	public void set_description(String _description) {
 		this._description = _description;
 	}
+
+	/**
+	 * @return the _shortDescription
+	 */
+	public String get_shortDescription() {
+		return _shortDescription;
+	}
+
+	/**
+	 * @param _shortDescription the _shortDescription to set
+	 */
+	public void set_shortDescription(String _shortDescription) {
+		this._shortDescription = _shortDescription;
+	}
+
 	/**
 	 * @return the _dateOfLastUpdate
 	 */

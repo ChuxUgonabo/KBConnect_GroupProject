@@ -44,6 +44,7 @@ public class AlertDAO implements AlertDAOInterface {
 				// populate the properties of the object from the database
 				alert.set_id(rs.getInt("id"));
 				alert.set_description(rs.getString("description"));
+				alert.set_shortDescription(rs.getString("shortDescription"));
 				alert.set_dateCreated(rs.getDate("dateCreated"));
 				alert.set_dateOfLastUpdate(rs.getDate("dateOfLastUpdate"));
 
@@ -80,6 +81,7 @@ public class AlertDAO implements AlertDAOInterface {
 			while (rs.next()) {
 				// populate the properties of the object from the database
 				alert.set_id(rs.getInt("id"));
+				alert.set_shortDescription(rs.getString("shortDescription"));
 				alert.set_description(rs.getString("description"));
 				alert.set_dateCreated(rs.getDate("dateCreated"));
 				alert.set_dateOfLastUpdate(rs.getDate("dateOfLastUpdate"));				
@@ -96,7 +98,7 @@ public class AlertDAO implements AlertDAOInterface {
 	@Override
 	public boolean createAlert(Alert newAlert) {
 		// create a query to insert one
-		String sql = "INSERT INTO alerts (description,dateOfLastUpdate, dateCreated) values (?,?,?);";
+		String sql = "INSERT INTO alerts (shortDescription, description, dateOfLastUpdate, dateCreated) values (?,?,?);";
 		int count = -1;
 		try {
 			// get connect to database
@@ -104,9 +106,10 @@ public class AlertDAO implements AlertDAOInterface {
 			// create the prepare statement
 			this.pstmt = this.conn.prepareStatement(sql);
 			// set parameters
-			this.pstmt.setString(1, newAlert.get_description());
-			this.pstmt.setDate(2, newAlert.get_dateOfLastUpdate());
-			this.pstmt.setDate(3, newAlert.get_dateCreated());
+			this.pstmt.setString(1, newAlert.get_shortDescription());
+			this.pstmt.setString(2, newAlert.get_description());
+			this.pstmt.setDate(3, newAlert.get_dateOfLastUpdate());
+			this.pstmt.setDate(4, newAlert.get_dateCreated());
 			// execute
 			this.pstmt.execute();
 			count = this.pstmt.getResultSetType();
@@ -124,7 +127,7 @@ public class AlertDAO implements AlertDAOInterface {
 
 	@Override
 	public boolean updateAlert(Alert updatedAlert) {
-		String sql = "UPDATE alerts set description =?, dateOfLastUpdate=?, dateCreated=? WHERE id=?;";
+		String sql = "UPDATE alerts set shortDescription=?, description =?, dateOfLastUpdate=?, dateCreated=? WHERE id=?;";
 		int count = -1;
 		
 		try {
@@ -132,10 +135,11 @@ public class AlertDAO implements AlertDAOInterface {
 			this.conn = daoAgent.connectDB(this.conn, databaseName);
 			// create the prepare statement
 			this.pstmt = this.conn.prepareStatement(sql);
-			this.pstmt.setString(1, updatedAlert.get_description());
-			this.pstmt.setDate(2, updatedAlert.get_dateOfLastUpdate());
-			this.pstmt.setDate(3, updatedAlert.get_dateCreated());
-			this.pstmt.setString(4, String.valueOf(updatedAlert.get_id()));
+			this.pstmt.setString(1, updatedAlert.get_shortDescription());
+			this.pstmt.setString(2, updatedAlert.get_description());
+			this.pstmt.setDate(3, updatedAlert.get_dateOfLastUpdate());
+			this.pstmt.setDate(4, updatedAlert.get_dateCreated());
+			this.pstmt.setString(5, String.valueOf(updatedAlert.get_id()));
 
 			this.pstmt.execute();
 			count = this.pstmt.getUpdateCount();
