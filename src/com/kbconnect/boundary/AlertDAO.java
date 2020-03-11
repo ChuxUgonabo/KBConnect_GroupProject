@@ -98,7 +98,7 @@ public class AlertDAO implements AlertDAOInterface {
 	@Override
 	public boolean createAlert(Alert newAlert) {
 		// create a query to insert one
-		String sql = "INSERT INTO alerts (shortDescription, description, dateOfLastUpdate, dateCreated) values (?,?,?);";
+		String sql = "INSERT INTO alerts (shortDescription, description, dateOfLastUpdate, dateCreated) values (?,?,?,?);";
 		int count = -1;
 		try {
 			// get connect to database
