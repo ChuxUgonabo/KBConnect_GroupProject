@@ -55,11 +55,19 @@
         </div>
     </div>
 	 <hr>
-	  <div class="dropdown">
+    <div class="dropdown">
         <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Manage Commuters</button>
         <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
             <a class="dropdown-item" href="allCommuters.jsp">List Of All Commuters</a>
             <a class="dropdown-item" href="userForm.jsp?action=createCommuter">Add a new Commuter</a>
+        </div>
+    </div>
+
+    <div class="dropdown">
+        <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Alerts</button>
+        <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+            <a class="dropdown-item" href="listAlerts.jsp">List all Alerts</a>
+            <a class="dropdown-item" href="createAlert.jsp?action=new">Send out a new alert</a>
         </div>
     </div>
 
