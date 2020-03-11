@@ -3,6 +3,7 @@
 <%@ page import="com.kbconnect.boundary.*, com.kbconnect.entity.*" %>    
 <% 
 	AdminDAO adminDAO = new AdminDAO();
+	AlertDAO aldao = new AlertDAO();
     if (session.getAttribute("username") == null) {
         response.sendRedirect("adminLogin.jsp?message=login");
         return;
@@ -32,9 +33,10 @@
 
                 out.print(
                 "<div class='container'>" + 
-                "<div class='card m-auto' style='width: 18rem;'>" +
+                "<div class='card m-auto w-75' >" +
                 "<div class='card-body'>" +
                 "<form action='AlertController' method='post'>" +
+                "<input type='hidden' name='action' class='form-control' value='sendAlert'>" +
                 "<div class='form-group'>" +
                 "<label for='short-description'>Short Description</label>" +
                 "<input type='text' name='shortDescription' class='form-control' id='short-description'>" +
@@ -54,9 +56,9 @@
 
             case "update":
 
-                int alertId = request.getParameter("alertId");
+                Integer alertId = Integer.parseInt(request.getParameter("alertId"));
 
-                if (alertId == null) {
+                if (alertId.equals(null)) {
                     response.sendRedirect("listAlerts.jsp");
                     break;
                 }
@@ -64,10 +66,11 @@
                 Alert alert = aldao.getAlert(alertId);
                 out.print(
                 "<div class='container'>" + 
-                "<div class='card m-auto' style='width: 18rem;'>" +
+                "<div class='card m-auto w-75' style=''>" +
                 "<div class='card-body'>" +
                 "<form action='AlertController' method='post'>" +
-                "<input type='hidden' value='" + alert.get_id(); + "' name='alertId'>" +
+                "<input type='hidden' name='action' class='form-control' value='updateAlert'>" +
+                "<input type='hidden' value='" + alert.get_id() + "' name='alertId'>" +
                 "<div class='form-group'>" +
                 "<label for='short-description'>Short Description</label>" +
                 "<input type='text' name='shortDescription' class='form-control' id='short-description' value='" + alert.get_shortDescription() + "'>" +
@@ -75,7 +78,7 @@
                 "<div class='form-group'>" +
                 "<label for='description'>Detail</label>" +
                 "<textarea class='form-control' id='detail' name='description'>" +
-                alert.get_description(); + 
+                alert.get_description() + 
                 "</textarea>" +
                 "</div>" +
                 "<button type='submit' class='btn btn-primary'>Create Alert</button>" +
