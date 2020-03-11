@@ -51,6 +51,7 @@ public class AlertController extends HttpServlet {
             case "sendAlert":
 
                 // get the alert information
+                String shortDescription = request.getParameter("shortDescription");
                 String alertDescription = request.getParameter("description");
                 // for a new alert, the date created and last update are same
                 long millis = System.currentTimeMillis();
@@ -60,6 +61,7 @@ public class AlertController extends HttpServlet {
                 Alert newAlert = new Alert();
 
                 // set the parameters for the alert
+                newAlert.set_shortDescription(shortDescription);
                 newAlert.set_description(alertDescription);
                 newAlert.set_dateOfLastUpdate(alertCreationDate);
                 newAlert.set_dateCreated(alertCreationDate);
@@ -76,12 +78,14 @@ public class AlertController extends HttpServlet {
                 int updateId = Integer.parseInt(request.getParameter("updateId"));
 
                 // get  the new values for the alert
+                String updateShortDesc = request.getParameter("shortDescription");
                 String updateDesc = request.getParameter("description");
                 long updateMillis = System.currentTimeMillis();
                 Date lastUpdate = new Date(updateMillis);
 
                 // update the old alert to reflect new values
                 Alert oldAlert = aldao.getAlert(updateId);
+                oldAlert.set_shortDescription(updateShortDesc);
                 oldAlert.set_description(updateDesc);
                 oldAlert.set_dateOfLastUpdate(lastUpdate);
 
