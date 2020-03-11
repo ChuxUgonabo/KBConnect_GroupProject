@@ -1,4 +1,4 @@
-e<%@ page language="java" contentType="text/html; charset=UTF-8"
+<%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ page import="com.kbconnect.entity.*, com.kbconnect.boundary.*, java.util.*" %>
 <%
@@ -47,7 +47,7 @@ e<%@ page language="java" contentType="text/html; charset=UTF-8"
 
             for( int i=0;i<allAlerts.size(); i++) {
             out.print("<tr>" +
-                "<th>"+ i + "</th>" + 
+                "<th>"+ (i + 1) + "</th>" + 
                 "<td>" + allAlerts.get(i).get_shortDescription() + "</td>" +
                 "<td>" + allAlerts.get(i).get_dateCreated()+ "</td>" +
                 "<td>" + allAlerts.get(i).get_dateOfLastUpdate()+ "</td>" +
