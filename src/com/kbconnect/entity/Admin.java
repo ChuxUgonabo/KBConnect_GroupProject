@@ -9,7 +9,7 @@ package com.kbconnect.entity;
  */
 public class Admin extends User{
 	
-
+	private boolean _isAdmin;
 	
 	/**
 	 * The constructor for Admin

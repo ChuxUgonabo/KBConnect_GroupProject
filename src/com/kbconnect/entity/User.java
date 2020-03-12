@@ -22,21 +22,9 @@ public class User {
 	private String _address; // full address including street address city province and postal code
 	private Date _DOB; // date of birth
 	private String _cardNumber; // the card number
-    private boolean _isAdmin;
 
-    /**
-	 * @return the _isAdmin
-	 */
-	public boolean is_isAdmin() {
-		return _isAdmin;
-	}
 
-	/**
-	 * @param _isAdmin the _isAdmin to set
-	 */
-	public void set_isAdmin(boolean _isAdmin) {
-		this._isAdmin = _isAdmin;
-	}
+
 
 	public User() {
     };
@@ -48,7 +36,6 @@ public class User {
 		_email = email;
 		_address = address;
 		_DOB = Date.valueOf(dob);
-        _isAdmin = false;
 	}
 
 
@@ -60,7 +47,6 @@ public class User {
 		_address = updatedUser.get_address();
 		_DOB = updatedUser.get_DOB();
 		_cardNumber = updatedUser.get_cardNumber();
-        _isAdmin = updatedUser.is_isAdmin();
 	}
 
 	public void linkCard(CompassCard card) {
