@@ -10,7 +10,7 @@
     }
 	String username = String.valueOf(session.getAttribute("username"));
 
-    Admin user = adminDAO.getUser(username);
+    Admin admin = adminDAO.getUser(username);
 %>
 <!DOCTYPE html>
 <html>
@@ -20,7 +20,15 @@
 <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
 </head>
 <body>
+<nav class="navbar navbar-light bg-light">
+  <a class="navbar-brand" href="adminProfile.jsp"><% out.print(admin.get_username()); %></a>
 
+     <form action="LoginController" method="post">
+        <input type="hidden" value="admin" name="admin">
+        <input type="hidden" value="logout" name="action">
+        <input class="btn btn-primary" type="submit" value="Logout">
+    </form>
+</nav>
 
     <% 
 

@@ -18,7 +18,7 @@
         return;
     }
 
-    User user = userDao.getUser(username);
+    Admin admin = adao.getUser(username);
     ArrayList<Alert>  allAlerts = aldao.getAllAlerts();
 %>
 <!DOCTYPE html>
@@ -29,7 +29,15 @@
 <title>Alerts</title>
 </head>
 <body>
+<nav class="navbar navbar-light bg-light">
+  <a class="navbar-brand" href="adminProfile.jsp"><% out.print(admin.get_username()); %></a>
 
+     <form action="LoginController" method="post">
+        <input type="hidden" value="admin" name="admin">
+        <input type="hidden" value="logout" name="action">
+        <input class="btn btn-primary" type="submit" value="Logout">
+    </form>
+</nav>
     <div class="container">
 
         <table class="table">

@@ -25,15 +25,17 @@
 %>
 <title><% out.print(admin.get_username()); %></title>
 </head>
-<body>
-    <p><% out.print(admin.get_username()); %></p>
-    
+<body>    
+   
+<nav class="navbar navbar-light bg-light">
+  <a class="navbar-brand" href="adminProfile.jsp"><% out.print(admin.get_username()); %></a>
+
      <form action="LoginController" method="post">
         <input type="hidden" value="admin" name="admin">
         <input type="hidden" value="logout" name="action">
         <input class="btn btn-primary" type="submit" value="Logout">
-    </form>   
-
+    </form>
+</nav>
     <hr>
 
     <ul class="list-group">
