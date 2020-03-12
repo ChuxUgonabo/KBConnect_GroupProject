@@ -13,12 +13,14 @@
 	String username = String.valueOf(session.getAttribute("username"));
 
     // if someone is logged in but he is not an admin, then redirect to the forbidden page
-    if (adao.getUser(username) == null) {
-        response.sendRedirect("403.jsp?message=forbidden");
-        return;
-    }
+   
 
     Admin admin = adao.getUser(username);
+    User user = userDao.getUser(username);
+    if (admin == null && user == null) {
+        response.sendRedirect("login.jsp");
+        return;
+    }
     ArrayList<Alert>  allAlerts = aldao.getAllAlerts();
 %>
 <!DOCTYPE html>
@@ -30,7 +32,13 @@
 </head>
 <body>
 <nav class="navbar navbar-light bg-light">
-  <a class="navbar-brand" href="adminProfile.jsp"><% out.print(admin.get_username()); %></a>
+	<% 
+	if (admin != null ) {
+		out.print("<a class='navbar-brand' href='adminProfile.jsp'>" + admin.get_username() + "</a>");
+	} else {
+		out.print("<a class='navbar-brand' href='profile.jsp'>" + user.get_username() + "</a>");
+	}
+	%>
 
      <form action="LoginController" method="post">
         <input type="hidden" value="admin" name="admin">
@@ -47,20 +55,33 @@
                     <th scope="col">Short Description</th>
                     <th scope="col">Date Posted</th>
                     <th scope="col">Last Updated</th>
+                    <%
+                    if ( admin != null ) {
+                    	out.print("<th scope='col'>Edit</th>");   
+                        out.print("<th scope='col'>Delete</th>");
+                    }
+                    %>
                 </tr>
             </thead>
         <tbody>
 
             <%
 
-            for( int i=0;i<allAlerts.size(); i++) {
+            for( int i=0; i < allAlerts.size(); i++) {
             out.print("<tr>" +
                 "<th>"+ (i + 1) + "</th>" + 
                 "<td>" + allAlerts.get(i).get_shortDescription() + "</td>" +
                 "<td>" + allAlerts.get(i).get_dateCreated()+ "</td>" +
-                "<td>" + allAlerts.get(i).get_dateOfLastUpdate()+ "</td>" +
-                "</tr>" 
+                "<td>" + allAlerts.get(i).get_dateOfLastUpdate()+ "</td>"
                 );
+            if ( admin != null ) {
+            	out.print("<td><a href='createAlert.jsp?action=update&alertId=" + allAlerts.get(i).get_id()+ "'>Edit</a></td>" +
+				"<td><form action='AlertController' method='post'><input type='hidden' name='action' value='deleteAlert'/><input type='submit'  value='Delete' class='btn btn-primary'/>" + 
+            	"<input type='hidden' name='alertId' value='" + allAlerts.get(i).get_id()+ "'/></form></td>"
+            		            
+                );
+            }
+            out.print("</tr>");
             }
         %>
 </tbody>
