@@ -75,7 +75,7 @@ public class AlertController extends HttpServlet {
             case "updateAlert":
 
                 // get the id of the alert to be updated
-                int updateId = Integer.parseInt(request.getParameter("updateId"));
+                int updateId = Integer.parseInt(request.getParameter("alertId"));
 
                 // get  the new values for the alert
                 String updateShortDesc = request.getParameter("shortDescription");
@@ -91,7 +91,7 @@ public class AlertController extends HttpServlet {
 
                 // save the alert in the database
                 aldao.updateAlert(oldAlert);
-                response.sendRedirect("listAlert.jsp?message=updated&id=" + oldAlert.get_id());
+                response.sendRedirect("listAlerts.jsp?message=updated&id=" + oldAlert.get_id());
                 break;
 
             // if the admin is deleting the alert
