@@ -14,16 +14,31 @@ import org.mindrot.jbcrypt.BCrypt;
 
 public class User {
 
-	int _id; // unique id for the database
-	String _fullName;
-	String _username;
-	String _password; // encrypted password
-	String _email;
-	String _address; // full address including street address city province and postal code
-	Date _DOB; // date of birth
-	String _cardNumber; // the card number
+	private int _id; // unique id for the database
+	private String _fullName;
+	private String _username;
+	private String _password; // encrypted password
+	private String _email;
+	private String _address; // full address including street address city province and postal code
+	private Date _DOB; // date of birth
+	private String _cardNumber; // the card number
+    private boolean _isAdmin;
 
-    public User() {
+    /**
+	 * @return the _isAdmin
+	 */
+	public boolean is_isAdmin() {
+		return _isAdmin;
+	}
+
+	/**
+	 * @param _isAdmin the _isAdmin to set
+	 */
+	public void set_isAdmin(boolean _isAdmin) {
+		this._isAdmin = _isAdmin;
+	}
+
+	public User() {
     };
 
 	public User(String fName, String userN, String passW, String email, String address, String dob) {
@@ -32,19 +47,10 @@ public class User {
 		_password = BCrypt.hashpw(passW, BCrypt.gensalt());
 		_email = email;
 		_address = address;
-		// date should be in format yyyy-mm-dd
-		Date sqlDob = Date.valueOf(dob);
-		_DOB = sqlDob;
+		_DOB = Date.valueOf(dob);
+        _isAdmin = false;
 	}
 
-
-	public void login(String userN, String passW) {
-		// TODO do this in the servlet not here
-	}
-
-	public void logout() {
-		// TODO do in servlet
-	}
 
 	public void updateUser(User updatedUser) {
 		_fullName = updatedUser.get_fullName();
@@ -54,6 +60,7 @@ public class User {
 		_address = updatedUser.get_address();
 		_DOB = updatedUser.get_DOB();
 		_cardNumber = updatedUser.get_cardNumber();
+        _isAdmin = updatedUser.is_isAdmin();
 	}
 
 	public void linkCard(CompassCard card) {
