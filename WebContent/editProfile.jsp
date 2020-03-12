@@ -32,21 +32,13 @@ User user = userDao.getUser(username);
 			<div class="five columns">
 				<label>Full Name</label> <input class="u-full-width" type="text" placeholder="Full name" name="fullName" value="<% out.print(user.get_fullName()); %>" required>
 			</div>
-			<div class="five columns">
-				<label>User Name</label> <input class="u-full-width" type="text" placeholder="username" name="username" value="<% out.print(user.get_username()); %>" required>
-			</div>
-		</div>
-		<div class="row">
+	
+
 
 			<div class="five columns">
 				<label>Email</label> <input class="u-full-width" type="email" placeholder="test@gmail.com" name="email" value="<% out.print(user.get_email()); %>" required>
 			</div>
 
-			<div class="five columns">
-				<label>DOB</label> <input class="u-full-width" type="date" placeholder="mm/dd/yyyy" value="<% out.print(user.get_DOB()); %>" name="DOB">
-
-			</div>
-			<div class="five columns"></div>
 		</div>
 
 		<div class="row">
