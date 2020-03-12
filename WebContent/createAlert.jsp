@@ -89,7 +89,7 @@
                 alert.get_description() + 
                 "</textarea>" +
                 "</div>" +
-                "<button type='submit' class='btn btn-primary'>Create Alert</button>" +
+                "<button type='submit' class='btn btn-primary'>Update Alert</button>" +
                 "</form>" +
                 "</div>" +
                 "</div>" +
