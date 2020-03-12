@@ -49,6 +49,7 @@
 
     <button class="btn btn-primary"><a class="text-light" href="editProfile.jsp">Edit Profile</a></button>
     <button class="btn btn-primary"><a class="text-light" href="linkCard.jsp">Link Card</a></button>
+    <button class="btn btn-primary"><a class="text-light" href="listAlerts.jsp">Show Alerts</a></button>
 
 </body>
 </html>
