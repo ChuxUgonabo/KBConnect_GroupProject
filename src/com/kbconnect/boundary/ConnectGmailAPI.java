@@ -111,7 +111,7 @@ public class ConnectGmailAPI {
 						.setDataStoreFactory(new FileDataStoreFactory(new java.io.File(TOKENS_DIRECTORY_PATH)))
 						.setAccessType("offline").build();
 
-		LocalServerReceiver receiver = new LocalServerReceiver.Builder().setPort(8887).build();
+		LocalServerReceiver receiver = new LocalServerReceiver.Builder().setPort(8888).build();
 
 		Credential cred = new AuthorizationCodeInstalledApp(flow, receiver).authorize("user");
 
