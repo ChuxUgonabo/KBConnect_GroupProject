@@ -40,7 +40,7 @@ public class GmailController extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
-		response.getWriter().append("Served at: ").append(request.getContextPath());
+	
 	}
 
 	/**
@@ -50,48 +50,15 @@ public class GmailController extends HttpServlet {
 		// TODO Auto-generated method stub
 //		doGet(request, response);
 		
-		
 		PrintWriter out = response.getWriter();
 		out.println("start");
 
-		HttpTransport httpTransport = null;
-		try {
-			httpTransport = GoogleNetHttpTransport.newTrustedTransport();
-		} catch (GeneralSecurityException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-
-		GmailCredential credential = null;
-		ConnectGmailAPI connect=new ConnectGmailAPI();
 		
-		try {
-			credential = connect.connectGmaiService();
-		} catch (GeneralSecurityException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		} catch (ParseException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
 
-		GmailServiceImplement gmailService = new GmailServiceImplement();
-		gmailService.setGmailCredential(credential);
-		gmailService.setHttpTransport(httpTransport);
-
-		try {
-			if (gmailService.sendMessage("williamshi5358@hotmail.com", "today", "hello world")
-					&& gmailService.sendMessage("shiweijun2000@hotmail.com", "today", "hello world")) {
-				System.out.println("sent email");
-			}
-
-		} catch (
-
-		MessagingException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-			System.out.println("fail to send email");
-		}
+		GmailServiceImplement gmailService = new GmailServiceImplement("shiweijun2000@hotmail.com", "from Controller", "hello world");
+	
+		out.println("end");
+		
 	}
 
 }
