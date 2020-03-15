@@ -1,114 +1,51 @@
 package com.kbconnect.boundary;
 
-import java.io.ByteArrayOutputStream;
-import java.io.IOException;
-import java.security.GeneralSecurityException;
+import java.util.Date;
 import java.util.Properties;
+
+import javax.mail.Authenticator;
+import javax.mail.Message;
 import javax.mail.MessagingException;
+import javax.mail.PasswordAuthentication;
 import javax.mail.Session;
+import javax.mail.Transport;
+import javax.mail.internet.AddressException;
 import javax.mail.internet.InternetAddress;
 import javax.mail.internet.MimeMessage;
 
-import org.json.simple.parser.ParseException;
-
-import com.google.api.client.auth.oauth2.Credential;
-import com.google.api.client.googleapis.auth.oauth2.GoogleCredential;
-import com.google.api.client.googleapis.javanet.GoogleNetHttpTransport;
-import com.google.api.client.http.HttpTransport;
-import com.google.api.client.json.JsonFactory;
-import com.google.api.client.json.jackson2.JacksonFactory;
-import com.google.api.client.util.Base64;
-import com.google.api.services.gmail.Gmail;
-import com.google.api.services.gmail.model.Message;
-import com.kbconnect.entity.GmailCredential;
-
 public class GmailServiceImplement {
 
-	private static String APPLICATION_NAME = "kbconnect";
+	public static void sendEmail(String host, String port, final String userName, final String password,
+			String toAddress, String subject, String message) throws AddressException, MessagingException {
 
-	private static JsonFactory JSON_FACTORY = JacksonFactory.getDefaultInstance();
+		// sets SMTP server properties
+		Properties properties = new Properties();
+		properties.put("mail.smtp.host", host);
+		properties.put("mail.smtp.port", port);
+		properties.put("mail.smtp.auth", "true");
+		properties.put("mail.smtp.starttls.enable", "true");
 
-	private HttpTransport httpTransport;
-	private GmailCredential gmailCredentials;
-
-
-	// Constructor, by default to process to set two parameters
-	public GmailServiceImplement(String ToAddress, String subject, String content) throws IOException {
-	
-		setGmailCredential();
-		setHttpTransport();
-		
-		try {
-			
-			if(sendMessage(ToAddress, subject, content)) {
-				System.out.println("Email has benn sent");
-				
+		// creates a new session with an authenticator
+		Authenticator auth = new Authenticator() {
+			public PasswordAuthentication getPasswordAuthentication() {
+				return new PasswordAuthentication(userName, password);
 			}
-		} catch (MessagingException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-	}
+		};
 
-	// setters for HttpTransport and GmailCredential
-	public void setHttpTransport() throws IOException {
+		Session session = Session.getInstance(properties, auth);
 
-		try {
-			this.httpTransport = GoogleNetHttpTransport.newTrustedTransport();
-		} catch (GeneralSecurityException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
+		// creates a new e-mail message
+		Message msg = new MimeMessage(session);
 
-	}
+		msg.setFrom(new InternetAddress(userName));
+		InternetAddress[] toAddresses = { new InternetAddress(toAddress) };
+		msg.setRecipients(Message.RecipientType.TO, toAddresses);
+		msg.setSubject(subject);
+		msg.setSentDate(new Date());
+		msg.setText(message);
 
-	public void setGmailCredential() throws IOException {
-		ConnectGmailAPI connect = new ConnectGmailAPI();
-		try {
-			this.gmailCredentials = connect.connectGmaiService();
-		} catch (GeneralSecurityException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		} catch (ParseException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-	}
+		// sends the e-mail
+		Transport.send(msg);
 
-	public boolean sendMessage(String recipientAddress, String subject, String body)
-			throws MessagingException, IOException {
-		Message message = createMessageWithEmail(
-				createEmail(recipientAddress, gmailCredentials.getUserEmail(), subject, body));
-
-		return createGmail().users().messages().send(gmailCredentials.getUserEmail(), message).execute().getLabelIds()
-				.contains("SENT");
-	}
-
-	private Gmail createGmail() {
-		Credential credential = authorize();
-		return new Gmail.Builder(this.httpTransport, JSON_FACTORY, credential).setApplicationName(APPLICATION_NAME)
-				.build();
-	}
-
-	private MimeMessage createEmail(String to, String from, String subject, String bodyText) throws MessagingException {
-		MimeMessage email = new MimeMessage(Session.getDefaultInstance(new Properties(), null));
-		email.setFrom(new InternetAddress(from));
-		email.addRecipient(javax.mail.Message.RecipientType.TO, new InternetAddress(to));
-		email.setSubject(subject);
-		email.setText(bodyText);
-		return email;
-	}
-
-	private Message createMessageWithEmail(MimeMessage emailContent) throws MessagingException, IOException {
-		ByteArrayOutputStream buffer = new ByteArrayOutputStream();
-		emailContent.writeTo(buffer);
-
-		return new Message().setRaw(Base64.encodeBase64URLSafeString(buffer.toByteArray()));
-	}
-
-	private Credential authorize() {
-		return new GoogleCredential.Builder().setTransport(httpTransport).setJsonFactory(JSON_FACTORY)
-				.setClientSecrets(gmailCredentials.getClientId(), gmailCredentials.getClientSecret()).build()
-				.setAccessToken(gmailCredentials.getAccessToken()).setRefreshToken(gmailCredentials.getRefreshToken());
 	}
 }

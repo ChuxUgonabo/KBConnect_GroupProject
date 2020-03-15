@@ -2,23 +2,12 @@ package com.kbconnect.controller;
 
 import java.io.IOException;
 import java.io.PrintWriter;
-import java.security.GeneralSecurityException;
-
-import javax.mail.MessagingException;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-
-import org.json.simple.parser.ParseException;
-
-
-import com.google.api.client.googleapis.javanet.GoogleNetHttpTransport;
-import com.google.api.client.http.HttpTransport;
-import com.kbconnect.boundary.ConnectGmailAPI;
 import com.kbconnect.boundary.GmailServiceImplement;
-import com.kbconnect.entity.GmailCredential;
 
 /**
  * Servlet implementation class GmailController
@@ -26,39 +15,66 @@ import com.kbconnect.entity.GmailCredential;
 @WebServlet("/GmailController")
 public class GmailController extends HttpServlet {
 	private static final long serialVersionUID = 1L;
-       
-    /**
-     * @see HttpServlet#HttpServlet()
-     */
-    public GmailController() {
-        super();
-        // TODO Auto-generated constructor stub
-    }
+	// define the variables for store information of Gmail
+	private String host;
+	private String port;
+	private String user;
+	private String pass;
 
 	/**
-	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
+	 * @see HttpServlet#HttpServlet()
 	 */
-	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		// TODO Auto-generated method stub
-	
+	public GmailController() {
+		super();
+		// put the attributes of Gmail
+		this.host = "smtp.gmail.com";
+		this.port = "587";
+		this.user = "csis3275kbconnect@gmail.com";
+		this.pass = "kbconnect3275";
+
 	}
 
 	/**
-	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
+	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse
+	 *      response)
 	 */
-	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+	protected void doGet(HttpServletRequest request, HttpServletResponse response)
+			throws ServletException, IOException {
 		// TODO Auto-generated method stub
-//		doGet(request, response);
-		
+
+	}
+
+	/**
+	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse
+	 *      response)
+	 */
+	protected void doPost(HttpServletRequest request, HttpServletResponse response)
+			throws ServletException, IOException {
+		// reads form fields
+//		String recipient = request.getParameter("recipient");
+//		String subject = request.getParameter("subject");
+//		String content = request.getParameter("content");
+
+		String recipient = "shiweijun2000@hotmail.com";
+		String subject = "from servlet by kbconnect";
+		String content = "hello world";
+		String resultMessage = "";
 		PrintWriter out = response.getWriter();
-		out.println("start");
+		// sending 
+		try {
+			GmailServiceImplement.sendEmail(this.host, this.port, this.user, this.pass, recipient, subject, content);
+			resultMessage = "The e-mail was sent successfully";
 
-		
+			out.append(resultMessage);
+		} catch (Exception ex) {
+			ex.printStackTrace();
+			resultMessage = "There were an error: " + ex.getMessage();
+			out.append(resultMessage);
+		} finally {
+			request.setAttribute("Message", resultMessage);
+//			getServletContext().getRequestDispatcher("/successfulSending.jsp").forward(request, response);
+		}
 
-		GmailServiceImplement gmailService = new GmailServiceImplement("shiweijun2000@hotmail.com", "from Controller", "hello world");
-	
-		out.println("end");
-		
 	}
 
 }
