@@ -63,7 +63,7 @@
 				out.println("<td> "+commuterOne.get_address()+ " </td>");
 				out.println("<td><a href='userForm.jsp?action=updateCommuter&commuterId=" +commuterOne.get_id()+ "'>Edit</a> </td>");
                 out.println("<td> <form action='UserDAOController' method='post'>");
-                out.println("<input type='hidden' name='username' value='"+commuterOne.get_username()+"'>");
+                out.println("<input type='hidden' name='userId' value='"+commuterOne.get_id()+"'>");
                 out.println("<input type='hidden' name='action' value='delete' >");
                 out.println("<input type='submit' value='Delete' >");
                 out.println("</form></td>");

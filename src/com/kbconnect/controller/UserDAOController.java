@@ -170,7 +170,8 @@ public class UserDAOController extends HttpServlet {
             // instantiate object of User
             User curr;
             // call getUser to get current User by id
-            curr = bdao.getUser(request.getParameter("userId"));
+//            curr = bdao.getUser(request.getParameter("username"));
+            curr = bdao.getUser(Integer.parseInt(request.getParameter("userId")));
             // add new one to database
             bdao.deleteUser(curr);
             response.sendRedirect("allCommuters.jsp");
