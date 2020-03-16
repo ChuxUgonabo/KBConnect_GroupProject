@@ -11,7 +11,7 @@ import com.kbconnect.entity.User;
  *
  */
 
-public class ComuterDAO implements UserDaoInterface {
+public class CommuterDAO implements UserDaoInterface {
 
 
 	private Connection conn = null;

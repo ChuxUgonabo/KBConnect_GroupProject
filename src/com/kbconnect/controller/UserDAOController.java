@@ -12,7 +12,7 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import com.kbconnect.boundary.AdminDAO;
-import com.kbconnect.boundary.ComuterDAO;
+import com.kbconnect.boundary.CommuterDAO;
 import com.kbconnect.entity.Admin;
 import com.kbconnect.entity.User;
 
@@ -28,7 +28,7 @@ public class UserDAOController extends HttpServlet {
      */
 
     // instantiate DAO
-    ComuterDAO bdao = new ComuterDAO();
+    CommuterDAO bdao = new CommuterDAO();
     AdminDAO adao = new AdminDAO();
     // initialize an array list of allUser
     ArrayList<User> allUser = new ArrayList<User>();

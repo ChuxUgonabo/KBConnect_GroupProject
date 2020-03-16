@@ -16,13 +16,15 @@ import com.kbconnect.entity.Alert;
 @WebServlet("/AlertController")
 public class AlertController extends HttpServlet {
 	private static final long serialVersionUID = 1L;
+	
+	private EmailController emailSender;
        
     /**
      * @see HttpServlet#HttpServlet()
      */
     public AlertController() {
         super();
-        // TODO Auto-generated constructor stub
+        emailSender = new EmailController();
     }
 
 	/**
@@ -38,6 +40,9 @@ public class AlertController extends HttpServlet {
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 
+		// messages to show to the user
+		String message = "";
+		
         // initialize a alert dao
         AlertDAO aldao = new AlertDAO();
 
@@ -68,7 +73,13 @@ public class AlertController extends HttpServlet {
 
                 // save the alert to the database
                 aldao.createAlert(newAlert);
-                response.sendRedirect("listAlerts.jsp");
+                // send the email notifications
+                boolean wasEmailSuccessful = emailSender.notifyAllUsers(newAlert);
+                if (!wasEmailSuccessful) {
+
+                	message += "Error occured wile sending out some emails!";
+                }
+                response.sendRedirect("listAlerts.jsp?message=" + message);
                 break;
 
             // if the admin is posting the update on a previous alert
@@ -91,6 +102,12 @@ public class AlertController extends HttpServlet {
 
                 // save the alert in the database
                 aldao.updateAlert(oldAlert);
+                
+                boolean wasNotifySuccessful = emailSender.notifyAllUsers(oldAlert);
+                if (!wasNotifySuccessful) {
+
+                	message += "Error occured wile sending out some emails!";
+                }
                 response.sendRedirect("listAlerts.jsp?message=updated&id=" + oldAlert.get_id());
                 break;
 
@@ -104,7 +121,7 @@ public class AlertController extends HttpServlet {
 
                 // delete the alert
                 aldao.deleteAlert(deleteAlert);
-                response.sendRedirect("listAlert.jsp?message=deleted&id=" + deleteAlert.get_id());
+                response.sendRedirect("listAlerts.jsp?message=deleted&id=" + deleteAlert.get_id());
                 break;
         }
 

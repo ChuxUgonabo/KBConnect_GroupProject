@@ -10,7 +10,7 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import com.kbconnect.boundary.AdminDAO;
-import com.kbconnect.boundary.ComuterDAO;
+import com.kbconnect.boundary.CommuterDAO;
 import com.kbconnect.entity.Admin;
 import com.kbconnect.entity.Commuter;
 import com.kbconnect.entity.User;
@@ -44,7 +44,7 @@ public class LoginController extends HttpServlet {
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		
 		// initialize the dao for admin and user
-		ComuterDAO userDao = new ComuterDAO();
+		CommuterDAO userDao = new CommuterDAO();
 		AdminDAO adminDao = new AdminDAO();
 		switch (request.getParameter("action")) {
 			

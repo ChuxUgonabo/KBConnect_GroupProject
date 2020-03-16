@@ -55,7 +55,7 @@ public class GmailController extends HttpServlet {
 //		String subject = request.getParameter("subject");
 //		String content = request.getParameter("content");
 
-		String recipient = "shiweijun2000@hotmail.com";
+		String recipient = "gursewaktut@gmail.com";
 		String subject = "from servlet by kbconnect";
 		String content = "hello world";
 		String resultMessage = "";
