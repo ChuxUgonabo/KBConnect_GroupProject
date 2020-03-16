@@ -1,0 +1,6 @@
+com.kbconnect.boundary
+com.kbconnect.controller
+com.kbconnect.entity
+org.mindrot.jbcrypt
+test.com.kbconnect.boundary
+test.com.kbconnect.entity
