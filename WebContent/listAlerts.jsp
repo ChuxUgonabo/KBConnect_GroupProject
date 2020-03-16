@@ -2,8 +2,7 @@
     pageEncoding="UTF-8"%>
 <%@ page import="com.kbconnect.entity.*, com.kbconnect.boundary.*, java.util.*" %>
 <%
-
-	ComuterDAO userDao = new ComuterDAO();
+	CommuterDAO userDao = new CommuterDAO();
 	AdminDAO adao = new AdminDAO();
 	AlertDAO aldao = new AlertDAO();
     if (session.getAttribute("username") == null) {
@@ -46,6 +45,13 @@
         <input class="btn btn-primary" type="submit" value="Logout">
     </form>
 </nav>
+
+<%
+	if (request.getParameter("message") != null) {
+		String message = request.getParameter("message");
+		out.print("<h6>" + message + "</h6>");
+	}
+%>
     <div class="container">
 
         <table class="table">

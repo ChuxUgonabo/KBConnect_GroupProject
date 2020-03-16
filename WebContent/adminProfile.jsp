@@ -10,7 +10,7 @@
 
 <%
 	AdminDAO adminDao = new AdminDAO();
-	ComuterDAO comuterDao = new ComuterDAO();
+	CommuterDAO comuterDao = new CommuterDAO();
 	ArrayList<User> listOfUsers = new ArrayList<User>();
 	listOfUsers = comuterDao.getAllUsers();
 

@@ -3,8 +3,7 @@
 
 <%@ page import="com.kbconnect.entity.*, com.kbconnect.boundary.*" %>
 <%
-
-	ComuterDAO userDao = new ComuterDAO();
+	CommuterDAO userDao = new CommuterDAO();
     if (session.getAttribute("username") == null) {
         response.sendRedirect("login.jsp?message=login");
         return;
@@ -12,7 +11,6 @@
 	String username = String.valueOf(session.getAttribute("username"));
 
     User user = userDao.getUser(username);
- 
 %>
 
 <!DOCTYPE html>

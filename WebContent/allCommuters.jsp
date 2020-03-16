@@ -4,7 +4,7 @@
 <%@ page import="com.kbconnect.boundary.*, com.kbconnect.entity.*"%>
 
 <%
-	ComuterDAO commuterDao = new ComuterDAO();
+	CommuterDAO commuterDao = new CommuterDAO();
 	ArrayList<User> commuterList = commuterDao.getAllUsers();
 
 	AdminDAO userDao = new AdminDAO();
