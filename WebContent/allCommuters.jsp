@@ -36,6 +36,8 @@
         <input type="hidden" value="logout" name="action">
 		<input class="btn btn-primary" type="submit" value="Logout">
 	</form>
+	
+    <a href="adminProfile.jsp" class="btn btn-primary">Profile Page</a>
 
 	<table>
 		<tr>

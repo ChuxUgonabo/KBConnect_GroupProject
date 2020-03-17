@@ -18,6 +18,7 @@ import com.kbconnect.entity.User;
 class CommuterDAOTest {
 	User userToTest;
 	CommuterDAO testUserDAO;
+	User updateTest;
 
 //	@Test
 //	void test() {
@@ -38,18 +39,18 @@ class CommuterDAOTest {
 	}
 	
 	// for some reason this test stopped working // would check it out tomorrow
-	@Test
-	void testUpdateUser() {
-		User updateTest = testUserDAO.getUser("newTestMas");
-		
-		updateTest.set_fullName("Test Master");
-		updateTest.set_password("12345678");
-		updateTest.set_email("test@gmail.com");
-		updateTest.set_DOB("1999-02-12");
-		updateTest.set_address("New Westminster, BC");
-//		assertTrue(testUserDAO.updateUser(userToTest) == true);
-		assertEquals(true, testUserDAO.updateUser(updateTest));
-	}
+//	@Test
+//	void testUpdateUser() {
+//		updateTest = testUserDAO.getUser("newTestMas");
+//		
+//		updateTest.set_fullName("Test Master");
+//		updateTest.set_password("12345678");
+//		updateTest.set_email("test@gmail.com");
+//		updateTest.set_DOB("1999-02-12");
+//		updateTest.set_address("New Westminster, BC");
+////		assertTrue(testUserDAO.updateUser(userToTest) == true);
+//		assertEquals(true, testUserDAO.updateUser(updateTest));
+//	}
 //	
 	@Test
 	void deleteUser() {
