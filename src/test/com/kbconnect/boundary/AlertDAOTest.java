@@ -76,5 +76,20 @@ class AlertDAOTest {
     	nullDateAlert.set_description("Long Description");
     	assertFalse(alertDAOToTest.createAlert(nullDateAlert));
     }
+    
+    /**
+     * This test checks to see if the alert is created successfully
+     */
+    @Test
+    void testAlertCreated() {
+    	Alert newAlert = new Alert();
+    	newAlert.set_shortDescription("test Description");
+    	newAlert.set_description("test long description");
+    	long millis = System.currentTimeMillis();
+    	Date now = new Date(millis);
+    	newAlert.set_dateCreated(now);
+    	newAlert.set_dateOfLastUpdate(now);
+    	assertTrue(alertDAOToTest.createAlert(newAlert));
+    }
 
 }
