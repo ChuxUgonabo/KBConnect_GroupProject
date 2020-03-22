@@ -6,8 +6,8 @@ import java.sql.Date;
  * 
  * @author Gursewak Singh
  *
- *         Stores the information about the passes loaded on different compass
- *         cards
+ * Stores the information about the passes loaded on different compass
+ * cards
  */
 public class LoadedPasses {
 
