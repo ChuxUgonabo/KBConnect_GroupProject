@@ -13,16 +13,17 @@ public class Alert {
 	private int _id;
 	private String _shortDescription;
 	private String _description;
-	Date _dateOfLastUpdate; // date of last update
-	Date _dateCreated; // date created
-	
-	
+	private Route _route;
+	private Date _dateOfLastUpdate; // date of last update
+	private Date _dateCreated; // date created
+
 	/**
 	 * @return the _id
 	 */
 	public int get_id() {
 		return _id;
 	}
+
 	/**
 	 * @param _id the _id to set
 	 */
@@ -61,29 +62,43 @@ public class Alert {
 	/**
 	 * @return the _dateOfLastUpdate
 	 */
-	public java.sql.Date get_dateOfLastUpdate() {
+	public Date get_dateOfLastUpdate() {
 		return _dateOfLastUpdate;
 	}
+
 	/**
 	 * @param _dateOfLastUpdate the _dateOfLastUpdate to set
 	 */
-	public void set_dateOfLastUpdate(java.sql.Date _dateOfLastUpdate) {
+	public void set_dateOfLastUpdate( Date _dateOfLastUpdate) {
 		this._dateOfLastUpdate = _dateOfLastUpdate;
 	}
+
 	/**
 	 * @return the _dateCreated
 	 */
-	public java.sql.Date get_dateCreated() {
+	public Date get_dateCreated() {
 		return _dateCreated;
 	}
+
 	/**
 	 * @param _dateCreated the _dateCreated to set
 	 */
-	public void set_dateCreated(java.sql.Date _dateCreated) {
+	public void set_dateCreated( Date _dateCreated) {
 		this._dateCreated = _dateCreated;
 	}
 
+	/**
+	 * @return the _route
+	 */
+	public Route get_route() {
+		return _route;
+	}
 
-	
+	/**
+	 * @param _route the _route to set
+	 */
+	public void set_route(Route _route) {
+		this._route = _route;
+	}
 
 }
