@@ -8,6 +8,7 @@ import java.sql.Statement;
 import java.util.ArrayList;
 
 import com.kbconnect.entity.Alert;
+import com.kbconnect.entity.Route;
 
 public class AlertDAO implements AlertDAOInterface {
 
@@ -17,6 +18,7 @@ public class AlertDAO implements AlertDAOInterface {
 	private PreparedStatement pstmt = null;
 	private String databaseName = "kbconnect";
 	private DAOAgent daoAgent = new DAOAgent();
+	private RouteDAO rdao = new RouteDAO();
 
 	@Override
 	public ArrayList<Alert> getAllAlerts() {
@@ -47,6 +49,10 @@ public class AlertDAO implements AlertDAOInterface {
 				alert.set_shortDescription(rs.getString("shortDescription"));
 				alert.set_dateCreated(rs.getDate("dateCreated"));
 				alert.set_dateOfLastUpdate(rs.getDate("dateOfLastUpdate"));
+				
+				// get the route 
+				Route forRoute = rdao.getRoute(rs.getInt("routeId"));
+				alert.set_route(forRoute);
 
 				// add the object to the list
 				allAlerts.add(alert);
@@ -84,7 +90,13 @@ public class AlertDAO implements AlertDAOInterface {
 				alert.set_shortDescription(rs.getString("shortDescription"));
 				alert.set_description(rs.getString("description"));
 				alert.set_dateCreated(rs.getDate("dateCreated"));
-				alert.set_dateOfLastUpdate(rs.getDate("dateOfLastUpdate"));				
+				alert.set_dateOfLastUpdate(rs.getDate("dateOfLastUpdate"));	
+				
+				// get the route
+				Route forRoute = rdao.getRoute(rs.getInt("routeId"));
+				alert.set_route(forRoute);
+				
+				
 			}
 			// disconnect from the database
 			this.conn = daoAgent.disconnectDB(this.conn);
@@ -98,7 +110,7 @@ public class AlertDAO implements AlertDAOInterface {
 	@Override
 	public boolean createAlert(Alert newAlert) {
 		// create a query to insert one
-		String sql = "INSERT INTO alerts (shortDescription, description, dateOfLastUpdate, dateCreated) values (?,?,?,?);";
+		String sql = "INSERT INTO alerts (shortDescription, description, dateOfLastUpdate, dateCreated, routeId) values (?,?,?,?,?);";
 		int count = -1;
 		try {
 			// get connect to database
@@ -110,6 +122,10 @@ public class AlertDAO implements AlertDAOInterface {
 			this.pstmt.setString(2, newAlert.get_description());
 			this.pstmt.setDate(3, newAlert.get_dateOfLastUpdate());
 			this.pstmt.setDate(4, newAlert.get_dateCreated());
+
+			// set the route id
+			this.pstmt.setInt(5, newAlert.get_route().get_id());
+
 			// execute
 			this.pstmt.execute();
 			count = this.pstmt.getResultSetType();
@@ -127,7 +143,7 @@ public class AlertDAO implements AlertDAOInterface {
 
 	@Override
 	public boolean updateAlert(Alert updatedAlert) {
-		String sql = "UPDATE alerts set shortDescription=?, description =?, dateOfLastUpdate=?, dateCreated=? WHERE id=?;";
+		String sql = "UPDATE alerts set shortDescription=?, description =?, dateOfLastUpdate=?, dateCreated=?, routeid=?, WHERE id=?;";
 		int count = -1;
 		
 		try {
@@ -139,8 +155,13 @@ public class AlertDAO implements AlertDAOInterface {
 			this.pstmt.setString(2, updatedAlert.get_description());
 			this.pstmt.setDate(3, updatedAlert.get_dateOfLastUpdate());
 			this.pstmt.setDate(4, updatedAlert.get_dateCreated());
-			this.pstmt.setString(5, String.valueOf(updatedAlert.get_id()));
-
+	
+			// set the route
+			this.pstmt.setInt(5,  updatedAlert.get_route().get_id());
+			
+			this.pstmt.setInt(6, updatedAlert.get_id());
+			
+	
 			this.pstmt.execute();
 			count = this.pstmt.getUpdateCount();
 

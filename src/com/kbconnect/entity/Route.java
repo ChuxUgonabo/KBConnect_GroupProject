@@ -6,7 +6,7 @@ package com.kbconnect.entity;
 /**
  * @author Gursewak Singh
  * 
- * Route
+ *         Route
  *
  */
 public class Route {
@@ -20,9 +20,9 @@ public class Route {
 	 * 
 	 */
 	public Route() {
-		
+
 	}
-	
+
 	/**
 	 * 
 	 * @param id the database id of the route
@@ -30,6 +30,7 @@ public class Route {
 	public void set_id(int id) {
 		_id = id;
 	}
+
 	/**
 	 * 
 	 * @return the database id of the route
@@ -37,7 +38,7 @@ public class Route {
 	public int get_id() {
 		return _id;
 	}
-	
+
 	/**
 	 * @return the _routeNo
 	 */
