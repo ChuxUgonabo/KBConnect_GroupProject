@@ -70,14 +70,15 @@ public class OrderDAO implements OrderDAOInterface {
 	@Override
 	public Order getOrder(int orderId) {
 		// create mySQL query to get one by ID
-		String sql = "SELECT * FROM orders WHERE id=" + orderId;
+		String sql = "SELECT * FROM orders WHERE id=?;";
 		// instantiate new Order
 		Order currOrder = new Order();
 		try {
 			// connect the database
 			this._conn = daoAgent.connectDB(this._conn, databaseName);
 
-			this._stmt = this._conn.createStatement();
+			this._pstmt = this._conn.prepareStatement(sql);
+			this._pstmt.setInt(1, orderId);
 			this._rs = this._stmt.executeQuery(sql);
 			while (this._rs.next()) {
 				currOrder.set_id(this._rs.getInt("id"));
