@@ -100,7 +100,7 @@ public class CompassCardDAO implements CompassCardDAOInterface {
             displayErrors(sx);
 		}
 
-		return null;
+		return card;
 	}
 
 	@Override
