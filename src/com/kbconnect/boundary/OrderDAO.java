@@ -95,7 +95,7 @@ public class OrderDAO implements OrderDAOInterface {
 
 			this._pstmt = this._conn.prepareStatement(sql);
 			this._pstmt.setInt(1, orderId);
-			this._rs = this._stmt.executeQuery(sql);
+			this._rs = this._pstmt.executeQuery();
 			while (this._rs.next()) {
 				currOrder.set_id(this._rs.getInt("orderId"));
 				currOrder.set_quantity(this._rs.getInt("quantity"));
