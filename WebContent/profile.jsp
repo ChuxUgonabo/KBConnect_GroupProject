@@ -21,11 +21,14 @@
 <title><% out.print(user.get_username()); %></title>
 </head>
 <body>
-    <p><% out.print(user.get_username()); %></p>
+    <nav class="navbar navbar-light bg-light">
+        <a class="navbar-brand" href="profile.jsp"><% out.print(user.get_username()); %></a>
 
-    <form action="LoginController" method="post">
-    <input class="btn btn-primary" type="submit" name="action" value="logout">
-    </form>
+         <form action="LoginController" method="post">
+            <input type="hidden" value="logout" name="action">
+            <input class="btn btn-primary" type="submit" value="Logout">
+        </form>
+    </nav>
 
     <hr>
 
@@ -45,9 +48,25 @@
 
     <hr>
 
-    <button class="btn btn-primary"><a class="text-light" href="editProfile.jsp">Edit Profile</a></button>
-    <button class="btn btn-primary"><a class="text-light" href="linkCard.jsp">Link Card</a></button>
-    <button class="btn btn-primary"><a class="text-light" href="listAlerts.jsp">Show Alerts</a></button>
+<nav class="navbar navbar-expand-lg navbar-light bg-light">
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+    </button>
+
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+        <ul class="navbar-nav mr-auto">
+            <li class="nav-item active">
+                <a class="nav-link text-primary" href="editProfile.jsp">Edit Profile</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link text-primary" href="linkCard.jsp">Link Card</a>
+            </li>
+            <li class="nav-item dropdown">
+                <a class="nav-link text-primary" href="listAlerts.jsp">Show Alerts</a>
+            </li>
+        </ul>
+    </div>
+</nav>
 
 </body>
 </html>
