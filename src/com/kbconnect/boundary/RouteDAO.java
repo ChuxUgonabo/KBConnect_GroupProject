@@ -30,7 +30,7 @@ public class RouteDAO implements RouteDAOInterface{
 	public ArrayList<Route> getAllRoutes() {
 		// create mySQL query to get all
 		String sql = "SELECT * FROM routes;";
-		// define an arrayList to store products
+		// define an arrayList to store routes
 		ArrayList<Route> currList = new ArrayList<Route>();
 		try {
 			// connect the database
@@ -63,7 +63,7 @@ public class RouteDAO implements RouteDAOInterface{
 	public Route getRoute(int routeId) {
 		// create mySQL query to get one by ID
 		String sql = "SELECT * FROM routes WHERE id=?";
-		// define new product
+		// define new route
 		Route route= new Route();
 		try {
 			// connect the database
@@ -73,7 +73,7 @@ public class RouteDAO implements RouteDAOInterface{
 			this._pstmt = this._conn.prepareStatement(sql);
 			this._pstmt.setInt(1, routeId);
 			
-			this._rs = this._stmt.executeQuery(sql);
+			this._rs = this._pstmt.executeQuery();
 			while (this._rs.next()) {
 				route.set_id(this._rs.getInt("id"));
 				route.set_routeNo(this._rs.getString("routeNo"));
@@ -151,7 +151,7 @@ public class RouteDAO implements RouteDAOInterface{
 	@Override
 	public boolean deleteRoute(Route deletedRoute) {
 		// Create mySql query to delete current one on database
-		String sql = "DELETE FROM products WHERE id=?;";
+		String sql = "DELETE FROM routes WHERE id=?;";
 		// sentinel
 		int effectRow = 0;
 		try {
