@@ -8,7 +8,9 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.sql.Date;
 import com.kbconnect.boundary.AlertDAO;
+import com.kbconnect.boundary.RouteDAO;
 import com.kbconnect.entity.Alert;
+import com.kbconnect.entity.Route;
 
 /**
  * Servlet implementation class AlertController
@@ -45,6 +47,9 @@ public class AlertController extends HttpServlet {
 		
         // initialize a alert dao
         AlertDAO aldao = new AlertDAO();
+        
+        // initialize the route dao
+        RouteDAO rdao = new RouteDAO();
 
         // check for action if it is to create an alert, update or delete
         String action = request.getParameter("action");
@@ -58,6 +63,9 @@ public class AlertController extends HttpServlet {
                 // get the alert information
                 String shortDescription = request.getParameter("shortDescription");
                 String alertDescription = request.getParameter("description");
+                int routeId = Integer.parseInt(request.getParameter("routeId"));
+                
+                Route alertRoute = rdao.getRoute(routeId);
                 // for a new alert, the date created and last update are same
                 long millis = System.currentTimeMillis();
                 Date alertCreationDate = new Date(millis);
@@ -70,11 +78,12 @@ public class AlertController extends HttpServlet {
                 newAlert.set_description(alertDescription);
                 newAlert.set_dateOfLastUpdate(alertCreationDate);
                 newAlert.set_dateCreated(alertCreationDate);
+                newAlert.set_route(alertRoute);
 
                 // save the alert to the database
                 aldao.createAlert(newAlert);
                 // send the email notifications
-                boolean wasEmailSuccessful = emailSender.notifyAllUsers(newAlert);
+                boolean wasEmailSuccessful = emailSender.notifySubscribed(newAlert);
                 if (!wasEmailSuccessful) {
 
                 	message += "Error occured wile sending out some emails!";
@@ -93,17 +102,22 @@ public class AlertController extends HttpServlet {
                 String updateDesc = request.getParameter("description");
                 long updateMillis = System.currentTimeMillis();
                 Date lastUpdate = new Date(updateMillis);
+                
+                int updatedRouteId = Integer.parseInt(request.getParameter("routeId"));
+                
+                Route newAlertRoute = rdao.getRoute(updatedRouteId);
 
                 // update the old alert to reflect new values
                 Alert oldAlert = aldao.getAlert(updateId);
                 oldAlert.set_shortDescription(updateShortDesc);
                 oldAlert.set_description(updateDesc);
                 oldAlert.set_dateOfLastUpdate(lastUpdate);
+                oldAlert.set_route(newAlertRoute);
 
                 // save the alert in the database
                 aldao.updateAlert(oldAlert);
                 
-                boolean wasNotifySuccessful = emailSender.notifyAllUsers(oldAlert);
+                boolean wasNotifySuccessful = emailSender.notifySubscribed(oldAlert);
                 if (!wasNotifySuccessful) {
 
                 	message += "Error occured wile sending out some emails!";
