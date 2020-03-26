@@ -79,6 +79,56 @@ public class OrderDAO implements OrderDAOInterface {
 
 		return currList;
 	}
+	
+	public ArrayList<Order> getAllUserOrders(int currentUserId) {
+		// create mySQL query to get all
+		String sql = "SELECT * FROM orders WHERE placedBy=?;";
+		// define an arrayList to store orders
+		ArrayList<Order> currList = new ArrayList<Order>();
+		try {
+			// connect the database
+			this._conn = daoAgent.connectDB(this._conn, databaseName);
+			
+			this._pstmt = this._conn.prepareStatement(sql);
+			this._pstmt.setInt(1, currentUserId);
+			this._rs = this._pstmt.executeQuery();
+
+
+			while (this._rs.next()) {
+				// instantiate new order
+				Order order = new Order();
+
+				order.set_id(this._rs.getInt("orderId"));
+				order.set_quantity(this._rs.getInt("quantity"));
+				order.set_transactionDate(this._rs.getDate("transactionDate"));
+
+				Product p = new Product();
+				ProductDAO pdao = new ProductDAO();
+				p = pdao.getProduct(this._rs.getInt("productId"));
+				order.set_productOrdered(p);
+
+				User u = new User();
+				CommuterDAO udao = new CommuterDAO();
+				u = udao.getUser(this._rs.getInt("placedBy"));
+				order.set_placedBy(u);
+//
+//				Admin admin = new Admin();
+//				AdminDAO adao = new AdminDAO();
+//				admin = adao.getUser(this._rs.getInt("approvedBy"));
+//				order.set_approvedBy(admin);
+
+				currList.add(order);
+
+			}
+			// after executing , close the connection
+			this._conn = daoAgent.disconnectDB(this._conn);
+
+		} catch (SQLException sx) {
+			daoAgent.displayException(sx);
+		}
+
+		return currList;
+	}
 
 	/**
 	 * @return an order of object
@@ -133,7 +183,7 @@ public class OrderDAO implements OrderDAOInterface {
 	@Override
 	public boolean createOrder(Order newOrder) {
 		// Create mySql query to insert new one to database
-		String sql = "INSERT INTO orders (quantity,transactionDate,productId,placedBy,approvedBy) VALUES(?,?,?,?,?);";
+		String sql = "INSERT INTO orders (quantity,transactionDate,productId,placedBy) VALUES(?,?,?,?);";
 		// sentinel
 		int effectRow = 0;
 		try {
@@ -146,7 +196,7 @@ public class OrderDAO implements OrderDAOInterface {
 			this._pstmt.setDate(2, newOrder.get_transactionDate());
 			this._pstmt.setInt(3, newOrder.get_productOrdered().get_id());
 			this._pstmt.setInt(4, newOrder.get_placedBy().get_id());
-			this._pstmt.setInt(5, newOrder.get_approvedBy().get_id());
+//			this._pstmt.setInt(5, newOrder.get_approvedBy().get_id());
 			// execute and get effect row it should be 1 if execute successfully
 			effectRow = this._pstmt.executeUpdate();
 
@@ -167,7 +217,7 @@ public class OrderDAO implements OrderDAOInterface {
 	@Override
 	public boolean updateOrder(Order updatedOrder) {
 		// Create mySql query to update current one on database
-		String sql = "UPDATE orders SET quantity=?, transactionDate=?, productId=?, placedBy=?, approvedBy=? WHERE orderId=?;";
+		String sql = "UPDATE orders SET quantity=?, transactionDate=?, productId=?, placedBy=? WHERE orderId=?;";
 		// sentinel
 		int effectRow = 0;
 		try {
@@ -180,9 +230,9 @@ public class OrderDAO implements OrderDAOInterface {
 			this._pstmt.setDate(2, updatedOrder.get_transactionDate());
 			this._pstmt.setInt(3, updatedOrder.get_productOrdered().get_id());
 			this._pstmt.setInt(4, updatedOrder.get_placedBy().get_id());
-			this._pstmt.setInt(5, updatedOrder.get_approvedBy().get_id());
+//			this._pstmt.setInt(5, updatedOrder.get_approvedBy().get_id());
 
-			this._pstmt.setInt(6, updatedOrder.get_id());
+			this._pstmt.setInt(5, updatedOrder.get_id());
 
 			// execute and get effect row it should be 1 if execute successfully
 			effectRow = this._pstmt.executeUpdate();
