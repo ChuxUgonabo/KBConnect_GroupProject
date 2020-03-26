@@ -38,10 +38,10 @@
         <li class="list-group-item"><strong>Email: </strong><% out.print(user.get_email()); %></li>
         <li class="list-group-item"><strong>Address: </strong><% out.print(user.get_address()); %></li>
         <%
-            if (user.get_cardNumber() != null) {
-                out.print("<li class='list-group-item'><strong>Linked Card: </strong>" + user.get_cardNumber() + "</li>");
-            } else {
+            if (user.get_cardNumber() == null) {
                 out.print("<li class='list-group-item'><strong>Linked Card: </strong>None</li>");
+            } else {
+                out.print("<li class='list-group-item'><strong>Linked Card: </strong>" + user.get_cardNumber() + "</li>");
             }
         %>
     </ul>
@@ -63,6 +63,9 @@
             </li>
             <li class="nav-item dropdown">
                 <a class="nav-link text-primary" href="listAlerts.jsp">Show Alerts</a>
+            </li>
+            <li class="nav-item dropdown">
+                <a class="nav-link text-primary" href="subscriptions.jsp">Alert Subscriptions</a>
             </li>
         </ul>
     </div>
