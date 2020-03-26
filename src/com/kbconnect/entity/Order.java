@@ -23,6 +23,12 @@ public class Order {
 	public Order() {
 		super();
 	}
+	public Order(int qty, Date tranDate, Product productOrd, User placedBy) {
+		_quantity = qty;
+		_transactionDate = tranDate;
+		_productOrdered = productOrd;
+		_placedBy = placedBy;
+	}
 
 	/**
 	 * @return the _id
