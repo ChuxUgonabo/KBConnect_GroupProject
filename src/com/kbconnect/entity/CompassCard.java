@@ -66,9 +66,8 @@ public class CompassCard {
 	 * @return true if cvn matches false otherwise
 	 */
 	public boolean compareCVN( String cvn ) {
-		// TODO compare cvn and return true if it matches, false otherwise
 		// encrypted cvn
-		return true;
+		return BCrypt.checkpw(cvn, this._cvn);
 	}
 
     public String get_cvn() {
