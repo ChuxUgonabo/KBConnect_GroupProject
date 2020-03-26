@@ -156,6 +156,53 @@ public class CommuterDAO implements UserDaoInterface {
 		return user;
 	}
 
+	public User getUserFromCard(String cardNumber) {
+		// Instantiate the object of student
+		User user = new User();
+		boolean successful = false;
+
+		// get one object of student by condition of email
+		String sql = "SELECT * FROM users where cardNumber=?;";
+		try {
+
+			// connecting the connectDB
+			this.conn = daoAgent.connectDB(this.conn, databaseName);
+			// create the prepared statement
+			this.pstmt = this.conn.prepareStatement(sql);
+			// set the parameter for the query
+			this.pstmt.setString(1, cardNumber);
+			// Execute
+			this.pstmt.execute();
+
+			this.rs = this.pstmt.getResultSet();
+			while (rs.next()) {
+				successful = true;
+				// populate the properties of the object from the database
+				user.set_id(rs.getInt("id"));
+				user.set_fullName(rs.getString("fullName"));
+				user.set_username(rs.getString("username"));
+				user.set_email(rs.getString("email"));
+
+				user.set_password(rs.getString("password"));
+				user.set_address(rs.getString("address"));
+				user.set_DOB(rs.getDate("DOB"));
+				user.set_cardNumber(rs.getString("cardNumber"));
+			}
+			if (!successful) {
+
+				user = null;
+			}
+
+			// disconnect from the database
+//			this.conn = doaAgent.disconnectDB(conn);
+			this.conn = daoAgent.disconnectDB(this.conn);
+
+		} catch (SQLException sx) {
+			daoAgent.displayException(sx);
+		}
+
+		return user;
+	}
 	@Override
 	public boolean updateUser(User newUser) {
 		String sql = "UPDATE users set  fullName=?, username=?, email=?, password=?, address=?, DOB=?, cardNumber=? WHERE id=?;";

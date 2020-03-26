@@ -137,7 +137,7 @@ public class AlertDAO implements AlertDAOInterface {
 			daoAgent.displayException(sx);
 		}
 
-		return count > 0;
+		return (count > 0);
 
 	}
 
