@@ -1,16 +1,23 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
-<%@ page import="com.kbconnect.boundary.*, com.kbconnect.entity.*" %>    
+<%@ page import="com.kbconnect.boundary.*, com.kbconnect.entity.*, java.util.ArrayList" %>    
 <% 
 	AdminDAO adminDAO = new AdminDAO();
 	AlertDAO aldao = new AlertDAO();
-    if (session.getAttribute("username") == null) {
+    if (session.getAttribute("adminUsername") == null) {
         response.sendRedirect("adminLogin.jsp?message=login");
         return;
     }
-	String username = String.valueOf(session.getAttribute("username"));
+	String username = String.valueOf(session.getAttribute("adminUsername"));
 
     Admin admin = adminDAO.getUser(username);
+
+    // initialize the route class
+    RouteDAO rdao = new RouteDAO();
+    ArrayList<Route> allRoutes = new ArrayList<>();
+
+    // get all the routes
+    allRoutes = rdao.getAllRoutes();
 %>
 <!DOCTYPE html>
 <html>
@@ -54,6 +61,16 @@
                 "<textarea class='form-control' id='detail' name='description'>" +
                 "</textarea>" +
                 "</div>" +
+                "<label for='routeId'>Route No.</label>" + 
+                "<div class='form-group'>" + 
+                "<select class='form-control form-control-sm' name='routeId'>");
+                for (Route aRoute: allRoutes) {
+                    out.println("<option value='" + aRoute.get_id() + "'>" + 
+                    		aRoute.get_routeNo() + " :    " + aRoute.get_fromCity() + 
+                    		"    ->    " + aRoute.get_toCity() +"</option>");
+                    }
+                out.println("</select>" +
+                "</div>" + 
                 "<button type='submit' class='btn btn-primary'>Create Alert</button>" +
                 "</form>" +
                 "</div>" +
@@ -88,6 +105,15 @@
                 "<textarea class='form-control' id='detail' name='description'>" +
                 alert.get_description() + 
                 "</textarea>" +
+                "<label for='routeId'>Route No.</label>" + 
+                "<div class='form-group'>" +
+                "<select class='form-control form-control-sm' name='routeId'>");
+                for (Route aRoute: allRoutes) {
+                    out.println("<option value='" + aRoute.get_id() + "'>" + 
+                    		aRoute.get_routeNo() + " :    " + aRoute.get_fromCity() + 
+                    		"    ->    " + aRoute.get_toCity() +"</option>");
+                    }
+                out.println("</select>" +
                 "</div>" +
                 "<button type='submit' class='btn btn-primary'>Update Alert</button>" +
                 "</form>" +

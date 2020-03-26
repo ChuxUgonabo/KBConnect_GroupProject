@@ -6,7 +6,20 @@
 <%
 ProductDAO pdao = new ProductDAO();
 TravelPassDAO tpdao = new TravelPassDAO();
+
+
+AdminDAO adminDao = new AdminDAO();
+
+if (session.getAttribute("adminUsername") == null) {
+	response.sendRedirect("adminLogin.jsp?message=login");
+    return;
+}
+
+String username = String.valueOf(session.getAttribute("adminUsername"));
+
+Admin admin = adminDao.getUser(username);
 %>
+
 <!DOCTYPE html>
 <html>
 <head>

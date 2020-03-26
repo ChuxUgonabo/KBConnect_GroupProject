@@ -5,11 +5,19 @@
 	CommuterDAO userDao = new CommuterDAO();
 	AdminDAO adao = new AdminDAO();
 	AlertDAO aldao = new AlertDAO();
-    if (session.getAttribute("username") == null) {
+    if (session.getAttribute("username") == null && session.getAttribute("adminUsername") == null) {
         response.sendRedirect("login.jsp?message=login");
         return;
     }
-	String username = String.valueOf(session.getAttribute("username"));
+    
+    String username = "";
+    if (session.getAttribute("username") == null) {
+    	username = String.valueOf(session.getAttribute("adminUsername"));
+    } else {
+		username = String.valueOf(session.getAttribute("username"));
+    }
+	
+	
 
     // if someone is logged in but he is not an admin, then redirect to the forbidden page
    

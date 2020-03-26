@@ -8,11 +8,11 @@
 	ArrayList<User> commuterList = commuterDao.getAllUsers();
 
 	AdminDAO userDao = new AdminDAO();
-	if (session.getAttribute("username") == null ) {
+	if (session.getAttribute("adminUsername") == null ) {
 		response.sendRedirect("adminLogin.jsp?message=login");
 		return;
 	}
-	String username = String.valueOf(session.getAttribute("username"));
+	String username = String.valueOf(session.getAttribute("adminUsername"));
 
 	User user = userDao.getUser(username);
 	if (user == null ) {

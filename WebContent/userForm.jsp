@@ -7,12 +7,12 @@
 	AdminDAO adminDao = new AdminDAO();
 
 	CommuterDAO udao = new CommuterDAO();
-if (session.getAttribute("username") == null) {
+if (session.getAttribute("adminUsername") == null) {
 	response.sendRedirect("adminLogin.jsp?message=login");
     return;
 }
 
-String username = String.valueOf(session.getAttribute("username"));
+String username = String.valueOf(session.getAttribute("adminUsername"));
 
 Admin admin = adminDao.getUser(username);
 %>
