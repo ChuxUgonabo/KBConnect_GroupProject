@@ -143,7 +143,7 @@ public class AlertDAO implements AlertDAOInterface {
 
 	@Override
 	public boolean updateAlert(Alert updatedAlert) {
-		String sql = "UPDATE alerts set shortDescription=?, description =?, dateOfLastUpdate=?, dateCreated=?, routeid=?, WHERE id=?;";
+		String sql = "UPDATE alerts set shortDescription=?, description =?, dateOfLastUpdate=?, dateCreated=?, routeId=? WHERE id=?;";
 		int count = -1;
 		
 		try {
