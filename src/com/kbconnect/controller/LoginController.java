@@ -83,7 +83,7 @@ public class LoginController extends HttpServlet {
 			} else {
 				// start the session for admin
 				HttpSession session = request.getSession();
-				session.setAttribute("username", admin.get_username());
+				session.setAttribute("adminUsername", admin.get_username());
 				// redirect the admin to his profile page
 				response.sendRedirect("adminProfile.jsp");
 			}
