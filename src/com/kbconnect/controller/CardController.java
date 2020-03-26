@@ -78,10 +78,16 @@ public class CardController extends HttpServlet {
                     //  get the card from the data base
                     CompassCard compassCard = cdao.getCompassCard(cardNumber);
 
+                    // get the user if the card is already in use by another user
+                    User alreadyUser = udao.getUserFromCard(cardNumber);
+                    
                     // compare the card cvn
                     if (compassCard == null || !compassCard.compareCVN(cvn)) {
                         response.sendRedirect("linkCard.jsp?message=invalidCard");
                         break;
+                    } else if (alreadyUser != null ) {
+                        response.sendRedirect("linkCard.jsp?message=invalidCard");
+                        break;                    	
                     } else {
                         user.set_cardNumber(cardNumber);
                     }
