@@ -18,6 +18,13 @@
 
     // get all the routes
     allRoutes = rdao.getAllRoutes();
+    
+    // initialize the subscriptions dao
+    SubscribedDAO sdao = new SubscribedDAO();
+    ArrayList<SubscribedTo> allSubscriptions = new ArrayList<>();
+    
+    allSubscriptions = sdao.getSubscriptionForUser(user);
+    
 
 %>
 
@@ -40,11 +47,11 @@
     </nav>
     <div class="container">
         <h4 class="">Add a new bus route to alert subscriptions.</h4>
-        <form method="post" action="SubscriptionsController">
+        <form method="post" action="SubscriptionController">
             <div class="form-group w-50">
 
-                <label for="routeNo">Route No.</label>
-                <select class="form-control form-control-sm" name="routeNo">
+                <label for="routeId">Route No.</label>
+                <select class="form-control form-control-sm" name="routeId">
                     <%
                     for (Route aRoute: allRoutes) {
                     out.println("<option value='" + aRoute.get_id() + "'>" + 
@@ -54,6 +61,7 @@
                     %>
                 </select>
             </div>
+            <input type="hidden" name="action" value="addSubscription">
             <div class="form-group w-25">
                 <input class="form-control btn btn-primary" type="submit" value="Add">
             </div>
@@ -62,6 +70,20 @@
         <h4 class="">You are subscribed to receive alerts for following bus routes.</h4>
 
         <ul class="list-group">
+        <%
+        	if (allSubscriptions.size() < 1) {
+        		out.println("<div class='alert alert-info' role='alert'>" +
+        		  	"You don't have any active subscriptions!" +
+        			"</div>");
+        	} else {
+	        	for (SubscribedTo subscription: allSubscriptions) {
+	        		Route currentRoute = rdao.getRoute(subscription.get_routeId());
+	        		out.println("<li class='list-group-item'>" + 
+	        				currentRoute.get_routeNo() + " :    " + currentRoute.get_fromCity() + 
+	                		"    ->    " + currentRoute.get_toCity() +"</option>");
+	        	}
+        	}
+        %>
 
         </ul>
 
