@@ -138,7 +138,7 @@ public class CommuterDAO implements UserDaoInterface {
 				user.set_password(rs.getString("password"));
 				user.set_address(rs.getString("address"));
 				user.set_DOB(rs.getDate("DOB"));
-//				user.set_cardNumber(rs.getString("cardNumber"));
+				user.set_cardNumber(rs.getString("cardNumber"));
 			}
 			if (!successful) {
 
