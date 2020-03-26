@@ -15,6 +15,8 @@ public class Route {
 	private String _routeNo;
 	private String _startingStop;
 	private String _terminationStop;
+	private String _fromCity;
+	private String _toCity;
 
 	/**
 	 * 
@@ -79,6 +81,34 @@ public class Route {
 	 */
 	public void set_terminationStop(String _terminationStop) {
 		this._terminationStop = _terminationStop;
+	}
+
+	/**
+	 * @return the _fromCity
+	 */
+	public String get_fromCity() {
+		return _fromCity;
+	}
+
+	/**
+	 * @param _fromCity the _fromCity to set
+	 */
+	public void set_fromCity(String _fromCity) {
+		this._fromCity = _fromCity;
+	}
+
+	/**
+	 * @return the _toCity
+	 */
+	public String get_toCity() {
+		return _toCity;
+	}
+
+	/**
+	 * @param _toCity the _toCity to set
+	 */
+	public void set_toCity(String _toCity) {
+		this._toCity = _toCity;
 	}
 
 }

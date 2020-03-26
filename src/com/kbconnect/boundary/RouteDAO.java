@@ -45,6 +45,8 @@ public class RouteDAO implements RouteDAOInterface{
 				route.set_routeNo(this._rs.getString("routeNo"));
 				route.set_startingStop(this._rs.getString("startingStop"));
 				route.set_terminationStop(this._rs.getString("terminationStop"));
+				route.set_fromCity(this._rs.getString("fromCity"));
+				route.set_toCity(this._rs.getString("toCity"));
 
 				currList.add(route);
 
@@ -79,6 +81,9 @@ public class RouteDAO implements RouteDAOInterface{
 				route.set_routeNo(this._rs.getString("routeNo"));
 				route.set_startingStop(this._rs.getString("startingStop"));
 				route.set_terminationStop(this._rs.getString("terminationStop"));
+				route.set_fromCity(this._rs.getString("fromCity"));
+				route.set_toCity(this._rs.getString("toCity"));
+
 
 			}
 			// after executing , close the connection
@@ -94,7 +99,7 @@ public class RouteDAO implements RouteDAOInterface{
 	@Override
 	public boolean createRoute(Route newRoute) {
 		// Create mySql query to insert new one to database
-		String sql = "INSERT INTO routes (routeNo, startingStop, terminationStop) VALUES(?,?,?);";
+		String sql = "INSERT INTO routes (routeNo, startingStop, terminationStop, fromCity, toCity) VALUES(?,?,?,?,?);";
 		// sentinel
 		int effectRow = 0;
 		try {
@@ -105,6 +110,8 @@ public class RouteDAO implements RouteDAOInterface{
 			this._pstmt.setString(1, newRoute.get_routeNo());
 			this._pstmt.setString(2, newRoute.get_startingStop());
 			this._pstmt.setString(3, newRoute.get_terminationStop());
+			this._pstmt.setString(4, newRoute.get_fromCity());
+			this._pstmt.setString(5, newRoute.get_toCity());
 
 			// execute and get effect row it should be 1 if execute successfully
 			effectRow = this._pstmt.executeUpdate();
@@ -122,7 +129,7 @@ public class RouteDAO implements RouteDAOInterface{
 	@Override
 	public boolean updateRoute (Route updatedRoute) {
 		// Create mySql query to update current one on database
-		String sql = "UPDATE routes SET routeNo=?, startingStop=?, terminationStop=? WHERE id=?;";
+		String sql = "UPDATE routes SET routeNo=?, startingStop=?, terminationStop=?, fromCity=?, toCity=? WHERE id=?;";
 		// sentinel
 		int effectRow = 0;
 		try {
@@ -133,7 +140,9 @@ public class RouteDAO implements RouteDAOInterface{
 			this._pstmt.setString(1, updatedRoute.get_routeNo());
 			this._pstmt.setString(2, updatedRoute.get_startingStop());
 			this._pstmt.setString(3, updatedRoute.get_terminationStop());
-			this._pstmt.setInt(4, updatedRoute.get_id());
+			this._pstmt.setString(4, updatedRoute.get_fromCity());
+			this._pstmt.setString(5, updatedRoute.get_toCity());
+			this._pstmt.setInt(6, updatedRoute.get_id());
 
 			// execute and get effect row it should be 1 if execute successfully
 			effectRow = this._pstmt.executeUpdate();
