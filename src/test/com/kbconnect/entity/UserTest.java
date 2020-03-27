@@ -29,6 +29,7 @@ class UserTest {
 		userToTest.set_email("test@gmail.com");
 		userToTest.set_DOB("1999-02-12");
 		userToTest.set_address("New Westminster, BC");
+		userToTest.set_cardNumber("99999999999999");
 	}
 
 	@Test
@@ -61,6 +62,10 @@ class UserTest {
 		assertEquals("New Westminster, BC", userToTest.get_address());
 	}
 	
+	@Test 
+	void testGetCardNumber() {
+		assertEquals("99999999999999", userToTest.get_cardNumber());
+	}
 	// testSets
 	@Test
 	void testSetUsername() {
@@ -98,4 +103,10 @@ class UserTest {
 		assertEquals("Burnaby, BC", userToTest.get_address());
 	}
 
+	@Test
+	void testSetCardNumber() {
+		userToTest.set_cardNumber("99999");
+		assertNotNull(userToTest.get_cardNumber());
+		
+	}
 }

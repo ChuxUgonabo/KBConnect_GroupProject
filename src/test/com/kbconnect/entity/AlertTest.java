@@ -6,23 +6,39 @@ import java.text.ParseException;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import com.kbconnect.entity.Alert;
+import com.kbconnect.entity.Route;
+/**
+ * Create JUnit test case for testing the entity of Alert
+ * @author user
+ *
+ */
 
 class AlertTest {
 
 	Alert alertToTest;
 	Date aday = new Date(1584333710);
+	Route routeToTest;
 
 	@BeforeEach
 	void setUp() throws Exception {
 
 		// initialize a new alert
 		alertToTest = new Alert();
-
+	
 		alertToTest.set_id(1);
 		alertToTest.set_shortDescription("School will be closed");
 		alertToTest.set_description("This week is last week of this semester");	
 		alertToTest.set_dateCreated(aday);
 		alertToTest.set_dateOfLastUpdate(aday);
+		
+		routeToTest= new Route();
+		routeToTest.set_routeNo("No3275");
+		routeToTest.set_startingStop("douglas");
+		routeToTest.set_terminationStop("waterFront");
+		routeToTest.set_fromCity("New Westminster");
+		routeToTest.set_toCity("Vancouver");
+		
+		alertToTest.set_route(routeToTest);
 
 	}
 
@@ -50,6 +66,12 @@ class AlertTest {
 	@Test
 	void testGetDateOfLastUpdate() {
 		assertEquals(aday, alertToTest.get_dateOfLastUpdate());
+	}
+	
+	@Test
+	void testGetRoute() {
+		assertSame(routeToTest, alertToTest.get_route());
+		
 	}
 
 	@Test
@@ -86,4 +108,10 @@ class AlertTest {
 		assertEquals(date, alertToTest.get_dateOfLastUpdate());
 	}
 
+	@Test
+	void testSetRoute() {
+		Route curr= new Route();
+		alertToTest.set_route(curr);
+		assertNull(alertToTest.get_route().get_startingStop(), "it may get a null value of route statringStop");
+	}
 }
