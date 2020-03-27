@@ -6,6 +6,7 @@ CREATE TABLE IF NOT EXISTS orders (
     productId int,
     placedBy int,
     approvedBy int,
+    approvalStatus BOOLEAN,
     FOREIGN KEY productId REFERENCES products(id),
     FOREIGN KEY placedBy REFERENCES user(id),
     FOREIGN KEY approvedBy REFERENCES admin(id)
