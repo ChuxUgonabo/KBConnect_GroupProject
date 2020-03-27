@@ -73,6 +73,14 @@
                 </li>
 
                 <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">Manage Orders</a>
+                    <div class="dropdown-menu">
+                        <a class="dropdown-item" href="adminOrderList.jsp">List all Orders</a>
+                        <a class="dropdown-item" href="createOrder.jsp?action=add">Add New Order</a>
+                    </div>
+                </li>
+                
+                 <li class="nav-item dropdown">
                     <a class="nav-link dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">Alerts</a>
                     <div class="dropdown-menu">
                         <a class="dropdown-item" href="adminListAlerts.jsp">List all Alerts</a>
