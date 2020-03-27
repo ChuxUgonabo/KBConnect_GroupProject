@@ -45,13 +45,14 @@
 		</a>
 
 		<form action="LoginController" method="post">
-			<input type="hidden" value="admin" name="admin"> <input
-				type="hidden" value="logout" name="action"> <input
-				class="btn btn-primary" type="submit" value="Logout">
-		</form>
+            <input type="hidden" value="logout" name="action">
+            <input class="btn btn-primary" type="submit" value="Logout">
+        </form>
 	</nav>
 
 	<div class="container">
+			<h3>Available Products</h3>
+		
 		<table class="table">
 			<thead>
 				<tr>
@@ -89,7 +90,7 @@
 				
 				<%
 					if (allCommuterOrders.size() >= 1) {
-						out.print("<thead><tr><th scope='col'><h4>"+ user.get_fullName()	+"'s CART <th scope='col'>Price</th><th scope='col'>Status</th><th scope='col'>Quantity</th></tr></thead><tbody>");
+						out.print("<thead><tr><th scope='col'><h4>"+ user.get_fullName()	+"'s Cart <th scope='col'>Price</th><th scope='col'>Status</th><th scope='col'>Quantity</th></tr></thead><tbody>");
 
 						double totalPrice = 0;
 						int totalQuantity = 0;
@@ -113,8 +114,8 @@
 							totalPrice += price;
 							totalQuantity += allCommuterOrders.get(i).get_quantity();
 						}
-						out.print("<tr><td></td><td>"+totalPrice+"</td><td>"+totalQuantity+"</td><td><h4>Total<h4></td></tr>");
-						out.print("<tr><td><h3> Subtotal (" + allCommuterOrders.size() + " items) $" + totalPrice + "</h3></td><td><h3><form action='' method='' > <input type='submit' class='btn btn-primary' value='Proceed to Checkout'></form></h3></td></tr>");
+						out.print("<tr><td></td><td>"+totalPrice+"</td><td></td><td>"+totalQuantity+"</td><td><h4>Total<h4></td></tr>");
+						out.print("<tr><td><h3> Subtotal (" + allCommuterOrders.size() + " Products) $" + totalPrice + "</h3></td><td><h3><form action='' method='' > <input type='submit' class='btn btn-primary' value='Proceed to Checkout'></form></h3></td></tr>");
 					}else{
 						out.print("<thead><tr<th scope='col'></thead><tbody>");
 					}
