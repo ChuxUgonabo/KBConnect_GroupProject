@@ -89,7 +89,7 @@
 				
 				<%
 					if (allCommuterOrders.size() >= 1) {
-						out.print("<thead><tr><th scope='col'><h4>"+ user.get_fullName()	+"'s CART <th scope='col'>Price</th><th scope='col'>Quantity</th></tr></thead><tbody>");
+						out.print("<thead><tr><th scope='col'><h4>"+ user.get_fullName()	+"'s CART <th scope='col'>Price</th><th scope='col'>Status</th><th scope='col'>Quantity</th></tr></thead><tbody>");
 
 						double totalPrice = 0;
 						int totalQuantity = 0;
@@ -99,9 +99,14 @@
 							out.print("<tr>");
 							out.print("<td>" + allCommuterOrders.get(i).get_productOrdered().get_description() + "</td>"
 									+ "<td>" + price + "</td>");
+							if(allCommuterOrders.get(i).is_approvalStatus()){
+								out.print("<td>Approved</td>");
+							}else{
+								out.print("<td>Awaiting Approval</td>");
+							}
 							out.print("<td><form action='OrderController' method='post'><input type='submit' name='action' value='-'>"
 									+"   "+allCommuterOrders.get(i).get_quantity()
-									+ "  <input type='hidden' name='orderId' value='" + allCommuterOrders.get(i).get_id() + "'>"+"<input type='submit' name='action' value='+'></td>"
+									+ "  <input type='hidden' name='orderId' value='" + allCommuterOrders.get(i).get_id() + "'><input type='submit' name='action' value='+'></td>"
 									+ "<td><input type='submit' name='action' value='Delete'</td></form>");
 							out.print("</tr>");
 							
