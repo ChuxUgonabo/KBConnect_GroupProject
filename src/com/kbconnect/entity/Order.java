@@ -16,18 +16,33 @@ public class Order {
 	private Product _productOrdered;
 	private User _placedBy;
 	private Admin _approvedBy;
+	private boolean _approvalStatus;
 
+
+	/**
+	 * @return the _approvalStatus
+	 */
+	public boolean is_approvalStatus() {
+		return _approvalStatus;
+	}
+	/**
+	 * @param _approvalStatus the _approvalStatus to set
+	 */
+	public void set_approvalStatus(boolean _approvalStatus) {
+		this._approvalStatus = _approvalStatus;
+	}
 	/**
 	 * default constructor
 	 */
 	public Order() {
 		super();
 	}
-	public Order(int qty, Date tranDate, Product productOrd, User placedBy) {
-		_quantity = qty;
-		_transactionDate = tranDate;
-		_productOrdered = productOrd;
-		_placedBy = placedBy;
+	public Order(int qty, Date tranDate, Product productOrd, User placedBy, boolean approvalS) {
+		this._quantity = qty;
+		this._transactionDate = tranDate;
+		this._productOrdered = productOrd;
+		this._placedBy = placedBy;
+		this._approvalStatus = approvalS;
 	}
 
 	/**
