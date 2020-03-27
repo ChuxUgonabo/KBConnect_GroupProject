@@ -142,20 +142,20 @@ public class OrderController extends HttpServlet {
 			boolean updated = ordrDao.updateApproval(currOrder);
 
 			// create and send out confirmtion mail
-			String subject = "Order Confirmation";
-			String content = "Your " + currOrder.get_productOrdered().get_description()
-					+ " order has been approved. \n Your item will be shipped soon. \n Thanks for using us";
-			String currentUserEmail = currOrder.get_placedBy().get_email();
-			boolean wasEmailSuccessful;
-			if (updated == true) {
-				// send an alert to user with order inforomation
-				wasEmailSuccessful = emailSender.notifyOrderApproval(subject, content, "chuxjv@gmail.com");
-				if (!wasEmailSuccessful) {
-
-					message += "Error occured while sending out some emails!";
-				}
+//			String subject = "Order Confirmation";
+//			String content = "Your " + currOrder.get_productOrdered().get_description()
+//					+ " order has been approved. \n Your item will be shipped soon. \n Thanks for using us";
+//			String currentUserEmail = currOrder.get_placedBy().get_email();
+//			boolean wasEmailSuccessful;
+//			if (updated == true) {
+//				// send an alert to user with order inforomation
+//				wasEmailSuccessful = emailSender.notifyOrderApproval(subject, content, "chuxjv@gmail.com");
+//				if (!wasEmailSuccessful) {
+//
+//					message += "Error occured while sending out some emails!";
+//				}
 				response.sendRedirect("adminOrderList.jsp");
-			} 
+//			} 
 			break;
 
 		}
