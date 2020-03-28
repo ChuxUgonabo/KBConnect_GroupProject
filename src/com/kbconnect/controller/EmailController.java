@@ -117,4 +117,24 @@ public class EmailController {
 		// the notification failed
 		return successful;
 	}
+	
+	public boolean notifyOrderApproval(String subject, String content, String recipient) {
+		String resultMessage = "";
+		boolean successful = true;
+		
+		try {
+			GmailServiceImplement.sendEmail(_host, _port, _user, _pass, recipient, subject, content);
+			resultMessage = "The e-mail was sent successfully";
+
+			// if there was an exception, handle it
+		} catch (Exception ex) {
+			ex.printStackTrace();
+			resultMessage = "There were an error: " + ex.getMessage();
+			successful = false;
+		} finally {
+			System.out.println(resultMessage);
+			
+		}
+		return successful;
+	}
 }
