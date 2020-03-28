@@ -2,7 +2,9 @@ package com.kbconnect.controller;
 
 import java.io.IOException;
 import java.sql.Date;
+import java.util.ArrayList;
 
+import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -12,6 +14,7 @@ import javax.servlet.http.HttpServletResponse;
 import com.kbconnect.boundary.AdminDAO;
 import com.kbconnect.boundary.CommuterDAO;
 import com.kbconnect.boundary.OrderDAO;
+import com.kbconnect.boundary.OrderDAOInterface;
 import com.kbconnect.boundary.ProductDAO;
 import com.kbconnect.entity.Admin;
 import com.kbconnect.entity.Alert;
@@ -32,7 +35,7 @@ public class OrderController extends HttpServlet {
 	 */
 	public OrderController() {
 		super();
-		// TODO Auto-generated constructor stub
+		emailSender = new EmailController();
 	}
 
 	/**
@@ -68,7 +71,17 @@ public class OrderController extends HttpServlet {
 		int orderId;
 		// initialize current order
 		Order currOrder;
+		// create a list to hold all orders created by current commuter
+		ArrayList<Order> listOfCommutersOrders;
+		boolean orderExists = false;
 		String action = request.getParameter("action");
+
+//		int currentUserId = Integer.parseInt(request.getParameter("userId"));
+//		request.setAttribute("currentUserId", currentUserId);
+//		RequestDispatcher rd = request.getRequestDispatcher("adminCreateNewOrder.jsp");
+//		rd.forward(request, response);
+//		System.out.println("</body>");
+//		System.out.println("</html>");
 
 		switch (action) {
 
@@ -76,16 +89,47 @@ public class OrderController extends HttpServlet {
 			// collect data from user
 			int qty = Integer.parseInt(request.getParameter("quantity"));
 			Product currentProduct = productDao.getProduct(Integer.parseInt(request.getParameter("productId")));
-			User currentCommuter = commuterDao.getUser(Integer.parseInt(request.getParameter("userId")));
+			int currentUserId = Integer.parseInt(request.getParameter("userId"));
+			User currentCommuter = commuterDao.getUser(currentUserId);
 			long millis = System.currentTimeMillis();
 			Date transactionDate = new Date(millis);
 
 			// create new order
 			Order newOrder = new Order(qty, transactionDate, currentProduct, currentCommuter, false);
+			String product = newOrder.get_productOrdered().get_description();
+
+			// Get list of all current commuter's orders
+			listOfCommutersOrders = ordrDao.getAllUserOrders(currentUserId);
+
+			// this check if this product is already in commuter's cart
+			for (int i = 0; i < listOfCommutersOrders.size(); i++) {
+				// if order is already in cart only increase the quantity
+				if (listOfCommutersOrders.get(i).get_productOrdered().get_description().compareTo(product) == 0) {
+					currOrder = ordrDao.getOrder(listOfCommutersOrders.get(i).get_id());
+					// get current quantity and increase it by 1
+					int currQty = currOrder.get_quantity() + newOrder.get_quantity();
+					// set new quantity
+					currOrder.set_quantity((currQty));
+					// it has to be re-approved by admin
+					currOrder.set_approvalStatus(false);
+					// update quantity to DB
+					ordrDao.updateApproval(currOrder);
+
+					orderExists = true;
+				}
+			}
 
 			// Add order to dateBase
-			ordrDao.createOrder(newOrder);
+			if (orderExists == false) {
+				ordrDao.createOrder(newOrder);
+			}
+//			String adminManageUserOrder = request.getParameter("userOrder");
+//			// redirect depending on authorization
+////			if (adminManageUserOrder != null) {
+//				response.sendRedirect("adminCreateNewOrder.jsp");
+//			} else {
 			response.sendRedirect("placeOrder.jsp");
+//			}
 			break;
 
 		case "Delete":
@@ -100,6 +144,7 @@ public class OrderController extends HttpServlet {
 				response.sendRedirect("placeOrder.jsp");
 			} else {
 				response.sendRedirect("adminOrderList.jsp");
+
 			}
 			break;
 
@@ -110,10 +155,17 @@ public class OrderController extends HttpServlet {
 			int currQtyy = currOrder.get_quantity() - 1;
 			// set new quantity
 			currOrder.set_quantity((currQtyy));
+			// it has to be re-approved by admin
+			currOrder.set_approvalStatus(false);
 			// update quantity to DB
-			ordrDao.updateOrder(currOrder);
-
-			response.sendRedirect("placeOrder.jsp");
+			ordrDao.updateApproval(currOrder);
+			adminStatus = request.getParameter("adminStatus");
+			// redirect depending on authorization
+			if (adminStatus == null) {
+				response.sendRedirect("placeOrder.jsp");
+			} else {
+					response.sendRedirect("adminOrderList.jsp");
+			}
 			break;
 
 		case "+":
@@ -123,39 +175,47 @@ public class OrderController extends HttpServlet {
 			int currQty = currOrder.get_quantity() + 1;
 			// set new quantity
 			currOrder.set_quantity((currQty));
+			// it has to be re-approved by admin
+			currOrder.set_approvalStatus(false);
 			// update quantity to DB
-			ordrDao.updateOrder(currOrder);
-			response.sendRedirect("placeOrder.jsp");
+			ordrDao.updateApproval(currOrder);
+			adminStatus = request.getParameter("adminStatus");
+			// redirect depending on authorization
+			if (adminStatus == null) {
+				response.sendRedirect("placeOrder.jsp");
+			} else {
+				response.sendRedirect("adminOrderList.jsp");
+			}
 			break;
 
 		case "Approve":
 			orderId = Integer.parseInt(request.getParameter("orderId"));
-			//get current order
+			// get current order
 			currOrder = ordrDao.getOrder(orderId);
 			// set it's approvalStatus to true
 			currOrder.set_approvalStatus(true);
-			//get current admin
-			Admin approvedBy = adminDao.getUser(Integer.parseInt(request.getParameter("userId")));
-			// set admin who approvad order
+			// get current admin
+			Admin approvedBy = adminDao.getUser(Integer.parseInt(request.getParameter("adminId")));
+			// set admin who approved order
 			currOrder.set_approvedBy(approvedBy);
 			// update DB
 			boolean updated = ordrDao.updateApproval(currOrder);
 
-			// create and send out confirmtion mail
-//			String subject = "Order Confirmation";
-//			String content = "Your " + currOrder.get_productOrdered().get_description()
-//					+ " order has been approved. \n Your item will be shipped soon. \n Thanks for using us";
-//			String currentUserEmail = currOrder.get_placedBy().get_email();
-//			boolean wasEmailSuccessful;
-//			if (updated == true) {
-//				// send an alert to user with order inforomation
-//				wasEmailSuccessful = emailSender.notifyOrderApproval(subject, content, "chuxjv@gmail.com");
-//				if (!wasEmailSuccessful) {
-//
-//					message += "Error occured while sending out some emails!";
-//				}
+//			create and send out confirmation mail
+			String subject = "Order Confirmation";
+			String content = "Your " + currOrder.get_productOrdered().get_description()
+					+ " order has been approved. \n Your item will be shipped soon. \n Thanks for using us";
+			String currentUserEmail = currOrder.get_placedBy().get_email();
+			boolean wasEmailSuccessful;
+			if (updated == true) {
+				// send an alert to user with order information
+				wasEmailSuccessful = emailSender.notifyOrderApproval(subject, content, currentUserEmail);
+				if (!wasEmailSuccessful) {
+
+					message += "Error occured while sending out some emails!";
+				}
 				response.sendRedirect("adminOrderList.jsp");
-//			} 
+			}
 			break;
 
 		}
