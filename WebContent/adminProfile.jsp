@@ -67,7 +67,7 @@
                 <li class="nav-item dropdown">
                     <a class="nav-link dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">Manage Commuters</a>
                     <div class="dropdown-menu">
-                        <a class="dropdown-item" href="allCommuters.jsp">List all Commters</a>
+                        <a class="dropdown-item" href="allCommuters.jsp">List all Commuters</a>
                         <a class="dropdown-item" href="userForm.jsp?action=createCommuter">Add a new Commuter</a>
                     </div>
                 </li>
@@ -76,7 +76,7 @@
                     <a class="nav-link dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">Manage Orders</a>
                     <div class="dropdown-menu">
                         <a class="dropdown-item" href="adminOrderList.jsp">List all Orders</a>
-                        <a class="dropdown-item" href="createOrder.jsp?action=add">Add New Order</a>
+                        <a class="dropdown-item" href="allCommuters.jsp?action=add">Add New Order</a>
                     </div>
                 </li>
                 
