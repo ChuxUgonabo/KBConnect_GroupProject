@@ -39,7 +39,7 @@
 	
     <a href="adminProfile.jsp" class="btn btn-primary">Profile Page</a>
 
-	<table>
+	<table class="table">
 		<tr>
 			<thead>
 				<th>ID</th>
@@ -51,6 +51,8 @@
 				<th>Address</th>
 				<th>Edit</th>	
 				<th>Delete</th>	
+				<th>Add Order<th>
+				
 			</thead>
 		</tr>
 		<%
@@ -67,7 +69,8 @@
                 out.println("<td> <form action='UserDAOController' method='post'>");
                 out.println("<input type='hidden' name='userId' value='"+commuterOne.get_id()+"'>");
                 out.println("<input type='hidden' name='action' value='delete' >");
-                out.println("<input type='submit' value='Delete' >");
+                out.println("<input type='submit' value='Delete' ></td>");
+                out.println("<td><button type='submit' formaction='adminCreateNewOrder.jsp'>Add Order</button>");
                 out.println("</form></td>");
 				out.println("</tr>");	
 			}
