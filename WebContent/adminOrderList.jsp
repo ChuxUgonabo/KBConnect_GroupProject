@@ -48,7 +48,7 @@
 	</nav>
 	<table class="table">
 		<thead>
-			<h4>Orders Yet To Be Approved</h4>
+			<h4>Orders To Be Approved</h4>
 			<tr>
 				<th scope="col">Name</th>
 				<th scope="col">Item</th>
@@ -68,11 +68,14 @@
 				for (int i = 0; i < orderList.size(); i++) {
 					if (!orderList.get(i).is_approvalStatus()) {
 						out.print("<tr><td>" + orderList.get(i).get_placedBy().get_fullName() + "</td>"
-								+ "<td>" + orderList.get(i).get_productOrdered().get_description() + "</td>" + "<td>"
-								+ orderList.get(i).get_quantity() + "</td>" + "<td>"
-								+ orderList.get(i).get_transactionDate() + "</td>" + "<td>Awaiting Approval</td>"
-								+ "<td><form action='OrderController' method='post'><input type='hidden' name='adminStatus' value='admin'><input type='hidden' name='userId' value='"+user.get_id()+"'><input type='hidden' name='orderId' value='"
-										+ orderList.get(i).get_id() + "'><input type='submit' name='action' value='Approve'></td>"
+								+ "<td>" + orderList.get(i).get_productOrdered().get_description() + "</td>" 
+								+ "<td><form action='OrderController' method='post'><input type='submit' name='action' value='-'>  "
+								+ orderList.get(i).get_quantity() + "  <input type='submit' name='action' value='+'></td>" 
+								+ "<td>"+ orderList.get(i).get_transactionDate() + "</td>" + "<td>Awaiting Approval</td>"
+								+ "<td><input type='hidden' name='adminStatus' value='admin'>"
+								+ "<input type='hidden' name='adminId' value='"+user.get_id()+"'><input type='hidden' name='orderId' value='"+ orderList.get(i).get_id()+ "'>"
+								+ "<input type='hidden' name='userId' value='"+orderList.get(i).get_placedBy().get_id()+ "'>"
+								+"<input type='submit' name='action' value='Approve'></td>"
 								+ "<td><input type='submit' name='action' value='Delete'></td></form>");
 						out.print("</tr>");
 					}
@@ -96,11 +99,13 @@
 				for (int i = 0; i < orderList.size(); i++) {
 					if(orderList.get(i).is_approvalStatus()) {
 						out.print("<tr><td>" + orderList.get(i).get_placedBy().get_fullName() + "</td>"
-								+ "<td>" + orderList.get(i).get_productOrdered().get_description() + "</td>" + "<td>"
-								+ orderList.get(i).get_quantity() + "</td>" + "<td>"
-								+ orderList.get(i).get_transactionDate() + "</td>" + "<td>Approved</td>"
-								+ "<td><form action='OrderController' method='post'>"
-								+ "<input type='hidden' name='adminStatus' value='admin'><input type='hidden' name='userId' value='"+user.get_id()+"'><input type='hidden' name='orderId' value='"
+								+ "<td>" + orderList.get(i).get_productOrdered().get_description() + "</td>" 
+								+ "<td><form action='OrderController' method='post'><input type='submit' name='action' value='-'>  "
+								+ orderList.get(i).get_quantity() + "  <input type='submit' name='action' value='+'></td>" 
+								+ "<td>"+ orderList.get(i).get_transactionDate() + "</td>" + "<td>Approved</td>"
+								+ "<td><input type='hidden' name='adminStatus' value='admin'>"
+								+ "<input type='hidden' name='userId' value='"+orderList.get(i).get_placedBy().get_id()
+								+ "<input type='hidden' name='adminId' value='"+user.get_id()+"'><input type='hidden' name='orderId' value='"
 								+ orderList.get(i).get_id() + "'><input type='submit' name='action' value='Delete'></td></form>");
 						out.print("</tr>");
 
