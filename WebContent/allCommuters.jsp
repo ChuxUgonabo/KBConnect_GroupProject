@@ -81,7 +81,7 @@
 				out.println("<input type='hidden' name='userId' value='" + commuterOne.get_id() + "'>");
 				out.println("<input type='hidden' name='action' value='delete'>");
 				out.println("<input type='submit' value='Delete' ></td>");
-				out.println("<td><button type='submit' formaction='adminCreateNewOrder.jsp?session.invalidate()'>Add Order</button>");
+				out.println("<td><button type='submit' formaction='adminCreateNewOrder.jsp'>Add Order</button>");
 				out.println("</form></td>");
 				out.println("</tr>");
 			}
