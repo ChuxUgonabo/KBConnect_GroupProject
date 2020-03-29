@@ -224,14 +224,25 @@ public class OrderDAO implements OrderDAOInterface {
 	@Override
 	public boolean updateOrder(Order updatedOrder) {
 		// Create mySql query to update current one on database
+		
+//		String foreignKeyNoCheck = "SET FOREIGN_KEY_CHECKS=0";
+//		String foreignKeyCheck = "SET FOREIGN_KEY_CHECKS=1";
 		String sql = "UPDATE orders SET quantity=?, transactionDate=?, productId=?, placedBy=? WHERE orderId=?;";
+		
+
+		
 		// sentinel
 		int effectRow = 0;
 		try {
 			// connect the database
 			this._conn = daoAgent.connectDB(this._conn, databaseName);
+			
+			// remove foreign key checking
+//			this._stmt = this._conn.createStatement();
+//			this._stmt.execute(foreignKeyNoCheck);
 			// set the variables
 			this._pstmt = this._conn.prepareStatement(sql);
+
 
 			this._pstmt.setInt(1, updatedOrder.get_quantity());
 			this._pstmt.setDate(2, updatedOrder.get_transactionDate());
@@ -243,9 +254,63 @@ public class OrderDAO implements OrderDAOInterface {
 
 			// execute and get effect row it should be 1 if execute successfully
 			effectRow = this._pstmt.executeUpdate();
+			
+			// reinsert the foreign key constraint
+//			this._stmt.execute(foreignKeyCheck);
 
 			// disconnect the database
 			this._conn = daoAgent.disconnectDB(this._conn);
+			
+			
+
+		} catch (SQLException sx) {
+			daoAgent.displayException(sx);
+		}
+
+		return effectRow > 0;
+	}
+	
+
+	public boolean updateQuantity(Order updatedOrder) {
+		// Create mySql query to update current one on database
+		
+//		String foreignKeyNoCheck = "SET FOREIGN_KEY_CHECKS=0";
+//		String foreignKeyCheck = "SET FOREIGN_KEY_CHECKS=1";
+		String sql = "UPDATE orders SET quantity=?, transactionDate=?, productId=? WHERE orderId=?;";
+		
+
+		
+		// sentinel
+		int effectRow = 0;
+		try {
+			// connect the database
+			this._conn = daoAgent.connectDB(this._conn, databaseName);
+			
+			// remove foreign key checking
+//			this._stmt = this._conn.createStatement();
+//			this._stmt.execute(foreignKeyNoCheck);
+			// set the variables
+			this._pstmt = this._conn.prepareStatement(sql);
+
+
+			this._pstmt.setInt(1, updatedOrder.get_quantity());
+			this._pstmt.setDate(2, updatedOrder.get_transactionDate());
+			this._pstmt.setInt(3, updatedOrder.get_productOrdered().get_id());
+//			this._pstmt.setInt(4, updatedOrder.get_placedBy().get_id());
+//			this._pstmt.setInt(5, updatedOrder.get_approvedBy().get_id());
+
+			this._pstmt.setInt(4, updatedOrder.get_id());
+
+			// execute and get effect row it should be 1 if execute successfully
+			effectRow = this._pstmt.executeUpdate();
+			
+			// reinsert the foreign key constraint
+//			this._stmt.execute(foreignKeyCheck);
+
+			// disconnect the database
+			this._conn = daoAgent.disconnectDB(this._conn);
+			
+			
 
 		} catch (SQLException sx) {
 			daoAgent.displayException(sx);

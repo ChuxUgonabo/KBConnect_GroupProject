@@ -1,13 +1,14 @@
 package com.kbconnect.entity;
 
 import java.sql.Date;
+import java.util.Calendar;
 
 /**
  * 
  * @author Gursewak Singh
  *
- * Stores the information about the passes loaded on different compass
- * cards
+ *         Stores the information about the passes loaded on different compass
+ *         cards
  */
 public class LoadedPasses {
 
@@ -79,6 +80,7 @@ public class LoadedPasses {
 	 */
 	public void set_startDate(Date _startDate) {
 		this._startDate = _startDate;
+		this.set_endDate();
 	}
 
 	/**
@@ -91,8 +93,28 @@ public class LoadedPasses {
 	/**
 	 * @param _endDate the _endDate to set
 	 */
-	public void set_endDate(Date _endDate) {
-		this._endDate = _endDate;
+	public void set_endDate() {
+		Calendar cal = Calendar.getInstance();
+
+		switch (this._pass.get_passDuration()) {
+			case "weekly":
+				cal.setTime(this._startDate);
+				cal.add(Calendar.DATE, 7); // minus number would decrement the days
+				this._endDate = new Date(cal.getTimeInMillis());
+				break;
+	
+			case "monthly":
+				cal.setTime(this._startDate);
+				cal.add(Calendar.DATE, 30); // minus number would decrement the days
+				this._endDate = new Date(cal.getTimeInMillis());
+				break;
+	
+			case "daily":
+				cal.setTime(this._startDate);
+				cal.add(Calendar.DATE, 1); // minus number would decrement the days
+				this._endDate = new Date(cal.getTimeInMillis());
+				break;
+		}
 	}
 
 	/**

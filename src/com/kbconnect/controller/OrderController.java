@@ -174,7 +174,7 @@ public class OrderController extends HttpServlet {
 			// it has to be re-approved by admin
 			currOrder.set_approvalStatus(false);
 			// update quantity to DB
-			ordrDao.updateApproval(currOrder);
+			ordrDao.updateQuantity(currOrder);
 			adminStatus = request.getParameter("adminStatus");
 			adminManageUserOrder = request.getParameter("manageUserOrder");
 			currentUserId = Integer.parseInt(request.getParameter("userId"));
@@ -203,7 +203,7 @@ public class OrderController extends HttpServlet {
 			// it has to be re-approved by admin
 			currOrder.set_approvalStatus(false);
 			// update quantity to DB
-			ordrDao.updateApproval(currOrder);
+			ordrDao.updateQuantity(currOrder);
 			adminStatus = request.getParameter("adminStatus");
 			// redirect depending on authorization
 			adminManageUserOrder = request.getParameter("manageUserOrder");
