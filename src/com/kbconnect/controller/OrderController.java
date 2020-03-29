@@ -10,6 +10,7 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import com.kbconnect.boundary.AdminDAO;
 import com.kbconnect.boundary.CommuterDAO;
@@ -75,22 +76,21 @@ public class OrderController extends HttpServlet {
 		ArrayList<Order> listOfCommutersOrders;
 		boolean orderExists = false;
 		String action = request.getParameter("action");
-
-//		int currentUserId = Integer.parseInt(request.getParameter("userId"));
-//		request.setAttribute("currentUserId", currentUserId);
-//		RequestDispatcher rd = request.getRequestDispatcher("adminCreateNewOrder.jsp");
-//		rd.forward(request, response);
-//		System.out.println("</body>");
-//		System.out.println("</html>");
+		// store variables to determine admin current status
+		String adminManageUserOrder = "";
+		String adminStatus;
+		int currentUserId;
 
 		switch (action) {
-
 		case "add":
 			// collect data from user
+			// Get Quantity of order
 			int qty = Integer.parseInt(request.getParameter("quantity"));
+			// Get current product
 			Product currentProduct = productDao.getProduct(Integer.parseInt(request.getParameter("productId")));
-			int currentUserId = Integer.parseInt(request.getParameter("userId"));
+			currentUserId = Integer.parseInt(request.getParameter("userId"));
 			User currentCommuter = commuterDao.getUser(currentUserId);
+			// Get current timestamp
 			long millis = System.currentTimeMillis();
 			Date transactionDate = new Date(millis);
 
@@ -123,13 +123,20 @@ public class OrderController extends HttpServlet {
 			if (orderExists == false) {
 				ordrDao.createOrder(newOrder);
 			}
-//			String adminManageUserOrder = request.getParameter("userOrder");
-//			// redirect depending on authorization
-////			if (adminManageUserOrder != null) {
-//				response.sendRedirect("adminCreateNewOrder.jsp");
-//			} else {
-			response.sendRedirect("placeOrder.jsp");
-//			}
+			adminStatus = request.getParameter("adminStatus");
+			adminManageUserOrder = request.getParameter("manageUserOrder");
+			currentUserId = Integer.parseInt(request.getParameter("userId"));
+
+			if (adminStatus == null) {
+				response.sendRedirect("placeOrder.jsp");
+			} else {
+				if (adminManageUserOrder.equalsIgnoreCase("currentUser")) {
+					// start the session for admin
+					HttpSession session = request.getSession();
+					session.setAttribute("currentUserId", currentUserId);
+					response.sendRedirect("adminCreateNewOrder.jsp");
+				} 
+			}
 			break;
 
 		case "Delete":
@@ -138,13 +145,22 @@ public class OrderController extends HttpServlet {
 			currOrder = ordrDao.getOrder(orderId);
 			// delete current order from DB
 			ordrDao.deleteOrder(currOrder);
-			String adminStatus = request.getParameter("adminStatus");
+			adminStatus = request.getParameter("adminStatus");
 			// redirect depending on authorization
+			adminManageUserOrder = request.getParameter("manageUserOrder");
+			currentUserId = Integer.parseInt(request.getParameter("userId"));
+
 			if (adminStatus == null) {
 				response.sendRedirect("placeOrder.jsp");
 			} else {
-				response.sendRedirect("adminOrderList.jsp");
-
+				if (adminManageUserOrder != null) {
+					// start the session for admin
+					HttpSession session = request.getSession();
+					session.setAttribute("currentUserId", currentUserId);
+					response.sendRedirect("adminCreateNewOrder.jsp");
+				} else {
+					response.sendRedirect("adminOrderList.jsp");
+				}
 			}
 			break;
 
@@ -160,11 +176,20 @@ public class OrderController extends HttpServlet {
 			// update quantity to DB
 			ordrDao.updateApproval(currOrder);
 			adminStatus = request.getParameter("adminStatus");
-			// redirect depending on authorization
+			adminManageUserOrder = request.getParameter("manageUserOrder");
+			currentUserId = Integer.parseInt(request.getParameter("userId"));
+
 			if (adminStatus == null) {
 				response.sendRedirect("placeOrder.jsp");
 			} else {
+				if (adminManageUserOrder != null) {
+					// start the session for admin
+					HttpSession session = request.getSession();
+					session.setAttribute("currentUserId", currentUserId);
+					response.sendRedirect("adminCreateNewOrder.jsp");
+				} else {
 					response.sendRedirect("adminOrderList.jsp");
+				}
 			}
 			break;
 
@@ -181,11 +206,22 @@ public class OrderController extends HttpServlet {
 			ordrDao.updateApproval(currOrder);
 			adminStatus = request.getParameter("adminStatus");
 			// redirect depending on authorization
+			adminManageUserOrder = request.getParameter("manageUserOrder");
+			currentUserId = Integer.parseInt(request.getParameter("userId"));
+
 			if (adminStatus == null) {
 				response.sendRedirect("placeOrder.jsp");
 			} else {
-				response.sendRedirect("adminOrderList.jsp");
+				if (adminManageUserOrder != null) {
+					// start the session for admin
+					HttpSession session = request.getSession();
+					session.setAttribute("currentUserId", currentUserId);
+					response.sendRedirect("adminCreateNewOrder.jsp");
+				} else {
+					response.sendRedirect("adminOrderList.jsp");
+				}
 			}
+
 			break;
 
 		case "Approve":
@@ -206,6 +242,9 @@ public class OrderController extends HttpServlet {
 			String content = "Your " + currOrder.get_productOrdered().get_description()
 					+ " order has been approved. \n Your item will be shipped soon. \n Thanks for using us";
 			String currentUserEmail = currOrder.get_placedBy().get_email();
+			adminManageUserOrder = request.getParameter("manageUserOrder");
+			currentUserId = Integer.parseInt(request.getParameter("userId"));
+
 			boolean wasEmailSuccessful;
 			if (updated == true) {
 				// send an alert to user with order information
@@ -214,7 +253,14 @@ public class OrderController extends HttpServlet {
 
 					message += "Error occured while sending out some emails!";
 				}
-				response.sendRedirect("adminOrderList.jsp");
+				if (adminManageUserOrder != null) {
+					// start the session for admin
+					HttpSession session = request.getSession();
+					session.setAttribute("currentUserId", currentUserId);
+					response.sendRedirect("adminCreateNewOrder.jsp");
+				} else {
+					response.sendRedirect("adminOrderList.jsp");
+				}
 			}
 			break;
 
