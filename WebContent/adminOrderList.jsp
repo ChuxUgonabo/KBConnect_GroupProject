@@ -75,7 +75,7 @@
 								+ "<td><input type='hidden' name='adminStatus' value='admin'>"
 								+ "<input type='hidden' name='adminId' value='"+user.get_id()+"'><input type='hidden' name='orderId' value='"+ orderList.get(i).get_id()+ "'>"
 								+ "<input type='hidden' name='userId' value='"+orderList.get(i).get_placedBy().get_id()+ "'>"
-								+"<input type='submit' name='action' value='Approve'></td>"
+								+ "<input type='submit' name='action' value='Approve'></td>"
 								+ "<td><input type='submit' name='action' value='Delete'></td></form>");
 						out.print("</tr>");
 					}
@@ -104,7 +104,7 @@
 								+ orderList.get(i).get_quantity() + "  <input type='submit' name='action' value='+'></td>" 
 								+ "<td>"+ orderList.get(i).get_transactionDate() + "</td>" + "<td>Approved</td>"
 								+ "<td><input type='hidden' name='adminStatus' value='admin'>"
-								+ "<input type='hidden' name='userId' value='"+orderList.get(i).get_placedBy().get_id()
+								+ "<input type='hidden' name='userId' value='"+orderList.get(i).get_placedBy().get_id()+ "'>"
 								+ "<input type='hidden' name='adminId' value='"+user.get_id()+"'><input type='hidden' name='orderId' value='"
 								+ orderList.get(i).get_id() + "'><input type='submit' name='action' value='Delete'></td></form>");
 						out.print("</tr>");
