@@ -68,6 +68,13 @@ public class SubscriptionController extends HttpServlet {
 					newSubscription.set_userId(userId);
 					
 					sdao.createSubscription(newSubscription);
+					response.sendRedirect("subscriptions.jsp?message=subscriptionAdded&routeId=" + routeId);
+					break;
+					
+				case "delete":
+					int subscriptionId = Integer.parseInt(request.getParameter("subscriptionId"));
+					SubscribedTo subscriptionToDelete = sdao.getSubscription(subscriptionId);
+					sdao.deleteSubscription(subscriptionToDelete);
 					response.sendRedirect("subscriptions.jsp");
 					break;
 					
