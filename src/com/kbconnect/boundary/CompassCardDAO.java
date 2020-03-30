@@ -83,7 +83,7 @@ public class CompassCardDAO implements CompassCardDAOInterface {
 			// execute and store
 			this.rs = this.pstmt.executeQuery();
 
-			while (rs.next()) {
+			if (rs.next()) {
 
 				// populate the card
 				card.set_id(rs.getInt("id"));
@@ -92,6 +92,8 @@ public class CompassCardDAO implements CompassCardDAOInterface {
 				card.set_isActive(rs.getBoolean("isActive"));
 				card.set_loadedBalance(rs.getDouble("balance"));
                 
+			} else {
+				card = null;
 			}
 
             // disconnect from the database

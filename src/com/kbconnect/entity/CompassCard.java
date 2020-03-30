@@ -99,8 +99,12 @@ public class CompassCard {
 	 * @param _cvn the _cvn to set
 	 */
 	public void set_cvn(String _cvn) {
+//		this._cvn = BCrypt.hashpw(_cvn, BCrypt.gensalt());
+		this._cvn = _cvn;
+	}
+	
+	public void set_encryptedCvn(String _cvn) {
 		this._cvn = BCrypt.hashpw(_cvn, BCrypt.gensalt());
-//		this._cvn = _cvn;
 	}
 	
 

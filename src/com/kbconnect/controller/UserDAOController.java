@@ -123,6 +123,17 @@ public class UserDAOController extends HttpServlet {
 
             break;
 
+        case "unlink":
+
+        	HttpSession currentSession = request.getSession();
+        	String unlinkUsername = String.valueOf(thisSession.getAttribute("username"));
+
+        	User thisUser = bdao.getUser(unlinkUsername);
+        	thisUser.set_cardNumber(null);
+        	bdao.updateUser(thisUser);
+        	response.sendRedirect("profile.jsp");
+        	
+            break;
         case "update":
             // instantiate object of user
             User editUser;

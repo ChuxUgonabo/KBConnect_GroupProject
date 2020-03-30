@@ -45,6 +45,25 @@
             <input class="btn btn-primary" type="submit" value="Logout">
         </form>
     </nav>
+    
+    <%
+    	String message;
+    	if ((message = request.getParameter("message")) != null ) {
+			switch(message) {
+				case "subscriptionAdded":
+					int routeId = Integer.parseInt(request.getParameter("routeId"));
+					Route route = rdao.getRoute(routeId);
+	        		out.println("<div class='alert alert-info' role='alert'>" +
+							"You are now subscribed receive alerts for route " + route.get_routeNo() + "!" +
+	            			"</div>");
+					break;
+
+				default:
+					break;
+			}
+    	}
+    %>
+    
     <div class="container">
         <h4 class="">Add a new bus route to alert subscriptions.</h4>
         <form method="post" action="SubscriptionController">
@@ -80,7 +99,13 @@
 	        		Route currentRoute = rdao.getRoute(subscription.get_routeId());
 	        		out.println("<li class='list-group-item'>" + 
 	        				currentRoute.get_routeNo() + " :    " + currentRoute.get_fromCity() + 
-	                		"    ->    " + currentRoute.get_toCity() +"</option>");
+	                		"    ->    " + currentRoute.get_toCity() +
+	                		" <form action='SubscriptionController' method='post'>"+
+	                		"<input type='hidden' name='action' value='delete' />" +
+	    	                "<input type='hidden' name='subscriptionId' value='"+ subscription.get_id()+"' />" +
+	                		"<input type='submit' value='Delete' />" +
+	                		"</form>" +
+	                		"</li>");
 	        	}
         	}
         %>

@@ -82,7 +82,11 @@ public class CardController extends HttpServlet {
                     User alreadyUser = udao.getUserFromCard(cardNumber);
                     
                     // compare the card cvn
-                    if (compassCard == null || !compassCard.compareCVN(cvn)) {
+                    if (compassCard == null) {
+                    	response.sendRedirect("linkCard.jsp?message=invalidCard");
+                    	break;
+                    } else if (!compassCard.compareCVN(cvn)) {
+                    
                         response.sendRedirect("linkCard.jsp?message=invalidCard");
                         break;
                     } else if (alreadyUser != null ) {
