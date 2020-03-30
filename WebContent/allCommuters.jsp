@@ -33,11 +33,6 @@
 </head>
 <body>
 	<h2>All Registered Commuters</h2>
-	<form action="LoginController" method="post">
-		<input type="hidden" value="admin" name="admin"> <input
-			type="hidden" value="logout" name="action"> <input
-			class="btn btn-primary" type="submit" value="Logout">
-	</form>
 
 	<nav class="navbar navbar-light bg-light">
 		<a class="navbar-brand" href="adminProfile.jsp"> <%

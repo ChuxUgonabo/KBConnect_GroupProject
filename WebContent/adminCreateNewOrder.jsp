@@ -22,12 +22,12 @@
 		response.sendRedirect("adminLogin.jsp?message=login");
 		return;
 	}
-	if (session.getAttribute("currentUserId") != null) {
-		currentUserId = (int)session.getAttribute("currentUserId");
-	}else{
-	currentUserId = Integer.parseInt(request.getParameter("userId"));
-	}
+	//if (session.getAttribute("currentUserId") != null) {
+		//currentUserId = (int)session.getAttribute("currentUserId");
+//	}else{
 	//currentUserId = Integer.parseInt(request.getParameter("userId"));
+	//}
+	currentUserId = Integer.parseInt(request.getParameter("userId"));
 
 	User user = commuterDao.getUser(currentUserId);
 
