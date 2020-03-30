@@ -29,6 +29,19 @@
         </form>
     </nav>
 
+
+	<% 
+		String message;
+		if (request.getParameter("message") != null) {
+			message = request.getParameter("message");
+			out.println("<div class='alert alert-warning' role='alert'>");
+			switch (message){
+				case "invalidCard":
+					out.println("The details of the card do not match our records!");
+			}
+			out.println("</div>");
+		}
+	%>
     <div class="container">
         <div class="row">
             <form action="CardController" method="post">
