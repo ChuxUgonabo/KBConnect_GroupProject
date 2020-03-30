@@ -82,7 +82,7 @@ class CompassCardTest {
 	@Test 
 	void testSetCVN() {
 		//set cvn value, after that it should be encrypted
-		compassCardToTest.set_cvn("000");
+		compassCardToTest.set_encryptedCvn("000");
 		//should be get encrypted value of "000"
 		assertTrue(BCrypt.checkpw("000", compassCardToTest.get_cvn()));
 	}
