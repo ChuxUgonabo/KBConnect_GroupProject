@@ -276,7 +276,7 @@ public class OrderDAO implements OrderDAOInterface {
 		
 //		String foreignKeyNoCheck = "SET FOREIGN_KEY_CHECKS=0";
 //		String foreignKeyCheck = "SET FOREIGN_KEY_CHECKS=1";
-		String sql = "UPDATE orders SET quantity=?, transactionDate=?, productId=? WHERE orderId=?;";
+		String sql = "UPDATE orders SET quantity=?, transactionDate=?, productId=?, approvalStatus=? WHERE orderId=?;";
 		
 
 		
@@ -297,9 +297,10 @@ public class OrderDAO implements OrderDAOInterface {
 			this._pstmt.setDate(2, updatedOrder.get_transactionDate());
 			this._pstmt.setInt(3, updatedOrder.get_productOrdered().get_id());
 //			this._pstmt.setInt(4, updatedOrder.get_placedBy().get_id());
-//			this._pstmt.setInt(5, updatedOrder.get_approvedBy().get_id());
+//			this._pstmt.setInt(4, updatedOrder.get_approvedBy().get_id());
+			this._pstmt.setBoolean(4, updatedOrder.is_approvalStatus());
 
-			this._pstmt.setInt(4, updatedOrder.get_id());
+			this._pstmt.setInt(5, updatedOrder.get_id());
 
 			// execute and get effect row it should be 1 if execute successfully
 			effectRow = this._pstmt.executeUpdate();
