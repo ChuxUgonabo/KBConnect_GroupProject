@@ -6,6 +6,11 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import com.kbconnect.entity.Product;
+/**
+ * 
+ * Create JUnit test case for product entity
+ *
+ */
 
 class ProductTest {
 
@@ -16,7 +21,7 @@ class ProductTest {
 		
 		// initialize a new product
 		productToTest = new Product();
-		productToTest.set_description("This is a wearable watch");
+		productToTest.set_description("This is a watch");
 		productToTest.set_price(20);
 		productToTest.set_type("Watch");
 		productToTest.set_id(3);
@@ -27,10 +32,13 @@ class ProductTest {
 //	void test() {
 //		fail("Not yet implemented");
 //	}
+	/**
+	 * Testing all getter methods
+	 */
 	
 	@Test
 	void testGetDescription() {
-		assertEquals("This is a wearable watch", productToTest.get_description());
+		assertEquals("This is a watch", productToTest.get_description());
 	}
 	
 	@Test
@@ -47,7 +55,9 @@ class ProductTest {
 	void testGetId() {
 		assertEquals(3, productToTest.get_id());
 	}
-	
+	/**
+	 * Testing all setter methods
+	 */
 	@Test
 	void testSetId() {
 		productToTest.set_id(1);

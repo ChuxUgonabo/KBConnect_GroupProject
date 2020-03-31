@@ -1,5 +1,8 @@
 package test.com.kbconnect.entity;
 
+/**
+ * Junit Test case for entity of TravelPass
+ */
 import static org.junit.jupiter.api.Assertions.*;
 
 import org.junit.jupiter.api.BeforeEach;
@@ -25,7 +28,9 @@ class TravelPassTest {
 //	void test() {
 //		fail("Not yet implemented");
 //	}
-
+    /**
+     * Testing all getter Methods
+     */
 	@Test
 	void testGet_passDuration() {
 		assertEquals("yearly", travelPassTotest.get_passDuration());
@@ -41,7 +46,9 @@ class TravelPassTest {
 	void testGet_price() {
 		assertEquals(200.00, travelPassTotest.get_price());
 	}
-
+/**
+ * Testing all setter Methods
+ */
 	@Test
 	public void testSet_price() {
 		travelPassTotest.set_price(100.00);

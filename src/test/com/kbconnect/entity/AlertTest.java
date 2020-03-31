@@ -7,8 +7,10 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import com.kbconnect.entity.Alert;
 import com.kbconnect.entity.Route;
+
 /**
  * Create JUnit test case for testing the entity of Alert
+ * 
  * @author user
  *
  */
@@ -24,24 +26,28 @@ class AlertTest {
 
 		// initialize a new alert
 		alertToTest = new Alert();
-	
+		// set value for attributes of alert
 		alertToTest.set_id(1);
 		alertToTest.set_shortDescription("School will be closed");
-		alertToTest.set_description("This week is last week of this semester");	
+		alertToTest.set_description("This week is last week of this semester");
 		alertToTest.set_dateCreated(aday);
 		alertToTest.set_dateOfLastUpdate(aday);
-		
-		routeToTest= new Route();
+		// initialize a new route
+		routeToTest = new Route();
+		// set value for attributes of route
 		routeToTest.set_routeNo("No3275");
 		routeToTest.set_startingStop("douglas");
 		routeToTest.set_terminationStop("waterFront");
 		routeToTest.set_fromCity("New Westminster");
 		routeToTest.set_toCity("Vancouver");
-		
+
 		alertToTest.set_route(routeToTest);
 
 	}
 
+	/**
+	 * Testing all getter methods
+	 */
 	@Test
 	void testGetId() {
 
@@ -67,11 +73,11 @@ class AlertTest {
 	void testGetDateOfLastUpdate() {
 		assertEquals(aday, alertToTest.get_dateOfLastUpdate());
 	}
-	
+
 	@Test
 	void testGetRoute() {
 		assertSame(routeToTest, alertToTest.get_route());
-		
+
 	}
 
 	@Test
@@ -80,6 +86,9 @@ class AlertTest {
 		assertEquals(3, alertToTest.get_id());
 	}
 
+	/**
+	 * Testing all setter method
+	 */
 	@Test
 	void testsetShortDescription() {
 		alertToTest.set_shortDescription("For school");
@@ -110,7 +119,7 @@ class AlertTest {
 
 	@Test
 	void testSetRoute() {
-		Route curr= new Route();
+		Route curr = new Route();
 		alertToTest.set_route(curr);
 		assertNull(alertToTest.get_route().get_startingStop(), "it may get a null value of route statringStop");
 	}

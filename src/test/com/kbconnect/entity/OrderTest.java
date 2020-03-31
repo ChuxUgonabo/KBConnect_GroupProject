@@ -21,9 +21,7 @@ public class OrderTest {
 	User tempUser;
 	Product tempProduct;
 
-	/**
-	 * @throws java.lang.Exception
-	 */
+
 	@Before
 	public void setUp() throws Exception {
 		orderToTest = new Order();

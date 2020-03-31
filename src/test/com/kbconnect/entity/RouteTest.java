@@ -7,7 +7,11 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import com.kbconnect.entity.Route;
-
+/**
+ * 
+ * Create JUnit test case for Route entity
+ *
+ */
 class RouteTest {
 
 	Route routeToTest;
@@ -22,6 +26,9 @@ class RouteTest {
 //	void test() {
 //		fail("Not yet implemented");
 //	}
+	/**
+	 * Testing all getter methods
+	 */
 
 	@Test
 	void testEmptyRoute() {
@@ -58,7 +65,9 @@ class RouteTest {
 		assertEquals("98329", routeToTest.get_terminationStop());
 		
 	}
-
+   /**
+    * Tesing all setter methods
+    */
 	
 	@Test
 	void testChangeFromCity() {
