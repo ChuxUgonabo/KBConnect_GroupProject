@@ -84,7 +84,9 @@
             for( int i=0; i < allAlerts.size(); i++) {
             out.print("<tr>" +
                 "<th>"+ (i + 1) + "</th>" + 
-                "<td>" + allAlerts.get(i).get_shortDescription() + "</td>" +
+                "<td><a href='alertDetail.jsp?alertId=" + allAlerts.get(i).get_id() +
+                "'>" +
+                allAlerts.get(i).get_shortDescription() + "</a></td>" +
                 "<td>" + allAlerts.get(i).get_dateCreated()+ "</td>" +
                 "<td>" + allAlerts.get(i).get_dateOfLastUpdate()+ "</td>"
                 );
