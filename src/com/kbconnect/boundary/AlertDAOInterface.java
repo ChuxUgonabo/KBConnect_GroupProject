@@ -18,7 +18,7 @@ public interface AlertDAOInterface {
 
     /**
      * 
-     * @param AlertId
+     * @param alertId
      * @return
      */
     public Alert getAlert( int alertId );

@@ -32,7 +32,7 @@ public interface TravelPassDAOInterface {
 	/**
 	 * Deletes a TravelPass from the database where the pass id matches the given id
 	 * 
-	 * @param id
+	 * @param pass
 	 * @return 
 	 */
 	boolean deletePass(TravelPass pass);

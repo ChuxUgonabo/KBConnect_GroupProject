@@ -26,7 +26,7 @@ public interface CompassCardDAOInterface {
 
 	/**
 	 * 
-	 * @param cardNumber the unique card number
+	 * @param card the unique card number
 	 * @return delete the card with the given number
 	 */
 	boolean deleteCard(CompassCard card);
