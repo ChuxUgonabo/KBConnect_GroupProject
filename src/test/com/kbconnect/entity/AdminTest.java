@@ -17,9 +17,7 @@ import com.kbconnect.entity.Admin;
  */
 class AdminTest {
 
-	/**
-	 * @throws java.lang.Exception
-	 */
+
 	
 	Admin adminToTest;
 	@BeforeEach

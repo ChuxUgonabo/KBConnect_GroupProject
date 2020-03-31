@@ -31,7 +31,7 @@ public class SubscribedTo {
 		return _userId;
 	}
 	/**
-	 * @param _userEmail the _userEmail to set
+	 * @param _userId the _userId to set
 	 */
 	public void set_userId(int _userId) {
 		this._userId = _userId;

@@ -18,9 +18,7 @@ import com.kbconnect.entity.CompassCard;
  */
 class CompassCardTest {
 
-	/**
-	 * @throws java.lang.Exception
-	 */
+
 	
 	CompassCard compassCardToTest;
 	@BeforeEach

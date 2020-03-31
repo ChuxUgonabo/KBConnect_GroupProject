@@ -1,5 +1,6 @@
 package test.com.kbconnect.entity;
 /**
+ * @author John Ugonabo
  * Junit test for entity of User
  */
 import static org.junit.jupiter.api.Assertions.*;

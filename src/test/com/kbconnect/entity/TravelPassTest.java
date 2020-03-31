@@ -1,6 +1,7 @@
 package test.com.kbconnect.entity;
 
 /**
+ * @author William
  * Junit Test case for entity of TravelPass
  */
 import static org.junit.jupiter.api.Assertions.*;

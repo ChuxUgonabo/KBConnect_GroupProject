@@ -9,6 +9,7 @@ import com.kbconnect.entity.Product;
 /**
  * 
  * Create JUnit test case for product entity
+ * @author Gursewak Singh
  *
  */
 

@@ -8,7 +8,7 @@ import org.junit.jupiter.api.Test;
 
 import com.kbconnect.entity.Route;
 /**
- * 
+ * @author John Ugonabo
  * Create JUnit test case for Route entity
  *
  */

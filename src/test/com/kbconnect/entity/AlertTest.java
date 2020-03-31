@@ -11,7 +11,7 @@ import com.kbconnect.entity.Route;
 /**
  * Create JUnit test case for testing the entity of Alert
  * 
- * @author user
+ * @author William
  *
  */
 
