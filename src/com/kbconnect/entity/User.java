@@ -1,3 +1,18 @@
+/**
+ * 
+ @startuml
+ :Customer: -> (Accessing a login page)
+ :Customer: --> (Registration for a new user)
+ :Customer: --> (Authentication by username and password)
+ :Customer: -->(Heading to visit a profile page)
+ note "User" as n1
+ (Accessing a login page) .. n1
+ (Registration for a new user) .. n1
+ (Authentication by username and password) .. n1
+ (Heading to visit a profile page) .. n1
+ @enduml
+ */
+
 package com.kbconnect.entity;
 
 import java.sql.Date;
@@ -119,7 +134,7 @@ public class User {
 
 	/**
 	 * 
-	 * @param password
+	 * @param password string value for encryption
 	 */
 	public void storeHashedPassword(String password) {
 		this._password = BCrypt.hashpw(password, BCrypt.gensalt());
@@ -189,8 +204,8 @@ public class User {
 
 	/**
 	 * 
-	 * @param password
-	 * @return
+	 * @param password string value
+	 * @return encrypted password
 	 */
 	public boolean comparePassword(String password) {
 		return BCrypt.checkpw(password, this._password);

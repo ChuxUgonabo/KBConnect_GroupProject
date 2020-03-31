@@ -1,4 +1,31 @@
+/**
+ *
+@startuml
+:Customer: ->(view product list to create orders)
+:Customer: -->(list all orders)
+:Customer: -->(edit product quantity of orders)
+:Customer: -->(delete orders)
+note "Order" as n1
+(view product list to create orders) .. n1
+(list all orders) .. n1
+(edit product quantity of orders) .. n1
+(delete orders) .. n1
+@enduml
 
+
+@startuml
+:Admin: ->(create orders)
+:Admin: -->(list all orders)
+:Admin: -->(process to approve orders)
+:Admin: -->(delete orders)
+note "Order" as n1
+(create orders) .. n1
+(list all orders) .. n1
+(process to approve orders) .. n1
+(delete orders) .. n1
+@enduml
+
+ */
 package com.kbconnect.entity;
 
 import java.sql.Date;

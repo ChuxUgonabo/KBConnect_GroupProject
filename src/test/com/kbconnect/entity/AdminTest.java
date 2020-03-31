@@ -12,13 +12,12 @@ import com.kbconnect.entity.Admin;
 
 /**
  * @author William
+ * Creat Junit Test case for admin entity
  *
  */
 class AdminTest {
 
-	/**
-	 * @throws java.lang.Exception
-	 */
+
 	
 	Admin adminToTest;
 	@BeforeEach
@@ -31,12 +30,17 @@ class AdminTest {
 //	void test() {
 //		fail("Not yet implemented");
 //	}
+	/**
+	 * Testing all getter methods
+	 */
 	@Test 
-	
 	void testIsAdmin() {
 		// by default isAdmin,  so should be return the true
          assertTrue(adminToTest.is_isAdmin());
 	}
+	/**
+	 * Testing all setter methods
+	 */
 	
 	@Test 
 	void testSetIsAdmin() {

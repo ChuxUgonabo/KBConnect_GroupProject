@@ -131,10 +131,7 @@ public class OrderController extends HttpServlet {
 				response.sendRedirect("placeOrder.jsp");
 			} else {
 				if (adminManageUserOrder.equalsIgnoreCase("currentUser")) {
-					// start the session for admin
-					HttpSession session = request.getSession();
-					session.setAttribute("currentUserId", currentUserId);
-					response.sendRedirect("adminCreateNewOrder.jsp");
+					response.sendRedirect("adminCreateNewOrder.jsp?userId="+currentUserId);
 				} 
 			}
 			break;
@@ -154,10 +151,7 @@ public class OrderController extends HttpServlet {
 				response.sendRedirect("placeOrder.jsp");
 			} else {
 				if (adminManageUserOrder != null) {
-					// start the session for admin
-					HttpSession session = request.getSession();
-					session.setAttribute("currentUserId", currentUserId);
-					response.sendRedirect("adminCreateNewOrder.jsp");
+					response.sendRedirect("adminCreateNewOrder.jsp?userId="+currentUserId);
 				} else {
 					response.sendRedirect("adminOrderList.jsp");
 				}
@@ -183,10 +177,7 @@ public class OrderController extends HttpServlet {
 				response.sendRedirect("placeOrder.jsp");
 			} else {
 				if (adminManageUserOrder != null) {
-					// start the session for admin
-					HttpSession session = request.getSession();
-					session.setAttribute("currentUserId", currentUserId);
-					response.sendRedirect("adminCreateNewOrder.jsp");
+					response.sendRedirect("adminCreateNewOrder.jsp?userId="+currentUserId);
 				} else {
 					response.sendRedirect("adminOrderList.jsp");
 				}
@@ -213,10 +204,7 @@ public class OrderController extends HttpServlet {
 				response.sendRedirect("placeOrder.jsp");
 			} else {
 				if (adminManageUserOrder != null) {
-					// start the session for admin
-					HttpSession session = request.getSession();
-					session.setAttribute("currentUserId", currentUserId);
-					response.sendRedirect("adminCreateNewOrder.jsp");
+					response.sendRedirect("adminCreateNewOrder.jsp?userId="+currentUserId);
 				} else {
 					response.sendRedirect("adminOrderList.jsp");
 				}
@@ -254,10 +242,7 @@ public class OrderController extends HttpServlet {
 					message += "Error occured while sending out some emails!";
 				}
 				if (adminManageUserOrder != null) {
-					// start the session for admin
-					HttpSession session = request.getSession();
-					session.setAttribute("currentUserId", currentUserId);
-					response.sendRedirect("adminCreateNewOrder.jsp");
+					response.sendRedirect("adminCreateNewOrder.jsp?userId="+currentUserId);
 				} else {
 					response.sendRedirect("adminOrderList.jsp");
 				}

@@ -4,11 +4,15 @@
 <html>
 <head>
 <meta charset="UTF-8">
+
 <title>Insert title here</title>
+<!--  Reference from Skeleton CSS -->
+<link rel="stylesheet" href="css/normalize.css">
+<link rel="stylesheet" href="css/skeleton.css">
 </head>
 <body>
 
-	<h4>Register User</h4>
+	<h4>Register Administrator</h4>
 	<form action="AdminController" method="post">
 		<div class="row">
 			<div class="five columns">

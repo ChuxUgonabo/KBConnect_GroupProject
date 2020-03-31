@@ -2,11 +2,7 @@ package com.kbconnect.entity;
 
 import org.mindrot.jbcrypt.BCrypt;
 
-/**
- * 
- * @author Gursewak Singh
- *
- */
+
 /**
  * @author Gursewak Singh
  *
@@ -62,7 +58,7 @@ public class CompassCard {
 	/**
 	 * 
 	 * Compare the given cvn with the actual cvn to verify card integrity
-	 * @param cvn
+	 * @param cvn this is security code
 	 * @return true if cvn matches false otherwise
 	 */
 	public boolean compareCVN( String cvn ) {

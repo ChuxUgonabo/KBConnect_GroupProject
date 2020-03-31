@@ -11,6 +11,11 @@ import org.junit.jupiter.api.Test;
 import com.kbconnect.entity.CompassCard;
 import com.kbconnect.entity.LoadedPasses;
 import com.kbconnect.entity.TravelPass;
+/**
+ * @author Gursewak Singh
+ * Create Junit test case for LoadedPassed entity
+ *
+ */
 
 class LoadedPassesTest {
 
@@ -67,6 +72,9 @@ class LoadedPassesTest {
 //	void test() {
 //		fail("Not yet implemented");
 //	}
+	/**
+	 * Testing all getter methods
+	 */
 
 	@Test 
 	void testGetters(){

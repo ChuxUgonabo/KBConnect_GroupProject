@@ -21,7 +21,7 @@ public interface SubscribedDAOInterface {
 
 	/**
 	 * 
-	 * @param orderId given id to retrieve specific subscription
+	 * @param subscriptionId given id to retrieve specific subscription
 	 * @return subscribedTo object
 	 */
 

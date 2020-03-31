@@ -13,18 +13,17 @@ import com.kbconnect.entity.CompassCard;
 
 /**
  * @author William
+ * Create Junit test case for CompassCard entity
  *
  */
 class CompassCardTest {
 
-	/**
-	 * @throws java.lang.Exception
-	 */
+
 	
 	CompassCard compassCardToTest;
 	@BeforeEach
 	void setUp() throws Exception {
-		
+		//instantiate new compassCard , and set values
 		compassCardToTest= new CompassCard("9999999","999",false, 100.00 );
 			
 	}
@@ -33,6 +32,9 @@ class CompassCardTest {
 //	void test() {
 //		fail("Not yet implemented");
 //	}
+	/**
+	 * Testing all getter methods
+	 */
 	@Test
 	void testGetCompassCardNumber() {
 		//should be actually same
@@ -50,7 +52,9 @@ class CompassCardTest {
 		
 		assertFalse(compassCardToTest.is_isActive());
 	}
-	
+	/**
+	 * Testing all setter methods
+	 */
 	@Test
 	void testSetCompassCardNumber() {
 		//set value to compassCardNumber

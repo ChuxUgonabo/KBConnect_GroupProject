@@ -1,5 +1,8 @@
 package test.com.kbconnect.entity;
-
+/**
+ * @author John Ugonabo
+ * Junit test for entity of User
+ */
 import static org.junit.jupiter.api.Assertions.*;
 
 import org.junit.jupiter.api.BeforeEach;
@@ -31,6 +34,9 @@ class UserTest {
 		userToTest.set_address("New Westminster, BC");
 		userToTest.set_cardNumber("99999999999999");
 	}
+	/**
+	 * Testing all getter methods
+	 */
 
 	@Test
 	void testGetUsername() {
@@ -66,7 +72,7 @@ class UserTest {
 	void testGetCardNumber() {
 		assertEquals("99999999999999", userToTest.get_cardNumber());
 	}
-	// testSets
+	// Testing all setter methods
 	@Test
 	void testSetUsername() {
 		userToTest.set_username("newTestM");
