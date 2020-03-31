@@ -47,20 +47,30 @@ public class AddAndDeleteProductTest {
 	@Test
 	public void addAndDeleteProduct() {
 		driver.get("http://localhost:8080/KBPayment_GroupProject/adminLogin.jsp");
-		driver.manage().window().setSize(new Dimension(1366, 736));
-		driver.findElement(By.name("username")).click();
-		driver.findElement(By.name("username")).sendKeys("admin");
-		driver.findElement(By.name("password")).sendKeys("Password");
-		driver.findElement(By.name("password")).sendKeys(Keys.ENTER);
-		driver.findElement(By.linkText("Manage Products")).click();
-		driver.findElement(By.linkText("Add a new Product")).click();
-		driver.findElement(By.name("description")).click();
-		driver.findElement(By.name("description")).sendKeys("new Product description");
-		driver.findElement(By.name("price")).sendKeys("9");
-		driver.findElement(By.name("type")).sendKeys("test");
-		driver.findElement(By.name("type")).sendKeys(Keys.ENTER);
+		 driver.findElement(By.name("username")).click();
+		 driver.findElement(By.name("username")).sendKeys("admin");
+		 driver.findElement(By.name("password")).sendKeys("Password");
+		 driver.findElement(By.name("password")).sendKeys(Keys.ENTER);
+		 driver.findElement(By.linkText("Manage Products")).click();
+		 driver.findElement(By.linkText("Add a new Product")).click();
+		 driver.findElement(By.name("description")).click();
+		 driver.findElement(By.name("description")).sendKeys("test product");
+		 driver.findElement(By.name("price")).click();
+		 driver.findElement(By.name("price")).sendKeys("4");
+		 driver.findElement(By.name("type")).click();
+		 driver.findElement(By.name("type")).sendKeys("Test");
+		 driver.findElement(By.cssSelector(".btn:nth-child(5)")).click();
+//		 driver.findElement(By.name("type")).sendKeys(Keys.ENTER);
 		assertThat(driver.findElement(By.cssSelector("tr:nth-child(5) > td:nth-child(2)")).getText(),
-				is("new Product description"));
+				is("test product"));
 		driver.findElement(By.cssSelector("tr:nth-child(5) input:nth-child(3)")).click();
+	
+	
+		 
 	}
 }
+
+
+
+
+

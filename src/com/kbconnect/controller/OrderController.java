@@ -113,7 +113,7 @@ public class OrderController extends HttpServlet {
 					// it has to be re-approved by admin
 					currOrder.set_approvalStatus(false);
 					// update quantity to DB
-					ordrDao.updateApproval(currOrder);
+					ordrDao.updateQuantity(currOrder);
 
 					orderExists = true;
 				}

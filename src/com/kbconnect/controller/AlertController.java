@@ -88,7 +88,7 @@ public class AlertController extends HttpServlet {
 
                 	message += "Error occured wile sending out some emails!";
                 }
-                response.sendRedirect("listAlerts.jsp?message=" + message);
+                response.sendRedirect("adminListAlerts.jsp?message=" + message);
                 break;
 
             // if the admin is posting the update on a previous alert
@@ -122,7 +122,7 @@ public class AlertController extends HttpServlet {
 
                 	message += "Error occured wile sending out some emails!";
                 }
-                response.sendRedirect("listAlerts.jsp?message=updated&id=" + oldAlert.get_id());
+                response.sendRedirect("adminListAlerts.jsp?message=updated&id=" + oldAlert.get_id());
                 break;
 
             // if the admin is deleting the alert
@@ -135,7 +135,7 @@ public class AlertController extends HttpServlet {
 
                 // delete the alert
                 aldao.deleteAlert(deleteAlert);
-                response.sendRedirect("listAlerts.jsp?message=deleted&id=" + deleteAlert.get_id());
+                response.sendRedirect("adminListAlerts.jsp?message=deleted&id=" + deleteAlert.get_id());
                 break;
         }
 
