@@ -91,7 +91,7 @@ public class LoadedPasses {
 	}
 
 	/**
-	 * @param _endDate the _endDate to set
+	 *the _endDate to set
 	 */
 	public void set_endDate() {
 		Calendar cal = Calendar.getInstance();
