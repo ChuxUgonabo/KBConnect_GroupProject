@@ -58,33 +58,33 @@
                 <li class="nav-item dropdown">
                     <a class="nav-link dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">Manage Products</a>
                     <div class="dropdown-menu">
-                        <a class="dropdown-item" href="productList.jsp">List all products</a>
-                        <a class="dropdown-item" href="productForm.jsp?action=createPass">Add a new Travel Pass</a>
-                        <a class="dropdown-item" href="productForm.jsp?action=createProduct">Add a new Product</a>
+                        <a class="dropdown-item" href="productList.jsp">List Of All Products</a>
+                        <a class="dropdown-item" href="productForm.jsp?action=createPass">Add a New Travel Pass</a>
+                        <a class="dropdown-item" href="productForm.jsp?action=createProduct">Add a New Product</a>
                     </div>
                 </li>
 
                 <li class="nav-item dropdown">
                     <a class="nav-link dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">Manage Commuters</a>
                     <div class="dropdown-menu">
-                        <a class="dropdown-item" href="allCommuters.jsp">List all Commuters</a>
-                        <a class="dropdown-item" href="userForm.jsp?action=createCommuter">Add a new Commuter</a>
+                        <a class="dropdown-item" href="allCommuters.jsp">List Of All Commuters</a>
+                        <a class="dropdown-item" href="userForm.jsp?action=createCommuter">Add a New Commuter</a>
                     </div>
                 </li>
 
                 <li class="nav-item dropdown">
                     <a class="nav-link dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">Manage Orders</a>
                     <div class="dropdown-menu">
-                        <a class="dropdown-item" href="adminOrderList.jsp">List all Orders</a>
-                        <a class="dropdown-item" href="allCommuters.jsp?action=add">Add New Order</a>
+                        <a class="dropdown-item" href="adminOrderList.jsp">List Of All Orders</a>
+                        <a class="dropdown-item" href="adminManageCommtersOrders.jsp?action=add">Add New Order</a>
                     </div>
                 </li>
                 
                  <li class="nav-item dropdown">
                     <a class="nav-link dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">Alerts</a>
                     <div class="dropdown-menu">
-                        <a class="dropdown-item" href="adminListAlerts.jsp">List all Alerts</a>
-                        <a class="dropdown-item" href="createAlert.jsp?action=new">Send out a new Alert</a>
+                        <a class="dropdown-item" href="adminListAlerts.jsp">List Of All Alerts</a>
+                        <a class="dropdown-item" href="createAlert.jsp?action=new">Send out a New Alert</a>
                     </div>
                 </li>
 

@@ -59,7 +59,7 @@
 	</nav>
 
 	<div class="container">
-		<h2>
+		<h2 align='center'>
 			Manage
 			<%
 			out.print(user.get_fullName());
@@ -91,7 +91,7 @@
 						out.print("<input type='hidden' name='adminId' value='"+ admin.get_id()+ "'>"
 								+"<input type='hidden' name='manageUserOrder' value='currentUser'><input type='hidden' name='adminStatus' value='admin'>"
 										+ "<input type='hidden' name='action' value='add'/>");
-						out.print("<td><input type='submit' value='+' /></td>");
+						out.print("<td><input type='submit' value='Add to cart' /></td>");
 						out.print("</form></tr>");
 
 					}
@@ -127,7 +127,7 @@
 										+ "<input type='hidden' name='adminId' value='"+ admin.get_id()+ "'>"
 										+ "<input type='hidden' name='userId' value='"+ user.get_id() + "'>"
 										+ "<input type='submit' name='action' value='+'><input type='hidden' name='adminStatus' value='admin'></td><td><input type='submit' name='action' value='Approve'></td>"
-										+ "<td><input type='hidden' name='manageUserOrder' value='currentUser'><input type='submit' name='action' value='Delete'></td></form>");
+										+ "<td><input type='hidden' name='manageUserOrder' value='currentUser'><input type='submit' name='action' value='Remove'></td></form>");
 						out.print("</tr>");
 						totalPrice += price;
 						totalQuantity += allCommuterOrders.get(i).get_quantity();
@@ -137,7 +137,7 @@
 					out.print("<tr><td><h3> Subtotal (" + allCommuterOrders.size() + " Products) $" + totalPrice
 							+ "</h3></td></tr>");
 				} else {
-					out.print("<thead><tr><th scope='col'></thead><tbody>");
+					out.print("<thead><tr><th scope='col'><h4>No Ordrers At The Moment<h4></th></tr></thead><tbody>");
 				}
 			%>
 

@@ -6,6 +6,7 @@
 <%
 	CommuterDAO commuterDao = new CommuterDAO();
 	ArrayList<User> commuterList = commuterDao.getAllUsers();
+	OrderDAO orderDao = new OrderDAO();
 
 	AdminDAO userDao = new AdminDAO();
 	if (session.getAttribute("adminUsername") == null) {
@@ -29,13 +30,13 @@
 	integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh"
 	crossorigin="anonymous">
 
-<title>List of Commuters</title>
+<title>Manage Commuters' Orders</title>
 </head>
 <body>
 
 	<nav class="navbar navbar-light bg-light">
 		<a class="navbar-brand" href="adminProfile.jsp"> <%
- 	out.print(user.get_username());
+ 	out.print( user.get_username() );
  %>
 		</a>
 
@@ -45,48 +46,48 @@
 		</form>
 	</nav>
 	
-	<h2 align='center'>All Registered Commuters</h2>
+	<h2 align="center">Manage All Commuters' Orders</h2>
 
 	<table class="table">
 		<tr>
 		<thead>
-			<th>ID</th>
 			<th>Full Name</th>
 			<th>Username</th>
 			<th>email</th>
-			<th>Card Number</th>
-			<th>Date Of Birth</th>
 			<th>Address</th>
-			<th>Edit</th>
-			<th>Delete</th>
+			<th>Total Products Selected</th>
+			<th>Manage Order</th>
 		</thead>
 		</tr>
 		<%
+			ArrayList<Order> userOrderList;
 			for (User commuterOne : commuterList) {
 				out.println("<tr>");
-				out.println("<td> " + commuterOne.get_id() + " </td>");
 				out.println("<td> " + commuterOne.get_fullName() + " </td>");
 				out.println("<td> " + commuterOne.get_username() + " </td>");
 				out.println("<td> " + commuterOne.get_email() + " </td>");
-				out.println("<td> " + commuterOne.get_cardNumber() + " </td>");
-				out.println("<td> " + commuterOne.get_DOB() + " </td>");
 				out.println("<td> " + commuterOne.get_address() + " </td>");
-				out.println("<td><a href='userForm.jsp?action=updateCommuter&commuterId=" + commuterOne.get_id()
-						+ "'>Edit</a> </td>");
-				out.println("<td><form action='UserDAOController' method='post'>");
-				out.println("<input type='hidden' name='userId' value='" + commuterOne.get_id() + "'>");
-				out.println("<input type='hidden' name='action' value='delete'>");
-				out.println("<input type='submit' value='Delete' ></td>");
-				out.println("</form> </tr>");
+				userOrderList = orderDao.getAllUserOrders(commuterOne.get_id());
+				if (userOrderList.size() >= 1) {
+					out.println("<td align='center'>" + userOrderList.size() + " </td>");
+					out.println("<form action='UserDAOController' method='post'>");
+					out.println("<input type='hidden' name='userId' value='" + commuterOne.get_id() + "'>");
+					out.println("<td><button type='submit' formaction='adminCreateNewOrder.jsp'>Manage Order</button>");
+					out.println("</form></td>");
+				} else {
+					out.println("<td align='center'> 0 </td>");
+					out.println("<form action='UserDAOController' method='post'>");
+					out.println("<input type='hidden' name='userId' value='" + commuterOne.get_id() + "'>");
+					out.println("<td><button type='submit' formaction='adminCreateNewOrder.jsp'>Add Order</button>");
+					out.println("</form></td>");
+				}
+
+				out.println("</tr>");
 			}
 		%>
 	</table>
 	<hr>
-	<form action="">
-		<input type="hidden" name="action" value="createCommuter">
-		<button type="submit" formaction="userForm.jsp" class="button-primary">Add
-			New Commuter</button>
-	</form>
+
 
 </body>
 </html>

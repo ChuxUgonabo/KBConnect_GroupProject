@@ -48,15 +48,16 @@
 	</nav>
 	<table class="table">
 		<thead>
-			<h4>Orders To Be Approved</h4>
+			<h2 align='center'> Manage All Orders</h2>
+			<tr><td><h4 align='center'>Orders To Be Approved</h4></td></tr>
 			<tr>
 				<th scope="col">Name</th>
 				<th scope="col">Item</th>
 				<th scope="col">Quantity</th>
 				<th scope="col">Date Placed</th>
 				<th scope="col">Status</th>
-				<th scope="col">Approve</th>
-				<th scope="col">Delete</th>
+				<th scope="col">Approve Order</th>
+				<th scope="col">Remove Order</th>
 
 			</tr>
 		</thead>
@@ -76,15 +77,14 @@
 								+ "<input type='hidden' name='adminId' value='"+user.get_id()+"'><input type='hidden' name='orderId' value='"+ orderList.get(i).get_id()+ "'>"
 								+ "<input type='hidden' name='userId' value='"+orderList.get(i).get_placedBy().get_id()+ "'>"
 								+ "<input type='submit' name='action' value='Approve'></td>"
-								+ "<td><input type='submit' name='action' value='Delete'></td></form>");
+								+ "<td><input type='submit' name='action' value='Remove'></td></form>");
 						out.print("</tr>");
 					}
 				}
 			%>
 
-
 			<tr>
-				<td><h4>Approved Orders</h4></td>
+				<td><h4 align='center'>Approved Orders</h4></td>
 			</tr>
 			<tr>
 				<th scope="col">Name</th>
@@ -92,7 +92,7 @@
 				<th scope="col">Quantity</th>
 				<th scope="col">Date Placed</th>
 				<th scope="col">Status</th>
-				<th scope="col">Delete</th>
+				<th scope="col">Remove Order</th>
 
 			</tr>
 			<%
@@ -106,9 +106,8 @@
 								+ "<td><input type='hidden' name='adminStatus' value='admin'>"
 								+ "<input type='hidden' name='userId' value='"+orderList.get(i).get_placedBy().get_id()+ "'>"
 								+ "<input type='hidden' name='adminId' value='"+user.get_id()+"'><input type='hidden' name='orderId' value='"
-								+ orderList.get(i).get_id() + "'><input type='submit' name='action' value='Delete'></td></form>");
+								+ orderList.get(i).get_id() + "'><input type='submit' name='action' value='Remove'></td></form>");
 						out.print("</tr>");
-
 					}
 				}
 			%>
