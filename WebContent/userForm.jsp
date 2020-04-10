@@ -7,14 +7,14 @@
 	AdminDAO adminDao = new AdminDAO();
 
 	CommuterDAO udao = new CommuterDAO();
-if (session.getAttribute("adminUsername") == null) {
-	response.sendRedirect("adminLogin.jsp?message=login");
-    return;
-}
+	if (session.getAttribute("adminUsername") == null) {
+		response.sendRedirect("adminLogin.jsp?message=login");
+		return;
+	}
 
-String username = String.valueOf(session.getAttribute("adminUsername"));
+	String username = String.valueOf(session.getAttribute("adminUsername"));
 
-Admin admin = adminDao.getUser(username);
+	Admin admin = adminDao.getUser(username);
 %>
 <!DOCTYPE html>
 <html>
@@ -38,8 +38,9 @@ Admin admin = adminDao.getUser(username);
 		</a>
 
 		<form action="LoginController" method="post">
-			<input type="hidden" value="logout" name="action"> <input
-				class="btn btn-primary" type="submit" value="Logout">
+			<input type="hidden" value="admin" name="admin"> 
+			<input type="hidden" value="logout" name="action"> 
+			<input class="btn btn-primary" type="submit" value="Logout">
 		</form>
 	</nav>
 	<!-- form for creating a new user -->
@@ -53,8 +54,7 @@ Admin admin = adminDao.getUser(username);
 				out.print("<input type='hidden' name='action' value='create'>");
 				out.print("<input type='hidden' name='authority' value='admin'>");
 
-                   
-				out.print ("<div><h4>Create a new user</h4></div>");
+				out.print("<div><h4>Create a new user</h4></div>");
 				out.print("<div class='row'>");
 				out.print("<div class='five columns'>");
 				out.print("<label>Full Name</label>");
@@ -113,18 +113,18 @@ Admin admin = adminDao.getUser(username);
 				out.print("<input type='hidden' name='authority' value='admin'>");
 				out.print("<input type='hidden' name='userId' value='" + currCommuter.get_id() + "'>");
 
-				out.print ("<div><h4>Edit the current user</h4></div>");
+				out.print("<div><h4>Edit the current user</h4></div>");
 				out.print("<div class='row'>");
 				out.print("<div class='five columns'>");
 				out.print("<label>Full Name</label>");
-				out.print(
-						"<input class='u-full-width' type='text' placeholder='Full Name' name='fullName' value='"+ currCommuter.get_fullName()+"' required>");
+				out.print("<input class='u-full-width' type='text' placeholder='Full Name' name='fullName' value='"
+						+ currCommuter.get_fullName() + "' required>");
 				out.print("</div>");
 
 				out.print("<div class='five columns'>");
 				out.print("<label>User Name</label>");
-				out.print(
-						"<input class='u-full-width' type='text' placeholder='User Name' name='userName' value='"+ currCommuter.get_username()+"' required>");
+				out.print("<input class='u-full-width' type='text' placeholder='User Name' name='userName' value='"
+						+ currCommuter.get_username() + "' required>");
 				out.print("</div>");
 				out.print("</div>");
 
@@ -132,27 +132,28 @@ Admin admin = adminDao.getUser(username);
 				out.print("<div class='five columns'>");
 				out.print("<label>Email</label>");
 				out.print(
-						"<input class='u-full-width' type='email' placeholder='test@gmail.com' name='email' value='"+ currCommuter.get_email()+"' required>");
+						"<input class='u-full-width' type='email' placeholder='test@gmail.com' name='email' value='"
+								+ currCommuter.get_email() + "' required>");
 				out.print("</div>");
 
-				
 				out.print("<div class='five columns'>");
 				out.print("<label>DOB</label>");
-				out.print("<input class='u-full-width' type='date' placeholder='mm/dd/yyyy' name='DOB' value='"+ currCommuter.get_DOB()+"'>");
+				out.print("<input class='u-full-width' type='date' placeholder='mm/dd/yyyy' name='DOB' value='"
+						+ currCommuter.get_DOB() + "'>");
 				out.print("</div>");
 				out.print("</div>");
 
 				out.print("<div class='row'>");
 				out.print("<div class='five columns'>");
 				out.print("<label>Street Address</label>");
-				out.print("<textarea rows='3' cols='50' name='address'>"+ currCommuter.get_address()+"</textarea>");
+				out.print("<textarea rows='3' cols='50' name='address'>" + currCommuter.get_address()
+						+ "</textarea>");
 				out.print("</div>");
 
 				out.print("</div>");
 
 				out.print("<button type='submit' class='button-primary'>Save</button>");
 				out.print("</form>");
-				
 
 				break;
 

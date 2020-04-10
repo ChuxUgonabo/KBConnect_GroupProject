@@ -23,8 +23,8 @@
 		return;
 	}
 	//if (session.getAttribute("currentUserId") != null) {
-		//currentUserId = (int)session.getAttribute("currentUserId");
-//	}else{
+	//currentUserId = (int)session.getAttribute("currentUserId");
+	//	}else{
 	//currentUserId = Integer.parseInt(request.getParameter("userId"));
 	//}
 	currentUserId = Integer.parseInt(request.getParameter("userId"));
@@ -53,6 +53,7 @@
 
 		<form action="LoginController" method="post">
 			<input type="hidden" value="admin" name="admin"> <input
+				type="hidden" value="admin" name="admin"> <input
 				type="hidden" value="logout" name="action"> <input
 				class="btn btn-primary" type="submit" value="Logout">
 		</form>
@@ -88,9 +89,9 @@
 								+ "<input type='number' name='quantity'  min=1 Required/></td>");
 						out.print("<input type='hidden' name='productId' value='" + allProducts.get(i).get_id() + "'>");
 						out.print("<input type='hidden' name='userId' value='" + user.get_id() + "'>");
-						out.print("<input type='hidden' name='adminId' value='"+ admin.get_id()+ "'>"
-								+"<input type='hidden' name='manageUserOrder' value='currentUser'><input type='hidden' name='adminStatus' value='admin'>"
-										+ "<input type='hidden' name='action' value='add'/>");
+						out.print("<input type='hidden' name='adminId' value='" + admin.get_id() + "'>"
+								+ "<input type='hidden' name='manageUserOrder' value='currentUser'><input type='hidden' name='adminStatus' value='admin'>"
+								+ "<input type='hidden' name='action' value='add'/>");
 						out.print("<td><input type='submit' value='Add to cart' /></td>");
 						out.print("</form></tr>");
 
@@ -103,7 +104,8 @@
 		<hr>
 		<table class="table">
 
-			<%   	if (allCommuterOrders.size() >= 1) {
+			<%
+				if (allCommuterOrders.size() >= 1) {
 					out.print("<thead><tr><th scope='col'><h4>" + user.get_fullName()
 							+ "'s Current Cart <th scope='col'>Price</th><th scope='col'>Status</th><th scope='col'>Quantity</th></tr></thead><tbody>");
 
@@ -123,9 +125,10 @@
 						out.print(
 								"<td><form action='OrderController' method='post'><input type='submit' name='action' value='-'>"
 										+ "   " + allCommuterOrders.get(i).get_quantity()
-										+ "  <input type='hidden' name='orderId' value='"+ allCommuterOrders.get(i).get_id()+ "'>"
-										+ "<input type='hidden' name='adminId' value='"+ admin.get_id()+ "'>"
-										+ "<input type='hidden' name='userId' value='"+ user.get_id() + "'>"
+										+ "  <input type='hidden' name='orderId' value='"
+										+ allCommuterOrders.get(i).get_id() + "'>"
+										+ "<input type='hidden' name='adminId' value='" + admin.get_id() + "'>"
+										+ "<input type='hidden' name='userId' value='" + user.get_id() + "'>"
 										+ "<input type='submit' name='action' value='+'><input type='hidden' name='adminStatus' value='admin'></td><td><input type='submit' name='action' value='Approve'></td>"
 										+ "<td><input type='hidden' name='manageUserOrder' value='currentUser'><input type='submit' name='action' value='Remove'></td></form>");
 						out.print("</tr>");
