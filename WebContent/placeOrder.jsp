@@ -74,7 +74,7 @@
 						out.print("<input type='hidden' name='productId' value='" + allProducts.get(i).get_id() + "'/>");
 						out.print("<input type='hidden' name='userId' value='" + user.get_id() + "'/>");
 						out.print("<input type='hidden' name='action' value='add'/>");
-						out.print("<td><input type='submit' value='+' /></td>");
+						out.print("<td><input type='submit' value='Add to cart' /></td>");
 						out.print("</form></tr>");
 
 					}
@@ -108,7 +108,7 @@
 							out.print("<td><form action='OrderController' method='post'><input type='submit' name='action' value='-'>"
 									+"   "+allCommuterOrders.get(i).get_quantity()+"<input type='hidden' name='userId' value='" + user.get_id() + "'/>"
 									+ "  <input type='hidden' name='orderId' value='" + allCommuterOrders.get(i).get_id() + "'><input type='submit' name='action' value='+'></td>"
-									+ "<td><input type='submit' name='action' value='Delete'</td></form>");
+									+ "<td><input type='submit' name='action' value='Remove'</td></form>");
 							out.print("</tr>");
 							
 							totalPrice += price;

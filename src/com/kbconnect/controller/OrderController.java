@@ -136,7 +136,7 @@ public class OrderController extends HttpServlet {
 			}
 			break;
 
-		case "Delete":
+		case "Remove":
 			// collect data from user
 			orderId = Integer.parseInt(request.getParameter("orderId"));
 			currOrder = ordrDao.getOrder(orderId);

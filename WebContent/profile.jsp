@@ -94,7 +94,7 @@
 				<li class="nav-item dropdown"><a class="nav-link text-primary"
 					href="placeOrder.jsp">Place Order</a></li>
 				<li class="nav-item dropdown"><a class="nav-link text-primary"
-					href="subscriptions.jsp">Alert Subscriptions</a></li>
+					id="alertSubscription" href="subscriptions.jsp">Alert Subscriptions</a></li>
 			</ul>
 		</div>
 	</nav>
